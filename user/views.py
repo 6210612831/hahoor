@@ -1,6 +1,8 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from django.contrib.auth import *
 # Create your views here.
 import re
 
@@ -15,6 +17,24 @@ def about(request):
 
 def login(request):
     return render(request, "dormitory/index.html")
+
+
+def login_check(request):
+    # Check user is already login
+    if request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("dormitory:index"))
+    # Check this view use when submit login or not if not return to index
+    if request.method == "POST":
+        # login process
+        username = request.POST["username"]
+        password = request.POST["password"]
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return HttpResponseRedirect(reverse("dormitory:index"))
+        else:
+            return render(request, "dormitory:index", {"fail_login": "Invalid credential"})
+    return render(request, "dormitory:index")
 
 
 def register(request):
