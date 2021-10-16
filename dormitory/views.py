@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from .models import *
 
 # Create your views here.
 def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+    return render(request, "dormitory/index.html",{
+        "dormitories" : Dormitory.objects.order_by('seen')[:5]
+    })
