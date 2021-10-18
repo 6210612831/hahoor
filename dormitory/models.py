@@ -21,6 +21,7 @@ class Dormitory(models.Model) :
     reviews = models.ManyToManyField(Review,blank = True)
     date = models.DateTimeField()
     status = models.BooleanField()
+    icon = models.ImageField(upload_to='dormitorys')
 
     def __str__(self) :
-        return f"{self.tile}"
+        return f"{self.title}"
