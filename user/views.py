@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect , HttpResponse
 from django.urls import reverse
 from django.contrib.auth import *
 # Create your views here.
@@ -8,11 +8,11 @@ import re
 
 
 def index(request):
-    return render(request, "dormitory/index.html")
+    return HttpResponse("THIS IS USER INDEX PAGE")
 
 
 def about(request):
-    return render(request, "user/about.html")
+    return HttpResponse("THIS IS ABOUT PAGE")
 
 
 def login(request):

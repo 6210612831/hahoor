@@ -24,5 +24,6 @@ urlpatterns = [
     path('dormitory/',include("dormitory.urls")),
     path('thread/',include("thread.urls")),
     path('user/',include("user.urls")),
-    path('',include("user.urls")),
+    path('about/',include("user.abouturls")),
+    path('',include("dormitory.urls")),
 ]
