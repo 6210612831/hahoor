@@ -1,0 +1,26 @@
+
+
+<!--Show User-->
+<li>USER: {{request.user}}</li>
+
+<!--Dormitory list-->
+{% for x in dorm_list %}
+<ul>
+    <li>Dormitory Title: {{x.title}} </li>
+</ul>
+{% endfor %}
+
+
+<!--Search Dormitory-->
+Search Dormitory:
+<form action="{% url 'dormitory:dormitories' %}" method="POST">
+    {% csrf_token %}
+    <input type="text" name="search" placeholder="Dormitory" maxlength="100">
+    <br>
+    <input type="submit" value="Search" class = "button">
+    <input type="submit" value="Clear" class = "button">
+</form>
+
+
+
+
