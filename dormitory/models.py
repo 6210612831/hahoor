@@ -20,6 +20,7 @@ class Dormitory(models.Model) :
     seen = models.IntegerField()
     reviews = models.ManyToManyField(Review,blank = True)
     date = models.DateTimeField()
+    status = models.BooleanField()
 
     def __str__(self) :
         return f"{self.tile}"
