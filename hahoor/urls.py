@@ -14,16 +14,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path,include
+from django.urls import path, include
 from django.conf.urls import url
 from markdownx import urls as markdownx
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^markdownx/', include('markdownx.urls')),
-    path('dormitory/',include("dormitory.urls")),
-    path('thread/',include("thread.urls")),
-    path('user/',include("user.urls")),
-    path('about/',include("user.abouturls")),
-    path('',include("dormitory.urls")),
+    path('thread/', include("thread.urls")),
+    path('user/', include("user.urls")),
+    path('about/', include("user.abouturls")),
+    path('', include("dormitory.urls")),
 ]
