@@ -20,11 +20,11 @@ class Dormitory(models.Model):
     desc = models.TextField()
     content = MarkdownxField()
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    seen = models.IntegerField()
+    seen = models.IntegerField(default = 0)
     reviews = models.ManyToManyField(Review, blank=True)
     date = models.DateTimeField()
-    status = models.BooleanField()
-    icon = models.ImageField(upload_to='dormitorys', blank=True, null=True)
+    status = models.BooleanField(default = False)
+    icon = models.ImageField(upload_to='static/dormitorys/icon', blank=True, null=True)
 
     def __str__(self):
         return f"{self.title}"

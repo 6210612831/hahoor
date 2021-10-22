@@ -1,0 +1,11 @@
+{% extends "dormitory/layout.html" %} 
+{% load markdown_tag %}
+
+{% block body %}
+<h2>{{dormitory.title}}</h2>
+
+{{dormitory.date}}
+<br>
+{{dormitory.content | convert_markdown | safe }}
+
+{% endblock %}

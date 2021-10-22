@@ -26,3 +26,10 @@ def dormitories(request):
         for n in Dormitory.objects.all():
             dorm_list.append(n)
     return render(request, "dormitory/dormitories.html", {"dorm_list": dorm_list})
+
+def dormitory(request,dorm_title) :
+    this_dorm = Dormitory.objects.get(title = dorm_title)
+
+    return render(request, "dormitory/dormitory.html", {
+        "dormitory": this_dorm,
+    })
