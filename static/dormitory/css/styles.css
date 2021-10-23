@@ -1,0 +1,13 @@
+.form-rounded {
+  border-radius: 1rem;
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+.nav2 {
+  z-index: 10;
+  width: 100%;
+  left: 0;
+  right: 0;
+}
