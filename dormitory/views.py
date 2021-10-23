@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render , get_object_or_404
 from django.http import HttpResponse
 from .models import *
 
@@ -28,7 +28,7 @@ def dormitories(request):
     return render(request, "dormitory/dormitories.html", {"dorm_list": dorm_list})
 
 def dormitory(request,dorm_title) :
-    this_dorm = Dormitory.objects.get(title = dorm_title)
+    this_dorm = get_object_or_404(Dormitory,title = dorm_title)
 
     return render(request, "dormitory/dormitory.html", {
         "dormitory": this_dorm,
