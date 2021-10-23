@@ -9,6 +9,7 @@
 - user สามารถตอบกระทู้ได้
 
 ### About
+- Heroku : [link](https://hahoor.herokuapp.com/about)
 - Pivotal tracker : [link](https://www.pivotaltracker.com/n/projects/2534998)
 
 ### รายชื่อสมาชิกในกลุ่ม
