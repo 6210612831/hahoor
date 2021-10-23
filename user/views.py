@@ -2,7 +2,9 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
-from django.contrib.auth import *
+from django.contrib.auth import authenticate
+from django.contrib.auth import login as auth_login
+from django.contrib.auth import logout as auth_logout
 # Create your views here.
 import re
 
@@ -30,11 +32,11 @@ def login_check(request):
         password = request.POST["password"]
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            login(request, user)
+            auth_login(request, user)
             return HttpResponseRedirect(reverse("dormitory:index"))
         else:
-            return render(request, "dormitory:index", {"fail_login": "Invalid credential"})
-    return render(request, "dormitory:index")
+            return render(request, "dormitory/index.html", {"fail_login": "Invalid credential"})
+    return render(request, "dormitory/index.html")
 
 
 def register(request):
@@ -74,5 +76,9 @@ def register(request):
 
 
 def logout(request):
-    logout(request)
-    return render(request, "dormitory/index.html")
+    auth_logout(request)
+    return render(request, "dormitory/index.html", {"loggedout": "Logged out"})
+
+
+def register_view(request):
+    return render(request, "user/register.html")
