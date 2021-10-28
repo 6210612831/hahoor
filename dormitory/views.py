@@ -7,7 +7,7 @@ from .models import *
 
 def index(request):
     return render(request, "dormitory/index.html", {
-        "dormitories": Dormitory.objects.order_by('seen')[:5]
+        "dormitories": Dormitory.objects.order_by('-seen')[:5]
     })
 
 

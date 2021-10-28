@@ -1,50 +1,9 @@
 {% extends "dormitory/layout.html" %}
 
 {% block body %}
-hello
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+<h1>Top 5 Dormitories</h1>
+{% for dorm in dormitories%}
+    <b>{{dorm}}</b>
+    <br>
+{% endfor %}
 {% endblock %}
