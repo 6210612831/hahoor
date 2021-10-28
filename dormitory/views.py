@@ -1,13 +1,18 @@
 from django.shortcuts import render , get_object_or_404
 from django.http import HttpResponse
 from .models import *
+import folium
 
 # Create your views here.
 
 
 def index(request):
+    map_location = folium.Map(width = 1000,height=600, location=[14.0656662,100.605382],zoom_start = 90)
+    map_location = map_location._repr_html_()
+
     return render(request, "dormitory/index.html", {
-        "dormitories": Dormitory.objects.order_by('-seen')[:5]
+        "dormitories": Dormitory.objects.order_by('-seen')[:5] ,
+        "map" : map_location
     })
 
 
