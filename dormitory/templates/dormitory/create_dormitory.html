@@ -1,1 +1,14 @@
 {% extends "dormitory/layout.html" %} 
+
+{% block body %}
+Hello create dorm
+
+<form method="POST" action="{% url 'dormitory:create_dormitory' %}">
+    {% csrf_token %}
+    {{ form }}
+
+    <input type="submit" value ="Confirm" class="button"></input>
+</form>
+
+{{ form.media }}
+{% endblock %}

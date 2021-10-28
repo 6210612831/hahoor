@@ -1,7 +1,10 @@
 from django.shortcuts import render , get_object_or_404
 from django.http import HttpResponse
 from .models import *
+from .forms import MarkdownForm
+
 import folium
+import datetime
 
 # Create your views here.
 
@@ -38,3 +41,22 @@ def dormitory(request,dorm_title) :
     return render(request, "dormitory/dormitory.html", {
         "dormitory": this_dorm,
     })
+
+
+def create_dormitory(request) :
+    if not request.user.is_authenticated:
+        return render(request, "dormitory/index.html", {"fail_login": "Login First to proceed"})
+
+    if request.method == "POST":
+        title = request.POST["title"]
+        desc = request.POST["desc"]
+        content = MarkdownForm(request.POST["content"])
+        
+        if content.is_valid() :
+            new_dorm = Dormitory(title = title,desc = desc,content=content,author=request.user,seen = 0,date = datetime.now(),icon = icon)
+            new_dorm.save()
+
+            return HttpResponseRedirect(reverse("dormitory:dormitory",kwargs={'dorm_title': title}))
+    else :
+        content = MarkdownForm()
+    return render(request, 'dormitory/create_dormitory.html',{'form':content})
