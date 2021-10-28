@@ -11,6 +11,7 @@ import datetime
 
 def index(request):
     map_location = folium.Map(width = 1000,height=600, location=[14.0656662,100.605382],zoom_start = 90)
+    folium.Marker(location = [14.0656662,100.605382],tooltip = 'Click for more', popup ='หอพักรอบเชียงรากน้อย',icon=folium.Icon(color='orange')).add_to(map_location)
     map_location = map_location._repr_html_()
 
     return render(request, "dormitory/index.html", {
@@ -51,7 +52,7 @@ def create_dormitory(request) :
         title = request.POST["title"]
         desc = request.POST["desc"]
         content = MarkdownForm(request.POST["content"])
-        
+        icon = request.FILES['icon']
         if content.is_valid() :
             new_dorm = Dormitory(title = title,desc = desc,content=content,author=request.user,seen = 0,date = datetime.now(),icon = icon)
             new_dorm.save()
