@@ -1,5 +1,8 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
+<title>Hahoor</title>
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,8 +11,13 @@
         <title>Register</title>
 
         <!-- load stylesheets -->
+        <link rel="apple-touch-icon" sizes="180x180" href="{%static 'favicon/apple-touch-icon.png' %}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{%static 'favicon/favicon-32x32.png' %}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{%static 'favicon/favicon-16x16.png' %}">
+        <link rel="manifest" href="{%static 'favicon/site.webmanifest' %}">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400">  
-                                                  
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">        
+        <script src="{% static 'dormitory/css/styles.js' %}"></script>                                
     </head>
 
 {% block body %}
@@ -26,83 +34,208 @@
                 border-radius: 12px;
                 transition-duration: 0.4s;
                 }
-                .button:hover {
+            .button:hover {
                 background-color: #444444;
                 color: white;
                 }
+            body {
+                color: #000;
+                overflow-x: hidden;
+                height: 100%;
+                background-color: #ffeebfcb;
+                background-repeat: no-repeat
+            }
+            .card0 {
+                box-shadow: 0px 4px 8px 0px #757575;
+                border-radius: 0px
+            }
+
+            .card2 {
+                margin: 0px 40px
+            }
+
+            .logo {
+                width: 120px;
+                height: 120px;
+                margin-top: 40px;
+                margin-left: 60px;
+            }
+
+            .image {
+                margin-left: 22px;
+                margin-right: 15px;
+                width: 500px;
+                height: 330px
+            }
+
+            .border-line {
+                border-right: 1px solid #EEEEEE;
+            }
+
+            .line {
+                height: 1px;
+                width: 50%;
+                background-color: #E0E0E0;
+                margin-top: 10px;
+            }
+
+            .text-sm {
+                font-size: 14px !important
+            }
+
+            ::placeholder {
+                color: #BDBDBD;
+                opacity: 1;
+                font-weight: 300
+            }
+
+            :-ms-input-placeholder {
+                color: #BDBDBD;
+                font-weight: 300
+            }
+
+            ::-ms-input-placeholder {
+                color: #BDBDBD;
+                font-weight: 300
+            }
+
+            input,
+            textarea {
+                padding: 10px 12px 10px 12px;
+                border: 1px solid lightgrey;
+                border-radius: 2px;
+                margin-bottom: 5px;
+                margin-top: 2px;
+                width: 100%;
+                box-sizing: border-box;
+                color: #2C3E50;
+                font-size: 14px;
+                letter-spacing: 1px
+            }
+            a {
+                color: inherit;
+                cursor: pointer
+            }
+
+            .btn-blue {
+                background-color: #ffc097;
+                width: 150px;
+                color: rgb(0, 0, 0);
+                border-radius: 5px
+                
+            }
+
+            .btn-blue:hover {
+                background-color: #ffa76c;
+                color: white;
+                cursor: pointer
+            }
+
+            .bg-blue {
+                color: rgb(0, 0, 0);
+                background-color: #ffe499cb
+            }
         </style>
         
-
-        <!-- Header -->
-        <div class="container">
-        <header>
-            <a href="{% url 'user:register' %}" class = "button">
-                <h1>User Registration</h1>    
-            </a>            
-        </header>
-        
+      
         <!-- Register Form -->
-        
-        <section>
-                                
-            <header>
-                <h2>Register Form</h2>
-            </header>
-                                
-            <div>
-                <p>Please enter your infromation
-                </p>
+<section>
+    <form action="{% url 'user:register' %}" method="post" class="contact-form" name="form_insert">
+        {% csrf_token %}
+        <div class="container-fluid px-1 px-md-5 px-lg-1 px-xl-5 py-5 mx-auto">
+            <div class="card card0 border-0">
+                <div class="row d-flex">
+                    <div class="col-lg-6">
+                        <div class="card1 pb-5">
+                            <div class="row"> <img src="/static/images/hahoor_logo.png" class="logo"></div>
+                            <br>
+                            <br>
+                            <br>
+                            <div class="row px-3 justify-content-center mt-4 mb-5 border-line"> <img src="/static/images/hahoor1.png" class="image"> </div>
+                        </div>
+                    </div>
+                <div class="col-lg-6">
+                    <div class="card2 card border-0 px-4 py-5">
+                        <div class="row mb-4 px-3">
+                            <h6 class="mb-0 mr-4 mt-2" style="font-size: 30px;">Sign up</h6>
+                        </div>
+                        <div class="row px-3 mb-4">
+                            <div class="line"></div>
+                            <div class="line"></div>
+                        </div>
+                        <!-- username-->
+                        <div class="row px-3">
+                            {%if fail_username%} 
+                            <div style="color: red;"><b>{{fail_username}}</b></div><br> 
+                            {%endif%}
+                            <label class="mb-1">
+                                <h6 class="mb-0 text-sm">Username</h6>
+                            </label> 
+                            <input class="mb-4" type="text" name="username" placeholder="Enter username" required/> 
+                        </div>
 
-                <form action="{% url 'user:register' %}" method="post" class="contact-form" name="form_insert">
-                    {% csrf_token %}
-                    <div>
-                        {%if fail_username%} 
-                        <div style="color: red;"><b>{{fail_username}}</b></div><br> 
-                        {%endif%}
-                        <input type="text"  name="username" placeholder="Username" required/>
-                    </div>
-                    <br>
-                    <div>
-                        {%if fail_password%} 
-                        <div style="color: red;"><b>{{fail_password}}</b></div><br> 
-                        {%endif%}
-                        <input type="password"  name="password" placeholder="Password" required/>
-                    </div>
-                    <br>
-                    <div>
-                        {%if fail_re_password%} 
-                        <div style="color: red;"><b>{{fail_re_password}}</b></div><br> 
-                        {%endif%}
-                        <input type="password"  name="re_password" placeholder="Confirm Password" required/>
-                    </div>
-                    <br>
-                    <div>
-                        <input type="text"  name="first_name" placeholder="First Name" required/>
-                    </div>
-                    <br>
-                    <div>
-                        <input type="text"  name="last_name" placeholder="Last Name" required/>
-                    </div>
-                    <br>
-                    <br>
-                    <div class="form-group">
-                        {%if fail_email%} 
-                        <div style="color: red;"><b>{{fail_email}}</b></div><br> 
-                        {%endif%}
-                        <input type="text"  name="email" placeholder="Email" required/>
-                    </div>
-                    <br>
-                    <br>
-                    <input type="submit" value ="Confirm" class="button"></input>
+                        <!-- password-->
+                        <div class="row px-3">
+                            {%if fail_password%} 
+                                <div style="color: red;"><b>{{fail_password}}</b></div><br> 
+                            {%endif%} 
+                            <label class="mb-1">
+                                <h6 class="mb-0 text-sm">Password</h6>
+                            </label> 
+                            <input class="mb-4" type="password" name="password" placeholder="Enter password" required/> 
+                        </div>
 
-                </form>                           
-            </div>            
+                        <!-- re password-->
+                        <div class="row px-3">
+                            {%if fail_re_password%} 
+                                <div style="color: red;"><b>{{fail_re_password}}</b></div><br> 
+                            {%endif%} 
+                            <label class="mb-1">
+                                <h6 class="mb-0 text-sm">Confirm Password</h6>
+                            </label> 
+                            <input type="password" name="re_password" placeholder="Confirm password" required/> 
+                        </div>
 
-        </section> 
-        <br>
-        <a href="{% url 'dormitory:index' %}" class = "button">Back</a>
+                        <div class="row px-3 mb-4">
+                            <div class="line"></div>
+                            <div class="line"></div>
+                        </div>
+
+                        <div class="row px-3 d-inline-block">
+                            <label class="mb-1">
+                                <h6 class="mb-0 text-sm">First Name</h6>
+                            </label>  
+                            <input type="text" name="first_name" placeholder="Enter your first name" required/>
+                            <label class="mb-1">
+                                <h6 class="mb-0 text-sm">Last Name</h6>
+                            </label> 
+                            <input type="password" name="last_name" placeholder="Enter your last name" required/>
+                        </div>
+
+                        <div class="row px-3">
+                            {%if fail_email%} 
+                                <div style="color: red;"><b>{{fail_email}}</b></div><br> 
+                            {%endif%} 
+                            <label class="mb-1">
+                            <h6 class="mb-0 text-sm">Email Address</h6>
+                            </label> 
+                            <input class="mb-4" type="text" name="email" placeholder="Enter a valid email address" required/> 
+                        </div>
+                        <div class="row mb-3 px-3"> <button type="submit" class="btn btn-blue text-center">Confirm</button> </div>
+                        <div class="row mb-4 px-3"> <small class="font-weight-bold">Aleready have an account? <a href="{% url 'dormitory:index' %}" style="color: #ec8541;">Login</a></small> </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-blue py-4">
+                <div class="row px-3">
+                    <small class="ml-4 ml-sm-5 mb-2">www.hahoor.in.th</small>
+                </div>
+            </div>
+        </div>
     </div>
-       
+    </form>
+</section>
+
 
 </html>
 {% endblock %}
