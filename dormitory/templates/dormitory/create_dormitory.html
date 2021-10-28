@@ -3,8 +3,16 @@
 {% block body %}
 Hello create dorm
 
-<form method="POST" action="{% url 'dormitory:create_dormitory' %}">
+<form method="POST" action="{% url 'dormitory:create_dormitory' %}" enctype="multipart/form-data">
+
     {% csrf_token %}
+    <input type="text" name="title" placeholder="Enter dormitory title" required/></input>
+    <br>
+    <br>
+    <input type="text" name="desc" placeholder="Enter dormitory description" required/></input>
+    <br>
+    <input type="file" name="icon_d">
+    <br> 
     {{ form }}
 
     <input type="submit" value ="Confirm" class="button"></input>
