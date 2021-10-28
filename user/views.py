@@ -33,7 +33,7 @@ def login_check(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             auth_login(request, user)
-            return HttpResponseRedirect(reverse("dormitory:index"))
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
         else:
             return render(request, "dormitory/index.html", {"fail_login": "Invalid credential"})
     return render(request, "dormitory/index.html")
