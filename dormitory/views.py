@@ -15,7 +15,7 @@ def index(request):
     map_location = folium.Map(width=1000, height=600, location=[
                               14.0656662, 100.605382], zoom_start=90)
     folium.Marker(location=[14.0656662, 100.605382], tooltip='Click for more',
-                  popup='หอพักรอบเชียงรากน้อย', icon=folium.Icon(color='orange')).add_to(map_location)
+                  popup='หอพักรอบเชียงรากน้อย', icon=folium.Icon(color='purple')).add_to(map_location)
     map_location = map_location._repr_html_()
 
     return render(request, "dormitory/index.html", {
@@ -37,7 +37,7 @@ def dormitories(request):
     # use when user didnt search Dormitory so it will return all dormitory
     else:
         for n in Dormitory.objects.all():
-            if n.status == True :
+            if n.status == True:
                 dorm_list.append(n)
     return render(request, "dormitory/dormitories.html", {"dorm_list": dorm_list})
 
@@ -60,10 +60,10 @@ def create_dormitory(request):
         content = MarkdownForm(request.POST)
         icon = request.FILES['icon_d']
         if Dormitory.objects.filter(title=title).first():
-            return render(request,'dormitory/create_dormitory.html', {
+            return render(request, 'dormitory/create_dormitory.html', {
                 "fail_title": "This title is already taken",
-                "form" : content
-                })
+                "form": content
+            })
         if content.is_valid():
             new_dorm = Dormitory(title=title, desc=desc, content=content,
                                  author=request.user, seen=0, date=datetime.datetime.now(), icon=icon)
@@ -74,10 +74,11 @@ def create_dormitory(request):
         content = MarkdownForm()
     return render(request, 'dormitory/create_dormitory.html', {'form': content})
 
+
 def my_dormitory(request):
     if not request.user.is_authenticated:
-            return render(request, "dormitory/index.html", {"fail_login": "Login First to proceed"})
+        return render(request, "dormitory/index.html", {"fail_login": "Login First to proceed"})
 
     return render(request, "dormitory/my_dormitory.html", {
         "my_dormitories": Dormitory.objects.filter(author=request.user)
-        })
+    })

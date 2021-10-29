@@ -12,6 +12,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300&display=swap" rel="stylesheet">
     <script src="{% static 'dormitory/css/styles.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
 <style>
     .button {
         background-color: #4caf50; /* Green */
@@ -28,56 +31,74 @@
     }
 
     .button1 {
-        background-color: #ffa76c;
-        color: rgb(0, 0, 0);
-        border: 2px solid #ffa76c;
+        background-color: #8878c3;
+        color: white;
+        border: 2px solid #8878c3;
     }
 
     .button1:hover {
-        background-color: #ec8541;
+        background-color: #ccccff;
         color: rgb(0, 0, 0);
-        border: 2px solid #ec8541;
+        border: 2px solid #ccccff;
     }
     .button2 {
         background-color: white;
         color: black;
-        border: 2px solid #ec8541;
+        border: 2px solid #AA98A9;
     }
 
     .button2:hover {
-        background-color: #ffc097;
+        background-color: #cec8ef;
         color: rgb(0, 0, 0);
-        border: 2px solid #ffc097;
+        border: 2px solid #cec8ef;
     }
     .button3 {
-        background-color: #ffc097;
+        background-color: #cec8ef;
         color: black;
-        border: 2px solid #ffc097;
+        border: 2px solid #cec8ef;
         border-radius: 50%;
     }
 
     .button3:hover {
-        background-color: #ffd4b7;
+        background-color: #aa98e7;
         color: rgb(0, 0, 0);
-        border: 2px solid #ffd4b7;
+        border: 2px solid #aa98e7;
         border-radius: 50%
+    }
+    .button4 {
+        background-color:white;
+        color: black;
+        border: 2px solid white;
+    }
+
+    .button4:hover {
+        background-color: #e2e2e2;
+        color: rgb(0, 0, 0);
+        border: 2px solid #e2e2e2;
     }
     .p1{
         font-family: 'Prompt', sans-serif;
         font-size: 20px;
     }
     .p1:hover{
-        color: #ec8541;
+        color: #aa98e7;
     }
+    .footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    }
+
 </style>
 
 <body>
-    <nav class="navbar navbar-light" style="background-color: #ffeebfcb;">
-        <div class="container-fluid " style="margin-top: 1em;">
-          <a class="navbar-brand" style="margin-left: 1em;"><img src="/static/images/hahoor_logo.png" alt="HAHOOR" style="width: 5em"><b style="font-size: 2em;margin-left: 0.5em;">HAHOOR</b></a>
+    <nav class="navbar navbar-light" style="background-color: #a9a3eb;">
+        <div class="container-fluid " style="margin-top: 1em; margin-right: 2em;">
+          <a class="navbar-brand" style="margin-left: 1em;" href="{% url 'dormitory:index' %}"><img src="/static/images/hahoor_logo.png" alt="HAHOOR" style="width: 5em"><b class="" style="font-size: 2em;margin-left: 0.5em; color: white;">HAHOOR</b></a>
         {% if request.user.is_authenticated %}
           <div class="d-flex justify-content-end">
-            <h3 style="margin-right: 1em; "><b>Welcome, <span style="color: rgb(255, 127, 67);">{{request.user.username}}</span></b></h3>
+            <h3 style="margin-right: 1em; "><b>Welcome, <span style="color: white;">{{request.user.username}}</span></b></h3>
             <a href="{% url 'user:logout' %}"><button type="button"class="btn button2" style="margin-top: 0.5em; margin-right: 2em;">Logout</button></a>
           </div>
           {% else %}
@@ -87,15 +108,15 @@
                 <input class="form-control me-2" type="password" placeholder="Password" name="password" aria-label="Login" required>
                 <button class="btn button1" type="submit">Login</button>
                 &ensp;
-                <a href="{% url 'user:register' %}"><button type="button"class="btn button2">Register</button></a>
+                <a href="{% url 'user:register' %}"><button type="button"class="btn button2" style="width: 5.8em; height: 2.5em;">Sign up</button></a>
           </form>
 
           {% if messages %}
         <div class="container-fluid">
             <div class="d-flex justify-content-end">
-                <div style="margin-left: auto;">
+                <div style="margin-left: auto; margin-top: -0.5em;">
             {% for message in messages %}
-            <p style="color: tomato;"><b>{{ message }} !</b></p>
+            <p style="color: white;"><b>{{ message }} !</b></p>
             {% endfor %}
                 </div>
             </div>
@@ -107,7 +128,7 @@
     <div id="nav" class="nav2">
         <nav class="navbar navbar-expand-lg navbar-light border border-top-0 shadow-sm p-3 mb-5 bg-white rounded" style="background-color: white; height: 5em;">
             <div class="container-fluid">
-                <div class="collapse navbar-collapse " style="margin-left: 2em; margin-top: 1em;">
+                <div class="collapse navbar-collapse " style="margin-left: 0em; margin-top: 1em;">
                     <ul class="navbar-nav">
                         <li class="nav-item m-2">
                             <a class="nav-link active" aria-current="page" href="{% url 'dormitory:dormitories' %}"><p class="p1"><b>หอพัก</b></p></a>
@@ -115,9 +136,14 @@
                         <li class="nav-item m-2">
                             <a class="nav-link active" aria-current="page" href="{% url 'user:register' %}"><p class="p1"><b>ซื้อ - ขายสัญญา</b></p></a>
                         </li>
+                        {% if request.user.is_authenticated %}
                         <li class="nav-item m-2">
-                            <a class="nav-link active" aria-current="page" href="{% url 'user:about' %}"><p class="p1"><b>About</b></p></a>
+                            <a class="nav-link active" aria-current="page" href="{% url 'dormitory:create_dormitory' %}"><p class="p1"><b>เพิ่มหอพัก</b></p></a>
                         </li>
+                        <li class="nav-item m-2">
+                            <a class="nav-link active" aria-current="page" href="{% url 'dormitory:create_dormitory' %}"><p class="p1"><b>สร้างกระทู้</b></p></a>
+                        </li>
+                        {% endif %}
                     </ul>
                 </div>
                 <form class="d-flex">
@@ -130,10 +156,32 @@
                         </button>
                     </a>
                 </form>
+                {% if request.user.is_authenticated %}
+                <div class="btn-group" role="group" style="margin-left: 1em; margin-right: 1.5em;">
+                    <a id="btnGroupDrop1" type="button" class="btn dropdown-toggle button4 p1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <b>ข้อมูลของ {{ request.user.username }}</b>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="width: 13.3em;">
+                        <li><a class="dropdown-item" href="#"><p class="p1"><b>ข้อมูลส่วนตัว</b></p></a></li>
+                        <li><a class="dropdown-item" href="{% url 'dormitory:my_dormitory' %}"><p class="p1"><b>หอพักของฉัน</b></p></a></li>
+                        <li><a class="dropdown-item" href="#"><p class="p1"><b>กระทู้ของฉัน</b></p></a></li>
+                    </ul>
+                </div>
+                {% endif %}
+
             </div>
         </nav>
     </div>
+
     {% block body %}
     {% endblock %}
 </body>
+
+<!-- Footer -->
+<footer class="footer text-center text-lg-start bg-light text-muted" style="margin-bottom: 0em;">
+    <div class="text-center p-4" style="background-color: #cec8ef;">
+      <a class="text-reset fw-bold" href="{% url 'user:about' %}">About</a>
+    </div>
+</footer>
+
 </html>
