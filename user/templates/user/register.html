@@ -2,13 +2,11 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<title>Hahoor</title>
+<title>Sign up</title>
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        
-        <title>Register</title>
 
         <!-- load stylesheets -->
         <link rel="apple-touch-icon" sizes="180x180" href="{%static 'favicon/apple-touch-icon.png' %}">
@@ -42,7 +40,7 @@
                 color: #000;
                 overflow-x: hidden;
                 height: 100%;
-                background-color: #ffeebfcb;
+                background-color: #a9a3eb;
                 background-repeat: no-repeat
             }
             .card0 {
@@ -118,22 +116,22 @@
             }
 
             .btn-blue {
-                background-color: #ffc097;
+                background-color: #8878c3;
                 width: 150px;
-                color: rgb(0, 0, 0);
+                color: white;
                 border-radius: 5px
                 
             }
 
             .btn-blue:hover {
-                background-color: #ffa76c;
-                color: white;
+                background-color: #ccccff;
+                color: black;
                 cursor: pointer
             }
 
             .bg-blue {
                 color: rgb(0, 0, 0);
-                background-color: #ffe499cb
+                background-color: #cec8ef
             }
         </style>
         
@@ -146,8 +144,8 @@
             <div class="card card0 border-0">
                 <div class="row d-flex">
                     <div class="col-lg-6">
-                        <div class="card1 pb-5">
-                            <div class="row"> <img src="/static/images/hahoor_logo.png" class="logo"></div>
+                        <div class="card1 pb-5" style="margin-left: 1em; margin-top: 1em;">
+                            <div class="row"><a href="{% url 'dormitory:index' %}"><img src="/static/images/hahoor_logo.png" class="logo"><h2 style="margin-top: 1.6em; margin-left: 0.5em; font-size: 45px;"><b>HAHOOR</b></a></h2></div>
                             <br>
                             <br>
                             <br>
@@ -157,7 +155,7 @@
                 <div class="col-lg-6">
                     <div class="card2 card border-0 px-4 py-5">
                         <div class="row mb-4 px-3">
-                            <h6 class="mb-0 mr-4 mt-2" style="font-size: 30px;">Sign up</h6>
+                            <h6 class="mb-0 mr-4 mt-2" style="font-size: 35px;"><b>SIGN UP</b></h6>
                         </div>
                         <div class="row px-3 mb-4">
                             <div class="line"></div>
@@ -196,6 +194,7 @@
                             <input type="password" name="re_password" placeholder="Confirm password" required/> 
                         </div>
 
+                        <br>
                         <div class="row px-3 mb-4">
                             <div class="line"></div>
                             <div class="line"></div>
@@ -206,12 +205,15 @@
                                 <h6 class="mb-0 text-sm">First Name</h6>
                             </label>  
                             <input type="text" name="first_name" placeholder="Enter your first name" required/>
+                        </div>
+                            <br>
+                        <div class="row px-3 d-inline-block">
                             <label class="mb-1">
                                 <h6 class="mb-0 text-sm">Last Name</h6>
                             </label> 
                             <input type="password" name="last_name" placeholder="Enter your last name" required/>
                         </div>
-
+                        <br>
                         <div class="row px-3">
                             {%if fail_email%} 
                                 <div style="color: red;"><b>{{fail_email}}</b></div><br> 
@@ -222,7 +224,7 @@
                             <input class="mb-4" type="text" name="email" placeholder="Enter a valid email address" required/> 
                         </div>
                         <div class="row mb-3 px-3"> <button type="submit" class="btn btn-blue text-center">Confirm</button> </div>
-                        <div class="row mb-4 px-3"> <small class="font-weight-bold">Aleready have an account? <a href="{% url 'dormitory:index' %}" style="color: #ec8541;">Login</a></small> </div>
+                        <div class="row mb-4 px-3"> <small class="font-weight-bold">Aleready have an account ? <a href="{% url 'dormitory:index' %}" style="color: #aa98e7;">Login</a></small> </div>
                     </div>
                 </div>
             </div>
