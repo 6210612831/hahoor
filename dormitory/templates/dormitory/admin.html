@@ -1,0 +1,8 @@
+{% extends "dormitory/layout.html" %} 
+
+{% block body %}
+{% for dorm in req_dormitories %}
+    <b>{{dorm}}</b>
+    <br>
+{% endfor %}
+{% endblock %}

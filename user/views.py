@@ -6,7 +6,10 @@ from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib import messages
-
+import sys
+sys.path.append('../')
+from dormitory.models import *
+from thread.models import *
 # Create your views here.
 import re
 
@@ -87,3 +90,16 @@ def logout(request):
 
 def register_view(request):
     return render(request, "user/register.html")
+
+def admin_view(request) :
+    if not request.user.is_authenticated:
+        messages.warning(request, "Login First to proceed")
+        return HttpResponseRedirect(reverse("dormitory:index"))
+
+    if not request.user.is_superuser:
+        messages.warning(request, "Permission needed")
+        return HttpResponseRedirect(reverse("dormitory:index"))
+
+    return render(request, "dormitory/admin.html", {
+        "req_dormitories": Dormitory.objects.filter(status=False).order_by('-date')
+        })
