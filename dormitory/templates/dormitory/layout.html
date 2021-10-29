@@ -144,6 +144,12 @@
                             <a class="nav-link active" aria-current="page" href="{% url 'dormitory:create_dormitory' %}"><p class="p1"><b>สร้างกระทู้</b></p></a>
                         </li>
                         {% endif %}
+
+                        {% if request.user.is_superuser %}
+                        <li class="nav-item m-2">
+                            <a class="nav-link active" aria-current="page" href="{% url 'user:admin' %}"><p class="p1"><b>Admin page</b></p></a>
+                        </li>
+                        {% endif %}
                     </ul>
                 </div>
                 <form class="d-flex">
