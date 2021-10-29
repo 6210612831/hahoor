@@ -75,7 +75,7 @@
     <nav class="navbar navbar-light" style="background-color: #ffeebfcb;">
         <div class="container-fluid " style="margin-top: 1em;">
           <a class="navbar-brand" style="margin-left: 1em;"><img src="/static/images/hahoor_logo.png" alt="HAHOOR" style="width: 5em"><b style="font-size: 2em;margin-left: 0.5em;">HAHOOR</b></a>
-          {% if request.user.is_authenticated %}
+        {% if request.user.is_authenticated %}
           <div class="d-flex justify-content-end">
             <h3 style="margin-right: 1em; "><b>Welcome, <span style="color: rgb(255, 127, 67);">{{request.user.username}}</span></b></h3>
             <a href="{% url 'user:logout' %}"><button type="button"class="btn button2" style="margin-top: 0.5em; margin-right: 2em;">Logout</button></a>
@@ -89,25 +89,19 @@
                 &ensp;
                 <a href="{% url 'user:register' %}"><button type="button"class="btn button2">Register</button></a>
           </form>
-            {% if fail_login %}
-                <div class="container-fluid">
-                    <div class="d-flex justify-content-end">
-                        <div style="margin-right: 30em;">
-                            <p style="color: tomato;"><b>{{fail_login}} !</b></p>
-                        </div>
-                    </div>
+
+          {% if messages %}
+        <div class="container-fluid">
+            <div class="d-flex justify-content-end">
+                <div style="margin-left: auto;">
+            {% for message in messages %}
+            <p style="color: tomato;"><b>{{ message }} !</b></p>
+            {% endfor %}
                 </div>
-            {% endif%}
-            {% if loggedout %}
-                <div class="container-fluid">
-                    <div class="d-flex justify-content-end">
-                        <div style="margin-right: 33.9em;">
-                            <p style="color: tomato;"><b>{{loggedout}} !</b></p>
-                        </div>
-                    </div>
-                </div>
-            {% endif%}
+            </div>
+        </div>
           {% endif %}
+        {% endif %}
         </div>
     </nav>
     <div id="nav" class="nav2">

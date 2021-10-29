@@ -5,6 +5,8 @@ from django.urls import reverse
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
+from django.contrib import messages
+
 # Create your views here.
 import re
 
@@ -35,7 +37,9 @@ def login_check(request):
             auth_login(request, user)
             return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
         else:
-            return render(request, "dormitory/index.html", {"fail_login": "Invalid credential"})
+            messages.warning(request, "Invalid credential")
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+            
     return render(request, "dormitory/index.html")
 
 
@@ -77,7 +81,8 @@ def register(request):
 
 def logout(request):
     auth_logout(request)
-    return render(request, "dormitory/index.html", {"loggedout": "Logged out"})
+    messages.warning(request, "Logged out")
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 
 def register_view(request):
