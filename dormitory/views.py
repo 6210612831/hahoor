@@ -4,6 +4,7 @@ from .models import *
 from .forms import MarkdownForm
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
+from django.contrib import messages
 
 import folium
 import datetime
@@ -52,7 +53,8 @@ def dormitory(request, dorm_title):
 
 def create_dormitory(request):
     if not request.user.is_authenticated:
-        return render(request, "dormitory/index.html", {"fail_login": "Login First to proceed"})
+        messages.warning(request, "Login First to proceed")
+        return render(request, "dormitory/index.html")
 
     if request.method == "POST":
         title = request.POST["title"]
@@ -77,8 +79,39 @@ def create_dormitory(request):
 
 def my_dormitory(request):
     if not request.user.is_authenticated:
-        return render(request, "dormitory/index.html", {"fail_login": "Login First to proceed"})
+        messages.warning(request, "Login First to proceed")
+        return HttpResponseRedirect(reverse("dormitory:index"))
 
     return render(request, "dormitory/my_dormitory.html", {
         "my_dormitories": Dormitory.objects.filter(author=request.user)
     })
+
+
+def remove_dormitory(request, dormitory_id):
+
+    if not request.user.is_authenticated:
+        messages.warning(request, "Login First to proceed")
+        return HttpResponseRedirect(reverse("dormitory:index"))
+
+    if not request.user.is_superuser:
+        messages.warning(request, "Permission needed")
+        return HttpResponseRedirect(reverse("dormitory:index"))
+
+    Dormitory.objects.filter(id=dormitory_id).delete()
+
+
+def change_status_dormitory(request, dormitory_id):
+
+    if not request.user.is_authenticated:
+        messages.warning(request, "Login First to proceed")
+        return HttpResponseRedirect(reverse("dormitory:index"))
+
+    if not request.user.is_superuser:
+        messages.warning(request, "Permission needed")
+        return HttpResponseRedirect(reverse("dormitory:index"))
+
+    this_dorm = get_object_or_404(Dormitory, id=dormitory_id)
+
+    this_dorm.status = not(this_dorm.status)
+
+    this_dorm.save()
