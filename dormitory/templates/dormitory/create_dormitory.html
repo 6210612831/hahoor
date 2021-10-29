@@ -6,6 +6,9 @@ Hello create dorm
 <form method="POST" action="{% url 'dormitory:create_dormitory' %}" enctype="multipart/form-data">
 
     {% csrf_token %}
+    {%if fail_title%} 
+        <div style="color: red;"><b>{{fail_title}}</b></div><br> 
+    {%endif%}
     <input type="text" name="title" placeholder="Enter dormitory title" required/></input>
     <br>
     <br>
