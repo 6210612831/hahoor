@@ -73,3 +73,11 @@ def create_dormitory(request):
     else:
         content = MarkdownForm()
     return render(request, 'dormitory/create_dormitory.html', {'form': content})
+
+def my_dormitory(request):
+    if not request.user.is_authenticated:
+            return render(request, "dormitory/index.html", {"fail_login": "Login First to proceed"})
+
+    return render(request, "dormitory/my_dormitory.html", {
+        "my_dormitories": Dormitory.objects.filter(author=request.user)
+        })
