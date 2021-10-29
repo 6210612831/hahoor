@@ -19,7 +19,7 @@ def index(request):
     map_location = map_location._repr_html_()
 
     return render(request, "dormitory/index.html", {
-        "dormitories": Dormitory.objects.order_by('-seen')[:5],
+        "dormitories": Dormitory.objects.filter(status=True).order_by('-seen')[:5],
         "map": map_location
     })
 
@@ -32,12 +32,13 @@ def dormitories(request):
         search = request.POST["search"]
         dorm_list = []
         for x in Dormitory.objects.all():
-            if x.search(search):
+            if x.search(search) and x.status == True:
                 dorm_list.append(x)
     # use when user didnt search Dormitory so it will return all dormitory
     else:
         for n in Dormitory.objects.all():
-            dorm_list.append(n)
+            if n.status == True :
+                dorm_list.append(n)
     return render(request, "dormitory/dormitories.html", {"dorm_list": dorm_list})
 
 
@@ -58,6 +59,11 @@ def create_dormitory(request):
         desc = request.POST["desc"]
         content = MarkdownForm(request.POST)
         icon = request.FILES['icon_d']
+        if Dormitory.objects.filter(title=title).first():
+            return render(request,'dormitory/create_dormitory.html', {
+                "fail_title": "This title is already taken",
+                "form" : content
+                })
         if content.is_valid():
             new_dorm = Dormitory(title=title, desc=desc, content=content,
                                  author=request.user, seen=0, date=datetime.datetime.now(), icon=icon)
