@@ -1,4 +1,4 @@
-{% extends "dormitory/layout.html" %}
+{% extends "thread/layout.html" %}
 
 {% block body %}
 
@@ -12,14 +12,4 @@
 </ul>
 {% endfor %}
 
-
-<!--Search Dormitory-->
-Search Thread:
-<form action="{% url 'thread:index' %}" method="POST">
-    {% csrf_token %}
-    <input type="text" name="search" placeholder="Thread" maxlength="100">
-    <br>
-    <input type="submit" value="Search" class = "button">
-    <input type="submit" value="Clear" class = "button">
-</form>
 {% endblock %}
