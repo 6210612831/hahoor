@@ -67,6 +67,7 @@ def create_dormitory(request):
                 "form": content
             })
         if content.is_valid():
+            content = content.cleaned_data['Content']
             new_dorm = Dormitory(title=title, desc=desc, content=content,
                                  author=request.user, seen=0, date=datetime.datetime.now(), icon=icon)
             new_dorm.save()
@@ -96,8 +97,8 @@ def remove_dormitory(request, dormitory_id):
     if not request.user.is_superuser:
         messages.warning(request, "Permission needed")
         return HttpResponseRedirect(reverse("dormitory:index"))
-
-    Dormitory.objects.filter(id=dormitory_id).delete()
+    Dormitory.objects.get(id=dormitory_id).icon.delete(save=True)
+    Dormitory.objects.get(id=dormitory_id).delete()
     return HttpResponseRedirect(reverse("user:admin"))
 
 

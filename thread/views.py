@@ -57,6 +57,7 @@ def create_thread(request):
                 "form": content
             })
         if content.is_valid():
+            content = content.cleaned_data['Content']
             new_thread = Thread(header=header,content=content,author=request.user,date=datetime.datetime.now())
             new_thread.save()
 
