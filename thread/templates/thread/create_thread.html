@@ -1,20 +1,47 @@
 {% extends "thread/layout.html" %} 
-
 {% block body %}
-Hello create thread
 
+<style>
+    .p2 {
+        font-family: "Prompt", sans-serif;
+        font-size: 1.2em;
+    }   
+</style>
+<br>
+<div style="text-align: center;">
+    <h2><b class="p2">สร้างกระทู้</b></h2>
+    <br>
+    <br>
+    <br>
+</div>
 <form method="POST" action="{% url 'thread:create_thread' %}" enctype="multipart/form-data">
 
     {% csrf_token %}
     {%if fail_header%} 
         <div style="color: red;"><b>{{fail_header}}</b></div><br> 
     {%endif%}
-    <input type="text" name="header" placeholder="Enter thread header" required/></input>
-    <br>
-    <br>
-    {{ form }}
 
-    <input type="submit" value ="Confirm" class="button"></input>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="form-group" style="width: 25em; margin-left: 5em;">
+                    <label><b class="p2">ชื่อกระทู้</b></label>
+                    <input type="text" name="header" class="form-control" maxlength="100" placeholder="Enter thread header" required/></input>
+                </div>
+                <br>
+                <div style="margin-left: 5em;">
+                    <br>
+                    <input type="submit" value ="ยืนยัน" class="btn button1 p2"></input>
+                </div>
+                <br>
+            </div>
+                <br>
+                <br>
+            <div class="col" style="margin-left: 5em;"> 
+                <p class="p2">{{ form }}</p>
+            </div>
+        </div>
+    </div>
 </form>
 
 {{ form.media }}
