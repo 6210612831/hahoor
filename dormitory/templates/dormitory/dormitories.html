@@ -1,4 +1,6 @@
+{% extends "dormitory/layout.html" %}
 
+{% block body %}
 
 <!--Show User-->
 <li>USER: {{request.user}}</li>
@@ -20,7 +22,7 @@ Search Dormitory:
     <input type="submit" value="Search" class = "button">
     <input type="submit" value="Clear" class = "button">
 </form>
-
+{% endblock %}
 
 
 

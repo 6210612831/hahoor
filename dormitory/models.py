@@ -10,6 +10,7 @@ class Review(models.Model):
     content = MarkdownxField()
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     date = models.DateTimeField()
+    report = models.IntegerField(default = 0)
 
     def __str__(self):
         return f"{self.stars} stars by {self.author}"
