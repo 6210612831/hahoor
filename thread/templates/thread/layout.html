@@ -95,7 +95,8 @@
 <body>
     <nav class="navbar navbar-light" style="background-color: #a9a3eb;">
         <div class="container-fluid " style="margin-top: 1em; margin-right: 2em;">
-          <a class="navbar-brand" style="margin-left: 1em;" href="{% url 'dormitory:index' %}"><img src="/static/images/hahoor_logo.png" alt="HAHOOR" style="width: 5em"><b class="" style="font-size: 2em;margin-left: 0.5em; color: white;">HAHOOR</b></a>
+          <a class="navbar-brand" style="margin-left: 1em;" href="{% url 'dormitory:index' %}"><img style="width: 22em; height: 5em;"
+            src="/static/images/newlogo.png" alt="HAHOOR"></a>
         {% if request.user.is_authenticated %}
           <div class="d-flex justify-content-end">
             <h3 style="margin-right: 1em; "><b>Welcome, <span style="color: white;">{{request.user.username}}</span></b></h3>
