@@ -5,15 +5,16 @@
 <style>
     .detail {
         width: 20%;
+        
         box-sizing: border-box;
         display: inline-block;
-        padding: 40px;
+        
         /* background-color: rgb(250, 245, 255); */
     }
 
     div.figure {
         float: 20%;
-        width: 27.5%;
+        width: 25%;
         border: thin silver solid;
         margin: 1em;
         padding: 0.5em;
@@ -46,32 +47,42 @@
     font-family: "Prompt", sans-serif;
     font-size: 2em;
     }
+    .p3:hover {
+        color: #aa98e7;
+    }
     .p4 {
     font-family: "Prompt", sans-serif;
     font-size: 1.2em;
     }
 
 </style>
-    <h1 class="padding" style="margin-left:1em;"><p class="p2"><b>Top Dormitories</b></p></h1>
+    <h1 class="padding" style="margin-left: 2em;"><p class="p2"><b>&#11088; Popular Dormitories &#11088;</b></p></h1>
 
     <div style="margin-left: 15em; margin-top: 1em;">
         {% for dorm in dormitories%}
+            
+            <a href="{% url 'dormitory:dormitory' dorm.title %}" style="text-decoration: none;">
             <div class="figure">
-                <p><img style="width: 40em; height: 25em" class="img-thumbnail" src="{{ dorm.icon }}" ></p>
+                <img class="img-thumbnail scaled" src="{{ dorm.icon }}" >
             </div>
+            </a>
             
             <div class="detail">
-                <h2 class="center p3"><b>{{dorm.title}}</b></h2>
+                <a href="{% url 'dormitory:dormitory' dorm.title %}" style="text-decoration: none;">
+                <h2 class="active center p3"><b>{{dorm.title}}</b></h2>
+                </a>
                 <p class="p4">{{ dorm.desc }} </p>
             </div>
+            
         {% endfor %}
+    </div>
 
-    <h1 class="padding" style="margin-left:-5em;"><p class="p2"><b>Dormitory around Thammasat University</b></p></h1>
+    <h1 class="padding" style="margin-left: 2em;"><p class="p2"><b>Dormitory around Thammasat University 🗺️</b></p></h1>
 
-        <div style="margin-left: 20%;">
+        <div style="margin-left: 12%; display: block;">
             {{ map | safe }}
         </div>
-    </div>
+    
 
     
 
