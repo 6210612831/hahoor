@@ -4,3 +4,4 @@ django_markdownx==3.0.1
 django-heroku
 gunicorn
 folium==0.12.1
+whitenoise
