@@ -4,12 +4,18 @@
 
 <style>
     .detail {
+        text-align: center;
         width: 20%;
         
         box-sizing: border-box;
         display: inline-block;
-        
-        /* background-color: rgb(250, 245, 255); */
+        align-items: center;
+        transform: translateY(40%);
+    }
+
+    .border {
+        border-style: solid;
+        border: thin black;
     }
 
     div.figure {
@@ -58,7 +64,8 @@
 </style>
     <h1 class="padding" style="margin-left: 2em;"><p class="p2"><b>&#11088; Popular Dormitories &#11088;</b></p></h1>
 
-    <div style="margin-left: 15em; margin-top: 1em;">
+    <div style="margin-left: 12%;margin-right: 10%; margin-top: 1em;">
+        
         {% for dorm in dormitories%}
             
             <a href="{% url 'dormitory:dormitory' dorm.title %}" style="text-decoration: none;">
@@ -73,13 +80,14 @@
                 </a>
                 <p class="p4">{{ dorm.desc }} </p>
             </div>
-            
+        
         {% endfor %}
+        
     </div>
 
-    <h1 class="padding" style="margin-left: 2em;"><p class="p2"><b>Dormitory around Thammasat University 🗺️</b></p></h1>
+    <h1 class="padding" style="margin-left: 2em; margin-top: 2em;"><p class="p2"><b>Dormitory around Thammasat University 🗺️</b></p></h1>
 
-        <div style="margin-left: 12%; display: block;">
+        <div style="margin-left: 23%; display: block;">
             {{ map | safe }}
         </div>
     

@@ -20,7 +20,7 @@ def index(request):
     map_location = map_location._repr_html_()
 
     return render(request, "dormitory/index.html", {
-        "dormitories": Dormitory.objects.filter(status=True).order_by('-seen')[:5],
+        "dormitories": Dormitory.objects.filter(status=True).order_by('-seen')[:6],
         "map": map_location
     })
 

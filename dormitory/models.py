@@ -18,8 +18,8 @@ class Review(models.Model):
 
 
 class Dormitory(models.Model):
-    title = models.CharField(max_length=300)
-    desc = models.TextField()
+    title = models.CharField(max_length=100)
+    desc = models.TextField(max_length=200)
     content = MarkdownxField()
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     seen = models.IntegerField(default = 0)
