@@ -1,0 +1,15 @@
+{% extends "thread/layout.html" %} 
+
+{% block body %}
+<h2>My Threads</h2>
+{% for thread in my_threads %}
+    <b>{{thread}}</b>
+    <br>
+{% endfor %}
+=====================<br>
+<h2>My Replies</h2>
+{% for reply in my_replies %}
+    <b>{{reply}}</b>
+    <br>
+{% endfor %}
+{% endblock %}

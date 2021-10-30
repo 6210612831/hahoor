@@ -30,3 +30,13 @@ def thread(request,thread_id) :
     return render(request, "thread/thread.html", {
         "thread": this_thread,
     })
+
+def my_thread(request):
+    if not request.user.is_authenticated:
+        messages.warning(request, "Login First to proceed")
+        return HttpResponseRedirect(reverse("dormitory:index"))
+
+    return render(request, "thread/my_thread.html", {
+        "my_threads": Thread.objects.filter(author=request.user),
+        "my_replies" : Sub_thread.objects.filter(author=request.user)
+    })

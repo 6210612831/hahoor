@@ -4,14 +4,14 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Sub_thread(models.Model):
-    
+    replyto = models.OneToOneField('thread.Thread', on_delete=models.CASCADE)
     content = MarkdownxField()
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     date = models.DateTimeField()
     report = models.IntegerField(default = 0)
 
     def __str__(self):
-        return f"reply @{self.date} by {self.author}"
+        return f"reply {self.replyto.header} @{self.date} by {self.author}"
 
 class Thread(models.Model):
     header = models.CharField(max_length=300)

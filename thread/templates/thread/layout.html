@@ -154,7 +154,7 @@
                 </div>
                 <form class="d-flex" action="{% url 'thread:index' %}" method="POST">
                     {% csrf_token %}
-                    <input class="form-control me-2" type="search" name="search" placeholder="Search threads" aria-label="Search">
+                    <input class="form-control me-2" type="search" name="search" placeholder="Search Threads" aria-label="Search">
                     
                         <button class="btn button3" type="submit">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
@@ -171,7 +171,7 @@
                     <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="width: 13.3em;">
                         <li><a class="dropdown-item" href="#"><p class="p1"><b>ข้อมูลส่วนตัว</b></p></a></li>
                         <li><a class="dropdown-item" href="{% url 'dormitory:my_dormitory' %}"><p class="p1"><b>หอพักของฉัน</b></p></a></li>
-                        <li><a class="dropdown-item" href="#"><p class="p1"><b>กระทู้ของฉัน</b></p></a></li>
+                        <li><a class="dropdown-item" href="{% url 'thread:my_thread' %}"><p class="p1"><b>กระทู้ของฉัน</b></p></a></li>
                     </ul>
                 </div>
                 {% endif %}
