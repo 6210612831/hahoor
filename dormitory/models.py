@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 
 
 class Review(models.Model):
+    reviewto = models.OneToOneField('dormitory.Dormitory', on_delete=models.CASCADE)
     stars = models.IntegerField()
     content = MarkdownxField()
     author = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -13,7 +14,7 @@ class Review(models.Model):
     report = models.IntegerField(default = 0)
 
     def __str__(self):
-        return f"{self.stars} stars by {self.author}"
+        return f"Reviewed {self.reviewto.title} : {self.stars} stars by {self.author}"
 
 
 class Dormitory(models.Model):
