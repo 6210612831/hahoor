@@ -1,12 +1,168 @@
 {% extends "dormitory/layout.html" %}
 
 {% block body %}
-<h1>Top 5 Dormitories</h1>
+
 {% for dorm in dormitories%}
-    <b>{{dorm}}</b>
-    <br>
+<b>{{dorm}}</b>
 {% endfor %}
-<div style="margin-left: 25%;">
-{{ map | safe }}
-</div>
+
+<h1 class="padding"> Top Dormitories</h1>
+
+<style>
+    .detail {
+        width: 20%;
+        box-sizing: border-box;
+        display: inline-block;
+        padding: 40px;
+        /* background-color: rgb(250, 245, 255); */
+    }
+
+    p {
+        color: gray;
+
+    }
+
+    div.figure {
+        float: 20%;
+        width: 25%;
+        border: thin silver solid;
+        margin: 0.5em;
+        padding: 0.5em;
+    }
+
+    div.figure p {
+        text-align: center;
+        font-style: italic;
+        font-size: smaller;
+        text-indent: 0;
+        display: inline;
+    }
+
+    img.scaled {
+        width: 100%;
+        height: 230px;
+    }
+
+    .button {
+        background-color: #a9a3eb;
+        border: none;
+        color: black;
+        padding: 16px 32px;
+        text-align: center;
+        font-size: 16px;
+        margin: 4px 2px;
+        opacity: 0.6;
+        transition: 0.3s;
+        display: inline-block;
+        text-decoration: none;
+        cursor: pointer;
+        border: radius 40%;
+    }
+
+
+    .button:hover {
+        opacity: 1
+    }
+
+    .button {
+        border-radius: 20px;
+    }
+
+    .padding {
+        padding: 1cm;
+    }
+
+    .center {
+        text-align: center;
+    }
+</style>
+
+<body>
+    <div class="figure">
+        <p><img class="scaled" src="/static/dormitorys/accompark.jpg">
+        <p>Accompark
+    </div>
+
+    <div class="detail">
+        <h2 class="center">Accompark</h2>
+        <p>ตั้งอยู่ตรงข้ามมหาวิทยาลัย ธรรมศาสตร์ เดินทางก็แสนจะง๊ายง่าย สำหรับใครไม่มีรถ
+            สามารถเดินข้ามสะพานลอยไปมอได้ที่สะพานหน้า Tudome เลยจ้า หอนี้จะติดกับหออื่นๆ แต่ไม่ต้องกลัวแออัด เพราะ
+            โครงการเค้าใหญ่พอตัว </p>
+        <a href="#"><button class="button">thread Accompark</button>
+        </a>
+    </div>
+
+    <div class="figure">
+        <p><img class="scaled" src="/static/dormitorys/skyview.jpg">
+        <p>Skyview
+    </div>
+    <div class="detail">
+        <h2 class="center">Skyview</h2>
+        <p>หอพัก Sky view เป็นหอที่อยู่ตรงข้ามกับยูสแคว์ถ้ามาจากถนนใหญ่จะอยู่หลังหอ Tudio
+            และอยู่ห่างจากทางเข้ามอหรือประตูเชียงราก2 ประมาณ200เมตร
+        </p>
+        <a href="#"><button class="button">thread Skyview</button></a>
+
+    </div>
+
+    <div class="figure">
+        <p><img class="scaled" src="/static/dormitorys/golfview.jpg">
+        <p>Golfview
+    </div>
+
+    <div class="detail">
+        <h2 class="center">Golfview</h2>
+        <p>หอกอล์ฟวิวจะตั้งอยู่ฝั่งตรงข้ามกับมหาลัยแต่ไม่ได้ติดถนนนะ
+            เราจะต้องเข้าไปในซอยไกลพอสมควรแต่มีบริการรถตู้ส่งฟรีเข้า-ออกกอล์ฟวิวทุก5นาที </p>
+        <a href="#"><button class="button">thread Golfview</button>
+        </a>
+    </div>
+
+
+
+    <div class="figure">
+        <p><img class="scaled" src="/static/dormitorys/citypark.jpg">
+        <p>citypark
+    </div>
+    <div class="detail">
+        <h2 class="center">Citypark</h2>
+        <p>หอ City Park อยู่ฝั่งเดียวกับมหาลัยเลยยยย เดินจากประตูเชียงราก1 ไม่ถึง 2 นาทีก็ถึงหอแล้ววว ติดกับหอ Inter
+            park</p>
+        <a href="#"><button class="button">thread Citypark</button></a>
+
+    </div>
+
+    <div class="figure">
+        <p><img class="scaled" src="/static/dormitorys/sunta2.jpg">
+        <p>Sunta
+    </div>
+    <div class="detail">
+        <h2 class="center">Sunta</h2>
+        <p>อยู่ฝั่งตรงข้ามกับประตูเชียงราก 1 เลยยย สามารถเดินข้ามสะพานหน้าประตูเชียงราก 1 เดินต่ออีกนิดหน่อยก็ถึงแล้วววว
+            อยู่ใกล้ หอพัก the charn</p>
+        <a href="#"><button class="button">thread Sunta</button></a>
+
+    </div>
+
+    <div class="figure">
+        <p><img class="scaled" src="/static/dormitorys/twintown.jpg">
+        <p>Twintown
+    </div>
+    <div class="detail">
+        <h2 class="center">Twintown</h2>
+        <p>หอ twin town จะอยู่ตรงยูสแควร์เลย อยู่ข้างหลังร้านนายเกรียง จะเป็นตึกคู่สีม่วง สามารถสังเกตได้ง่ายๆ
+            จะมาจากทางเชียงรากไหนก็สะดวก เพราะระยะทางพอๆกัน อยู่ใกล้กับหออื่นๆ เช่น U-house</p>
+        <a href="#"><button class="button">thread Twintown</button></a>
+
+    </div>
+
+    <h1 class="padding">Dormitory around Thammasat University</h1>
+
+    <div style="margin-left: 18%;">
+        {{ map | safe }}
+    </div>
+
+</body>
+
+
 {% endblock %}
