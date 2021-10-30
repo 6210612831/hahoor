@@ -1,0 +1,25 @@
+{% extends "dormitory/layout.html" %}
+
+{% block body %}
+
+<!--Show User-->
+<li>USER: {{request.user}}</li>
+
+<!--Dormitory list-->
+{% for x in thread_list %}
+<ul>
+    <li>Thread header: <a href = "{% url 'thread:thread' x.id %}"><b>{{x}}</b></a></li>
+</ul>
+{% endfor %}
+
+
+<!--Search Dormitory-->
+Search Thread:
+<form action="{% url 'thread:index' %}" method="POST">
+    {% csrf_token %}
+    <input type="text" name="search" placeholder="Thread" maxlength="100">
+    <br>
+    <input type="submit" value="Search" class = "button">
+    <input type="submit" value="Clear" class = "button">
+</form>
+{% endblock %}
