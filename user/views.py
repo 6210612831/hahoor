@@ -101,5 +101,6 @@ def admin_view(request) :
         return HttpResponseRedirect(reverse("dormitory:index"))
 
     return render(request, "dormitory/admin.html", {
-        "req_dormitories": Dormitory.objects.filter(status=False).order_by('-date')
+        "req_dormitories": Dormitory.objects.filter(status=False).order_by('-date'),
+        "else_dormitories": Dormitory.objects.filter(status=True).order_by('-date'),
         })

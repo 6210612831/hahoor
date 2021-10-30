@@ -98,6 +98,7 @@ def remove_dormitory(request, dormitory_id):
         return HttpResponseRedirect(reverse("dormitory:index"))
 
     Dormitory.objects.filter(id=dormitory_id).delete()
+    return HttpResponseRedirect(reverse("user:admin"))
 
 
 def change_status_dormitory(request, dormitory_id):
@@ -115,3 +116,4 @@ def change_status_dormitory(request, dormitory_id):
     this_dorm.status = not(this_dorm.status)
 
     this_dorm.save()
+    return HttpResponseRedirect(reverse("user:admin"))

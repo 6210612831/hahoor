@@ -1,8 +1,20 @@
 {% extends "dormitory/layout.html" %} 
 
 {% block body %}
+<title>Dormitory Admin</title>
+<h2>Requesting Dormitories</h2>
 {% for dorm in req_dormitories %}
-    <b>{{dorm}}</b>
+    <a href = "{% url 'dormitory:dormitory' dorm.title %}"><b>{{dorm}}</b></a>
+    <a href="{% url 'dormitory:change_status_dormitory' dorm.id %}"><button type="button"class="btn button2" style="width: 5.8em; height: 2.5em;">Change Status</button></a>
+    <a href="{% url 'dormitory:remove_dormitory' dorm.id %}"><button type="button"class="btn button2" style="width: 5.8em; height: 2.5em;">Delete</button></a>
+    <br>
+{% endfor %}
+===========================<br>
+<h2>Showing Dormitories</h2>
+{% for dorm in else_dormitories %}
+    <a href = "{% url 'dormitory:dormitory' dorm.title %}"><b>{{dorm}}</b></a>
+    <a href="{% url 'dormitory:change_status_dormitory' dorm.id %}"><button type="button"class="btn button2" style="width: 5.8em; height: 2.5em;">Change Status</button></a>
+    <a href="{% url 'dormitory:remove_dormitory' dorm.id %}"><button type="button"class="btn button2" style="width: 5.8em; height: 2.5em;">Delete</button></a>
     <br>
 {% endfor %}
 {% endblock %}
