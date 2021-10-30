@@ -71,7 +71,7 @@ def create_dormitory(request):
                                  author=request.user, seen=0, date=datetime.datetime.now(), icon=icon)
             new_dorm.save()
 
-            return HttpResponseRedirect(reverse("dormitory:dormitory", kwargs={'dorm_title': title}))
+            return HttpResponseRedirect(reverse("dormitory:my_dormitory"))
     else:
         content = MarkdownForm()
     return render(request, 'dormitory/create_dormitory.html', {'form': content})

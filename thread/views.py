@@ -40,3 +40,27 @@ def my_thread(request):
         "my_threads": Thread.objects.filter(author=request.user),
         "my_replies" : Sub_thread.objects.filter(author=request.user)
     })
+
+def create_thread(request):
+    if not request.user.is_authenticated:
+        messages.warning(request, "Login First to proceed")
+        return render(request, "dormitory/index.html")
+
+    if request.method == "POST":
+        header = request.POST["header"]
+        
+        content = MarkdownForm(request.POST)
+        
+        if Thread.objects.filter(header=header).first():
+            return render(request, 'thread/create_thread.html', {
+                "fail_header": "This header is already taken",
+                "form": content
+            })
+        if content.is_valid():
+            new_thread = Thread(header=header,content=content,author=request.user,date=datetime.datetime.now())
+            new_thread.save()
+
+            return HttpResponseRedirect(reverse("thread:my_thread"))
+    else:
+        content = MarkdownForm()
+    return render(request, 'thread/create_thread.html', {'form': content})

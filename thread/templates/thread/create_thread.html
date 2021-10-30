@@ -1,0 +1,21 @@
+{% extends "thread/layout.html" %} 
+
+{% block body %}
+Hello create thread
+
+<form method="POST" action="{% url 'thread:create_thread' %}" enctype="multipart/form-data">
+
+    {% csrf_token %}
+    {%if fail_header%} 
+        <div style="color: red;"><b>{{fail_header}}</b></div><br> 
+    {%endif%}
+    <input type="text" name="header" placeholder="Enter thread header" required/></input>
+    <br>
+    <br>
+    {{ form }}
+
+    <input type="submit" value ="Confirm" class="button"></input>
+</form>
+
+{{ form.media }}
+{% endblock %}
