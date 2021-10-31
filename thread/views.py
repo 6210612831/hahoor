@@ -22,7 +22,7 @@ def index(request):
         for n in Thread.objects.all():
             if n.report < 10:
                 thread_list.append(n)
-    return render(request, "thread/index.html", {"thread_list": thread_list})
+    return render(request, "thread/index.html", {"thread_list": thread_list[::-1]})
 
 def thread(request,thread_id) :
     this_thread = get_object_or_404(Thread, id=thread_id)

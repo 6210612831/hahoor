@@ -24,6 +24,9 @@ class Thread(models.Model):
     def __str__(self):
         return f"{self.header} by {self.author}"
 
+    def number_reply(self):
+        return self.reply.count()
+        
     def search(self, search):
         if search.lower() in self.header.lower():
             return True
