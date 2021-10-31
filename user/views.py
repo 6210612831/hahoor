@@ -1,3 +1,6 @@
+import re
+from thread.models import *
+from dormitory.models import *
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse
@@ -8,10 +11,7 @@ from django.contrib.auth import logout as auth_logout
 from django.contrib import messages
 import sys
 sys.path.append('../')
-from dormitory.models import *
-from thread.models import *
 # Create your views here.
-import re
 
 
 def index(request):
@@ -42,7 +42,7 @@ def login_check(request):
         else:
             messages.warning(request, "Invalid credential")
             return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
-            
+
     return render(request, "dormitory/index.html")
 
 
@@ -91,7 +91,8 @@ def logout(request):
 def register_view(request):
     return render(request, "user/register.html")
 
-def admin_view(request) :
+
+def admin_view(request):
     if not request.user.is_authenticated:
         messages.warning(request, "Login First to proceed")
         return HttpResponseRedirect(reverse("dormitory:index"))
@@ -101,6 +102,5 @@ def admin_view(request) :
         return HttpResponseRedirect(reverse("dormitory:index"))
 
     return render(request, "dormitory/admin.html", {
-        "req_dormitories": Dormitory.objects.filter(status=False).order_by('-date'),
-        "else_dormitories": Dormitory.objects.filter(status=True).order_by('-date'),
-        })
+        "dormitories": Dormitory.objects.all().order_by('-date'),
+    })

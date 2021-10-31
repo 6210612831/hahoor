@@ -2,19 +2,88 @@
 
 {% block body %}
 <title>Dormitory Admin</title>
-<h2>Requesting Dormitories</h2>
-{% for dorm in req_dormitories %}
-    <a href = "{% url 'dormitory:dormitory' dorm.title %}"><b>{{dorm}}</b></a>
-    <a href="{% url 'dormitory:change_status_dormitory' dorm.id %}"><button type="button"class="btn button2" style="width: 5.8em; height: 2.5em;">Change Status</button></a>
-    <a href="{% url 'dormitory:remove_dormitory' dorm.id %}"><button type="button"class="btn button2" style="width: 5.8em; height: 2.5em;">Delete</button></a>
-    <br>
-{% endfor %}
-===========================<br>
-<h2>Showing Dormitories</h2>
-{% for dorm in else_dormitories %}
-    <a href = "{% url 'dormitory:dormitory' dorm.title %}"><b>{{dorm}}</b></a>
-    <a href="{% url 'dormitory:change_status_dormitory' dorm.id %}"><button type="button"class="btn button2" style="width: 5.8em; height: 2.5em;">Change Status</button></a>
-    <a href="{% url 'dormitory:remove_dormitory' dorm.id %}"><button type="button"class="btn button2" style="width: 5.8em; height: 2.5em;">Delete</button></a>
-    <br>
-{% endfor %}
+<style>
+    .button5 {
+        background-color: #cec8ef;
+        color: black;
+        border: 2px solid white;
+    }
+
+    .button5:hover {
+        background-color: #aa98e7;
+        color: rgb(0, 0, 0);
+        border: 2px solid #e2e2e2;
+    }
+    .p2 {
+        font-family: "Prompt", sans-serif;
+        font-size: 1em;
+        }
+    .p3 {
+        font-family: "Prompt", sans-serif;
+        font-size: 2.5em;
+        }
+    .p4 {
+        font-family: "Prompt", sans-serif;
+        font-size: 1.2em;
+        }
+    .button6 {
+        background-color: rgb(238, 125, 105);
+        color: black;
+        border: 2px solid white;
+    }
+
+    .button6:hover {
+        background-color: #aa98e7;
+        color: rgb(0, 0, 0);
+        border: 2px solid #e2e2e2;
+    }
+    .line {
+        height: 1px;
+        width: 100%;
+        background-color: #E0E0E0;
+        margin-top: 10px;
+    }
+</style>
+<div style="margin-left: 10%; margin-right: 10%;">
+<h2 class="p3"><b>Dormitories<b></h2>
+<br>
+    <div class="container">
+        {% for dorm in dormitories %}
+            <div class="row">
+                {% if not dorm.status%}
+                <div class="col-7">
+                    <a href = "{% url 'dormitory:dormitory' dorm.title %}" style="text-decoration: none;"><b class="p4">{{dorm}}</b></a>
+                </div>
+                <div class="col">
+                    <b class="p2">STATUS: </b> <b class="p2" style="color: tomato;">Not Showing</b>
+                </div>
+                <div class="col">
+                    <a href="{% url 'dormitory:change_status_dormitory' dorm.id %}"><button type="button"class="btn button5 p2" style="width: 10em; height: 2.5em;"><b>Change Status</b></button></a>
+                    <a href="{% url 'dormitory:remove_dormitory' dorm.id %}"><button type="button"class="btn button6 p2" style="width: 5.8em; height: 2.5em;"><b>Delete</b></button></a>
+                </div>
+                <div class="line"></div>
+                <br>
+                {% else %}
+                <div class="col-7">
+                    <a href = "{% url 'dormitory:dormitory' dorm.title %}" style="text-decoration: none;"><b class="p4">{{dorm}}</b></a>
+                </div>
+                <div class="col">
+                    <b class="p2">STATUS: </b><b class="p2" style="color: #5cb484;">Showing</b>
+                </div>
+                <div class="col">
+                    <a href="{% url 'dormitory:change_status_dormitory' dorm.id %}"><button type="button"class="btn button2 p2" style="width: 10em; height: 2.5em;"><b>Change Status</b></button></a>
+                    <a href="{% url 'dormitory:remove_dormitory' dorm.id %}"><button type="button"class="btn button6 p2" style="width: 5.8em; height: 2.5em;"><b>Delete</b></button></a>
+                </div>
+                <div class="line"></div>
+                <br>
+                {% endif%}
+            
+            </div>
+        {% endfor %}
+    </div>
+    <h2 class="p3"><b>Threads</b></h2>
+    <h2 class="p3"><b>Sub Threads</b></h2>
+    <h2 class="p3"><b>Reviews</b></h2>
+</div>
+
 {% endblock %}
