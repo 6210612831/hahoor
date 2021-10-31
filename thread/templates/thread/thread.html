@@ -26,12 +26,12 @@
         font-family: "Prompt", sans-serif;
         font-size: 0.9em;
     }
-    h3 {
+    .h3 {
     overflow: hidden;
     text-align: center;
     }
-    h3:before,
-    h3:after {
+    .h3:before,
+    .h3:after {
         background-color: rgb(211, 211, 211);
         content: "";
         display: inline-block;
@@ -40,13 +40,16 @@
         vertical-align: middle;
         width: 100%;
     }
-    h3:before {
+    .h3:before {
         right: 0.5em;
         margin-left: -125%;
     }
-    h3:after {
+    .h3:after {
         left: 0.5em;
         margin-right: -50%;
+    }
+    h1,h2,h3,h4,h5,h6 {
+        font-family: 'Noto Sans Thai', sans-serif;
     }
 
 </style>
@@ -60,7 +63,7 @@
     <br>
 
     <b class="p4">{{thread.content | convert_markdown | safe }}</b>
-    <h3 class="p6">&#128172; <b>{{thread.number_reply}} การตอบกลับ</b></h3>
+    <h3 class="p6 h3">&#128172; <b>{{thread.number_reply}} การตอบกลับ</b></h3>
     
     {% for sub_thread in thread.reply.all %}
     <h5>{{sub_thread}}</h5>
