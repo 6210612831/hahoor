@@ -1,5 +1,6 @@
 # Hahoor.in.th with Django framework
 
+Heroku : [link](https://hahoor.herokuapp.com)
 ### ฟังก์ชั่นการทำงาน
 - หน้าหลัก สามารถ login ได้ด้านขวาบน
 - user สามารถสร้างหน้า page หอพักได้
@@ -9,7 +10,7 @@
 - user สามารถตอบกระทู้ได้
 
 ### About
-- Heroku : [link](https://hahoor.herokuapp.com/about)
+- Heroku about: [link](https://hahoor.herokuapp.com/about)
 - Pivotal tracker : [link](https://www.pivotaltracker.com/n/projects/2534998)
 
 ### รายชื่อสมาชิกในกลุ่ม
