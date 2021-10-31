@@ -1,12 +1,42 @@
 {% extends "dormitory/layout.html" %} 
-
 {% load markdown_tag %}
 
 {% block body %}
-<h2>{{dormitory.title}}</h2>
+<title>{{ dormitory.title }}</title>
+<style>
+    .p2 {
+        font-family: 'Noto Sans Thai', sans-serif;
+        font-size: 2em;
+    }
+    .p3 {
+        font-family: "Prompt", sans-serif;
+        font-size: 0.9em;
+    }
+    .p4 {
+        font-family: "Prompt", sans-serif;
+        font-size: 1.2em;
+    }
+    .p5 {
+        font-family: "Prompt", sans-serif;
+        font-size: 1.1em;
+    }
+    img{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+    }
+    
+</style>
 
-{{dormitory.date}}
-<br>
-{{dormitory.content | convert_markdown | safe }}
+<div style="margin-left: 25%; margin-right: 25%; margin-bottom: 7em; margin-top: 4em;">
+    <h2><b class="p2">{{ dormitory.title }}</b></h2>
+            <b class="p5">by {{ dormitory.author.username }}</b>
+            <b class="p3" style="float: right;">{{dormitory.date}} &#9203;</b> 
+            <br>
+            <br>
+            <b class="p4">{{dormitory.content | convert_markdown | safe }}</b>
+</div>
+
 
 {% endblock %}
