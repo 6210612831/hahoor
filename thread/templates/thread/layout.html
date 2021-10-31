@@ -91,7 +91,13 @@
     }
 
 </style>
-
+<script language="javascript">
+    function check()
+    {
+        var answer = window.confirm("Log out?");
+        return answer;
+    }
+</script>
 <body>
     <nav class="navbar navbar-light" style="background-color: #a9a3eb;">
         <div class="container-fluid " style="margin-top: 1em; margin-right: 2em;">
@@ -100,7 +106,7 @@
         {% if request.user.is_authenticated %}
           <div class="d-flex justify-content-end">
             <h3 style="margin-right: 1em; "><b>Welcome, <span style="color: white;">{{request.user.username}}</span></b></h3>
-            <a href="{% url 'user:logout' %}"><button type="button"class="btn button2" style="margin-top: 0.5em; margin-right: 2em;">Logout</button></a>
+            <a href="{% url 'user:logout' %}" onclick="return check()"><button type="button"class="btn button2" style="margin-top: 0.5em; margin-right: 2em;">Logout</button></a>
           </div>
           {% else %}
           <form class="d-flex justify-content-end" action="{% url 'user:login_check' %}" method="post">
