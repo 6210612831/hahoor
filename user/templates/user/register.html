@@ -194,7 +194,7 @@
                                 </label>
                                 <input type="password" name="re_password" placeholder="Confirm password" required/>
                                 {% if fail_re_password %}
-                                <label class="mb-1" style="color: tomato; margin-top: -1em;">
+                                <label class="mb-1" style="color: tomato; margin-top: 0em;">
                                     <b>{{fail_re_password}}</b><br>
                                 </label>  
                                 {% endif %}
@@ -224,7 +224,7 @@
                                 <label class="mb-1">
                                 <h6 class="mb-0 text-sm">Email Address</h6>
                                 </label> 
-                                <input class="mb-4" type="text" name="email" placeholder="Enter a valid email address" required/>
+                                <input class="mb-4" type="email" name="email" placeholder="Enter a valid email address" required/>
                                 {% if fail_email %}
                                 <label class="mb-1" style="color: tomato; margin-top: -1em;">
                                     <b>{{fail_email}}</b><br>
