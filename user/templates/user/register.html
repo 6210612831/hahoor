@@ -53,7 +53,7 @@
             }
 
             .logo {
-                width: 120px;
+                width: 500px;
                 height: 120px;
                 margin-top: 40px;
                 margin-left: 60px;
@@ -138,103 +138,111 @@
       
         <!-- Register Form -->
 <section>
-    <form action="{% url 'user:register' %}" method="post" class="contact-form" name="form_insert">
+    <form method="POST" action="{% url 'user:confirm_register' %}" class="contact-form" name="form_insert">
         {% csrf_token %}
         <div class="container-fluid px-1 px-md-5 px-lg-1 px-xl-5 py-5 mx-auto">
             <div class="card card0 border-0">
                 <div class="row d-flex">
                     <div class="col-lg-6">
                         <div class="card1 pb-5" style="margin-left: 1em; margin-top: 1em;">
-                            <div class="row"><a href="{% url 'dormitory:index' %}"><img src="/static/images/hahoor_logo.png" class="logo"><h2 style="margin-top: 1.6em; margin-left: 0.5em; font-size: 45px;"><b>HAHOOR</b></a></h2></div>
+                            <div class="row"><a href="{% url 'dormitory:index' %}"><img src="/static/images/newlogo.png" class="logo"><h2 style="margin-top: 1.6em; margin-left: 0.5em;"></a></h2></div>
                             <br>
                             <br>
                             <br>
                             <div class="row px-3 justify-content-center mt-4 mb-5 border-line"> <img src="/static/images/hahoor1.png" class="image"> </div>
                         </div>
                     </div>
-                <div class="col-lg-6">
-                    <div class="card2 card border-0 px-4 py-5">
-                        <div class="row mb-4 px-3">
-                            <h6 class="mb-0 mr-4 mt-2" style="font-size: 35px;"><b>SIGN UP</b></h6>
-                        </div>
-                        <div class="row px-3 mb-4">
-                            <div class="line"></div>
-                            <div class="line"></div>
-                        </div>
-                        <!-- username-->
-                        <div class="row px-3">
-                            {%if fail_username%} 
-                            <div style="color: red;"><b>{{fail_username}}</b></div><br> 
-                            {%endif%}
-                            <label class="mb-1">
-                                <h6 class="mb-0 text-sm">Username</h6>
-                            </label> 
-                            <input class="mb-4" type="text" name="username" placeholder="Enter username" required/> 
-                        </div>
+                    <div class="col-lg-6">
+                        <div class="card2 card border-0 px-4 py-5">
+                            <div class="row mb-4 px-3">
+                                <h6 class="mb-0 mr-4 mt-2" style="font-size: 35px;"><b>SIGN UP</b></h6>
+                            </div>
+                            <div class="row px-3 mb-4">
+                                <div class="line"></div>
+                                <div class="line"></div>
+                            </div>
+                            <!-- username-->
+                            <div class="row px-3">
+                                <label class="mb-1">
+                                    <h6 class="mb-0 text-sm">Username</h6>
+                                </label> 
+                                <input class="mb-4" type="text" name="username" placeholder="Enter username" required/>
+                                {% if fail_username %}
+                                <label class="mb-1" style="color: tomato; margin-top: -1em;">
+                                    <b>{{fail_username}}</b><br>
+                                </label>  
+                                {% endif %} 
+                            </div>
 
-                        <!-- password-->
-                        <div class="row px-3">
-                            {%if fail_password%} 
-                                <div style="color: red;"><b>{{fail_password}}</b></div><br> 
-                            {%endif%} 
-                            <label class="mb-1">
-                                <h6 class="mb-0 text-sm">Password</h6>
-                            </label> 
-                            <input class="mb-4" type="password" name="password" placeholder="Enter password" required/> 
-                        </div>
+                            <!-- password-->
+                            <div class="row px-3">
+                                <label class="mb-1">
+                                    <h6 class="mb-0 text-sm">Password</h6>
+                                </label> 
+                                <input class="mb-4" type="password" name="password" placeholder="Enter password" required/>
+                                {% if fail_password %}
+                                <label class="mb-1" style="color: tomato; margin-top: -1em;">
+                                    <b>{{fail_password}}</b><br> 
+                                </label> 
+                                {% endif %}  
+                            </div>
 
-                        <!-- re password-->
-                        <div class="row px-3">
-                            {%if fail_re_password%} 
-                                <div style="color: red;"><b>{{fail_re_password}}</b></div><br> 
-                            {%endif%} 
-                            <label class="mb-1">
-                                <h6 class="mb-0 text-sm">Confirm Password</h6>
-                            </label> 
-                            <input type="password" name="re_password" placeholder="Confirm password" required/> 
-                        </div>
+                            <!-- re password-->
+                            <div class="row px-3"> 
+                                <label class="mb-1">
+                                    <h6 class="mb-0 text-sm">Confirm Password</h6>
+                                </label>
+                                <input type="password" name="re_password" placeholder="Confirm password" required/>
+                                {% if fail_re_password %}
+                                <label class="mb-1" style="color: tomato; margin-top: -1em;">
+                                    <b>{{fail_re_password}}</b><br>
+                                </label>  
+                                {% endif %}
+                            </div>
 
-                        <br>
-                        <div class="row px-3 mb-4">
-                            <div class="line"></div>
-                            <div class="line"></div>
-                        </div>
-
-                        <div class="row px-3 d-inline-block">
-                            <label class="mb-1">
-                                <h6 class="mb-0 text-sm">First Name</h6>
-                            </label>  
-                            <input type="text" name="first_name" placeholder="Enter your first name" required/>
-                        </div>
                             <br>
-                        <div class="row px-3 d-inline-block">
-                            <label class="mb-1">
-                                <h6 class="mb-0 text-sm">Last Name</h6>
-                            </label> 
-                            <input type="password" name="last_name" placeholder="Enter your last name" required/>
+                            <div class="row px-3 mb-4">
+                                <div class="line"></div>
+                                <div class="line"></div>
+                            </div>
+
+                            <div class="row px-3 d-inline-block">
+                                <label class="mb-1">
+                                    <h6 class="mb-0 text-sm">First Name</h6>
+                                </label>  
+                                <input type="text" name="first_name" placeholder="Enter your first name" required/>
+                            </div>
+                                <br>
+                            <div class="row px-3 d-inline-block">
+                                <label class="mb-1">
+                                    <h6 class="mb-0 text-sm">Last Name</h6>
+                                </label> 
+                                <input type="text" name="last_name" placeholder="Enter your last name" required/>
+                            </div>
+                            <br>
+                            <div class="row px-3"> 
+                                <label class="mb-1">
+                                <h6 class="mb-0 text-sm">Email Address</h6>
+                                </label> 
+                                <input class="mb-4" type="text" name="email" placeholder="Enter a valid email address" required/>
+                                {% if fail_email %}
+                                <label class="mb-1" style="color: tomato; margin-top: -1em;">
+                                    <b>{{fail_email}}</b><br>
+                                </label>  
+                                {% endif %} 
+                            </div>
+                            <div class="row mb-3 px-3"> <button type="submit" class="btn btn-blue text-center">Confirm</button> </div>
+                            <div class="row mb-4 px-3"> <small class="font-weight-bold">Aleready have an account ? <a href="{% url 'dormitory:index' %}" style="color: #aa98e7;">Login</a></small> </div>
                         </div>
-                        <br>
-                        <div class="row px-3">
-                            {%if fail_email%} 
-                                <div style="color: red;"><b>{{fail_email}}</b></div><br> 
-                            {%endif%} 
-                            <label class="mb-1">
-                            <h6 class="mb-0 text-sm">Email Address</h6>
-                            </label> 
-                            <input class="mb-4" type="text" name="email" placeholder="Enter a valid email address" required/> 
-                        </div>
-                        <div class="row mb-3 px-3"> <button type="submit" class="btn btn-blue text-center">Confirm</button> </div>
-                        <div class="row mb-4 px-3"> <small class="font-weight-bold">Aleready have an account ? <a href="{% url 'dormitory:index' %}" style="color: #aa98e7;">Login</a></small> </div>
+                    </div>
+                </div>
+                <div class="bg-blue py-4">
+                    <div class="row px-3">
+                        <small class="ml-4 ml-sm-5 mb-2">www.hahoor.in.th</small>
                     </div>
                 </div>
             </div>
-            <div class="bg-blue py-4">
-                <div class="row px-3">
-                    <small class="ml-4 ml-sm-5 mb-2">www.hahoor.in.th</small>
-                </div>
-            </div>
         </div>
-    </div>
     </form>
 </section>
 
