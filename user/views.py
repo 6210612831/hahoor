@@ -103,4 +103,7 @@ def admin_view(request):
 
     return render(request, "dormitory/admin.html", {
         "dormitories": Dormitory.objects.all().order_by('-date'),
+        "reported_threads": Thread.objects.filter(report__gt=10).order_by('-date'),
+        "reported_sub_threads": Sub_thread.objects.filter(report__gt=10).order_by('-date'),
+        "reported_reviews" : Review.objects.filter(report__gt=10).order_by('-date')
     })
