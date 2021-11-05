@@ -5,3 +5,5 @@ django-heroku
 gunicorn
 folium==0.12.1
 whitenoise
+cloudinary
+django-cloudinary-storage

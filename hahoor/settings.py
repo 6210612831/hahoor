@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary_storage',
+    'cloudinary',
     'markdownx',
     'user',
     'thread',
@@ -122,6 +124,14 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
+
+CLOUDINARY_STORAGE = {
+             'CLOUD_NAME': 'hablh2qy1',
+             'API_KEY': '382791222542281',
+             'API_SECRET': 'k5XpWzvC6wipL6x3dWozseYum4g'
+            }
+
+DEFAULT_FILE_STORAGE='cloudinary_storage.storage.MediaCloudinaryStorage'
 
 STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
 
