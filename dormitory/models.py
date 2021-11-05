@@ -6,9 +6,9 @@ from django.contrib.auth.models import User
 
 
 class Review(models.Model):
-    reviewto = models.OneToOneField('dormitory.Dormitory', on_delete=models.CASCADE)
+    reviewto = models.ForeignKey('dormitory.Dormitory', on_delete=models.CASCADE)
     stars = models.IntegerField()
-    content = MarkdownxField()
+    content = models.TextField()
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     date = models.DateTimeField()
     report = models.IntegerField(default = 0)
