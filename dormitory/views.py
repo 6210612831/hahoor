@@ -69,7 +69,7 @@ def create_dormitory(request):
         if content.is_valid():
             content = content.cleaned_data['Content']
             new_dorm = Dormitory(title=title, desc=desc, content=content,
-                                 author=request.user, seen=0, date=datetime.datetime.now(), icon=icon)
+                                 author=request.user, seen=0, date=datetime.datetime.now(datetime.timezone.utc), icon=icon)
             new_dorm.save()
 
             return HttpResponseRedirect(reverse("dormitory:my_dormitory"))

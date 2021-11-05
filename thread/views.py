@@ -58,7 +58,7 @@ def create_thread(request):
             })
         if content.is_valid():
             content = content.cleaned_data['Content']
-            new_thread = Thread(header=header,content=content,author=request.user,date=datetime.datetime.now())
+            new_thread = Thread(header=header,content=content,author=request.user,date=datetime.datetime.now(datetime.timezone.utc))
             new_thread.save()
 
             return HttpResponseRedirect(reverse("thread:my_thread"))
