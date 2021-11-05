@@ -1,5 +1,5 @@
 {% extends "dormitory/layout.html" %}
-
+{% load cloudinary %}
 {% block body %}
 <title>หอพัก &#127968;</title>
 <style>
@@ -72,7 +72,7 @@
             <div>
             <a href="{% url 'dormitory:dormitory' dorm.title %}" style="text-decoration: none;">
             <div class="figure">
-                <img class="img-thumbnail scaled" src="{{ dorm.icon }}" >
+                <img class="img-thumbnail scaled" src="{{ dorm.icon.url }}" >
             </div>
             </a>
             

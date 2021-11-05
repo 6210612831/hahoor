@@ -1,5 +1,6 @@
 {% extends "dormitory/layout.html" %}
 {% load static %}
+{% load cloudinary %}
 {% block body %}
 <title>หน้าหลัก &#128204;</title>
 <style>
@@ -70,7 +71,7 @@
             
             <a href="{% url 'dormitory:dormitory' dorm.title %}" style="text-decoration: none;">
             <div class="figure">
-                <img class="img-thumbnail scaled" src="{{ dorm.icon }}" >
+                <img class="img-thumbnail scaled" src="{{ dorm.icon.url }}">
             </div>
             </a>
             
