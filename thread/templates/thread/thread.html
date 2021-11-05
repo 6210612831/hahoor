@@ -66,12 +66,17 @@
     <h3 class="p6 h3">&#128172; <b>{{thread.number_reply}} การตอบกลับ</b></h3>
     
     {% for sub_thread in thread.reply.all %}
-    <h5>{{sub_thread}}</h5>
-    {{sub_thread.content | convert_markdown | safe }}
+    <h5>{{sub_thread}} {{sub_thread.date}}</h5>
+    {{sub_thread.content | convert_markdown | safe | linebreaks}}
     <br>
     <hr>
     {% endfor %}
 
+    <form method="POST" action="{% url 'thread:reply_thread' thread.id%}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <textarea type="text" name="content" class="form-control" maxlength="500" placeholder="Enter content" required></textarea>
+        <input type="submit" value ="ยืนยัน" class="btn button1 p2"></input>
+    </form>
 <div>
 
 

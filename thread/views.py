@@ -65,3 +65,21 @@ def create_thread(request):
     else:
         content = MarkdownForm()
     return render(request, 'thread/create_thread.html', {'form': content})
+
+def reply_thread(request,thread_id):
+    if not request.user.is_authenticated:
+        messages.warning(request, "Login First to proceed")
+        return render(request, "dormitory/index.html")
+    if request.method == "POST":
+        
+        content = request.POST["content"]
+
+        this_thread = Thread.objects.get(id=thread_id)
+        new_subthread = Sub_thread(replyto = this_thread,content=content,author=request.user,date=datetime.datetime.now(datetime.timezone.utc))
+        new_subthread.save()
+        this_thread.reply.add(new_subthread)
+
+        return HttpResponseRedirect(reverse("thread:thread",args = (thread_id,)))
+
+    return HttpResponseRedirect(reverse("thread:thread",args = (thread_id,)))
+    
