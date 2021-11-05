@@ -137,3 +137,14 @@ def review_dormitory(request,dormitory_id) :
         return HttpResponseRedirect(reverse("dormitory:dormitory",args = (this_dorm.title,)))
 
     return HttpResponseRedirect(reverse("dormitory:dormitory",args = (this_dorm.title,)))
+
+def report_review(request,dormitory_title,review_id):
+    if not request.user.is_authenticated:
+        messages.warning(request, "Login First to proceed")
+        return HttpResponseRedirect(reverse("dormitory:index"))
+
+    this_review = get_object_or_404(Review, id=review_id)
+    this_review.report += 1
+    this_review.save()
+    
+    return HttpResponseRedirect(reverse("dormitory:dormitory",args = (dormitory_title,)))
