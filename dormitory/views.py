@@ -118,3 +118,22 @@ def change_status_dormitory(request, dormitory_id):
 
     this_dorm.save()
     return HttpResponseRedirect(reverse("user:admin"))
+
+def review_dormitory(request,dormitory_id) :
+    if not request.user.is_authenticated:
+        messages.warning(request, "Login First to proceed")
+        return render(request, "dormitory/index.html")
+
+    if request.method == "POST":
+        stars = request.POST["stars"]
+        content = request.POST["content"]
+        this_dorm = Dormitory.objects.get(id=dormitory_id)
+        
+        new_review = Review(reviewto = this_dorm,stars=stars,content=content,author=request.user,date=datetime.datetime.now(datetime.timezone(timedelta(hours = 7))))
+        new_review.save()
+        this_dorm.reviews.add(new_review)
+
+
+        return HttpResponseRedirect(reverse("dormitory:dormitory",args = (this_dorm.title,)))
+
+    return HttpResponseRedirect(reverse("dormitory:dormitory",args = (this_dorm.title,)))
