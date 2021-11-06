@@ -26,6 +26,13 @@
         font-family: "Prompt", sans-serif;
         font-size: 0.9em;
     }
+    .p7 {
+        font-family: "Prompt", sans-serif;
+        font-size: 1.2em;
+    }
+    .p7:hover {
+        color: #aa98e7;
+    }
     .h3 {
     overflow: hidden;
     text-align: center;
@@ -51,64 +58,114 @@
     h1,h2,h3,h4,h5,h6 {
         font-family: 'Noto Sans Thai', sans-serif;
     }
+    .line {
+        height: 1px;
+        width: 100%;
+        background-color: #E0E0E0;
+        margin-top: 10px;
+    }
+    .button5 {
+        background-color: white;
+        color: black;
+        border: 2px solid white;
+        padding: 2px 2px;
+    }
+
+    .button5:hover {
+        background-color: #e2e2e2;
+        color: rgb(0, 0, 0);
+        border: 2px solid #e2e2e2;
+    }
+    .button6 {
+        background-color: #8878c3;
+        color: white;
+        border: 2px solid #8878c3;
+        padding: 7px 5em;
+    }
+
+    .button6:hover {
+        background-color: #ccccff;
+        color: rgb(0, 0, 0);
+        border: 2px solid #ccccff;
+    }
 
 </style>
 
 <div style="margin-left: 25%; margin-right: 25%; margin-bottom: 7em; margin-top: 4em;">
 
-
+    <!-- update thread -->
     {% if check_update == 1 %}
-
     <form method="POST" action="{% url 'thread:update_thread' thread.id %}" enctype="multipart/form-data">
     
         {% csrf_token %}
     
         <div class="container">
-            <input type="submit" value ="ยืนยัน" class="btn button1 p2" style="float: right;"></input>
+            <input type="submit" value ="ยืนยันการแก้ไข" class="btn button1 p5" style="float: right;"></input>
             <p class="p2">ชื่อกระทู้ : {{ form.header }}</p>
             <p class="p2">เนื้อหา : {{ form.content }}</p>
         </div>
     </form>
     {{ form.media }}
-    
+    <br>
     {% else %}
 
+    <!-- thread -->
     <h2><b class="p2">{{thread.header}}</b></h2>
     <b class="p5">by {{ thread.author.username }}</b>
-    <b class="p3" style="float: right;">{{thread.date}} &#9203; 
+    <b class="p3" style="float: right;">{{thread.date}} &#9203;
         
     {% if request.user.username == thread.author.username %}
-        <a href = "{% url 'thread:update_thread' thread.id %}">Edit</a>
+        <a href = "{% url 'thread:update_thread' thread.id %}" style="float: right; text-decoration: none; margin-left: 1em;"><p class="p7">แก้ไข</p></a>
     {% endif %}
     
     </b>
     <br>
     <br>
 
-    <b class="p4">{{thread.content | convert_markdown | safe }}</b>
-
-
-    {% endif %}
-
-
-    <h3 class="p6 h3">&#128172; <b>{{thread.number_reply}} การตอบกลับ</b></h3>
-    
-    {% for sub_thread in thread.reply.all %}
-    <h5>{{sub_thread}} {{sub_thread.date}}</h5>
-    {{sub_thread.content | convert_markdown | safe | linebreaks}}
+    <h3><p class="p4">{{thread.content | convert_markdown | safe }}</p></h3>
     <br>
-    <hr>
+
+    <div style="float: right; margin-top: -1.5em;">
+        <a href="#ตอบกลับกระทู้"><button class="button button5"><b class="p3">&#128073; ตอบกลับกระทู้</b></button></a>
+        <a href="{% url 'thread:report_thread' thread.id %}"><button class="button button5">&#128681; <b class="p3">report</b></button></a>
+    </div>
+    <br>
+    {% endif %}
+    <h3 class="p6 h3">&#128172; <b>{{thread.number_reply}} การตอบกลับ</b></h3>
+
+    <!-- sub-thread -->
+    {% for sub_thread in thread.reply.all %}
+    <br>
+    <b class="p3">การตอบกลับที่ {{forloop.counter}}</b>
+    <b class="p3" style="float: right;">{{sub_thread.date}} &#9203;</b>
+    <br>
+    <br>
+    
+    <h4>{{sub_thread.content | convert_markdown | safe | linebreaks}}</h4>
+    <br>
+
+    <img class="avatar" src="/static/images/avatar.png" style="width: 2em; height: 2em; margin-bottom: 0em;"> 
+    <b class="p3">ตอบกลับโดย {{sub_thread.author}} </b>
+    <div style="float: right; margin-top: -0.2em;">
+        <a href="{% url 'thread:report_subthread' thread.id sub_thread.id%}"><button class="button button5">&#128681; <b class="p3">report</b></button></a>
+    </div>
+    
+    <div class="line"></div>
     {% endfor %}
 
+    <br>
+    
+    <!-- form -->
+    {% if check_update != 1 %}
 
-{% if check_update != 1 %}
+        <form method="POST" action="{% url 'thread:reply_thread' thread.id%}" enctype="multipart/form-data" id=ตอบกลับกระทู้>
+            {% csrf_token %}
+            <textarea type="text" name="content" class="form-control" maxlength="500" placeholder="ตอบกลับกระทู้" required></textarea>
+            <br>
 
-    <form method="POST" action="{% url 'thread:reply_thread' thread.id%}" enctype="multipart/form-data">
-        {% csrf_token %}
-        <textarea type="text" name="content" class="form-control" maxlength="500" placeholder="Enter content" required></textarea>
-        <input type="submit" value ="ยืนยัน" class="btn button1 p2"></input>
-    </form>
-<div>
+            <input type="submit" value ="ยืนยัน" class="btn button6 p3" style="position: sticky"></input>
+        </form>
+    <div>
 
 {% endif %}
 
