@@ -29,7 +29,11 @@ img.avatar {
 <title>กระทู้ &#128172</title>
 
 <!--Dormitory list-->
+{% if check_search %}
+<h1 style="margin-left: 2em; padding: 0.5em;"><p class="p2"><b>กำลังค้นหากระทู้ : {{title}} &#128226;</b></p></h1>
+{% else %}
 <h1 style="margin-left: 2em; padding: 0.5em;"><p class="p2"><b>กระทู้ใหม่ล่าสุด &#128226;</b></p></h1>
+{% endif %}
 
     <div style="margin-left: 12%;margin-right: 12%; margin-top: 3em; margin-bottom: 5em;">
     {% for thread in thread_list %}

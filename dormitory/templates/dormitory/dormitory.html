@@ -42,4 +42,13 @@
 </div>
 
 
+<!-- ปุ่ม Instant Search -->
+<form  action="{% url 'thread:index' %}" method="POST">
+    {% csrf_token %}
+    <input class="form-control me-2" type="hidden" name="search" value="{{dormitory.title}}">
+    <button class="btn button3" type="submit" style="margin-left: 25%;  margin-bottom: 7em; ">Search for thread</button>
+    
+</form>
+
 {% endblock %}
+
