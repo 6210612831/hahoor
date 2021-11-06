@@ -119,26 +119,29 @@ def change_status_dormitory(request, dormitory_id):
     this_dorm.save()
     return HttpResponseRedirect(reverse("user:admin"))
 
-def review_dormitory(request,dormitory_id) :
+
+def review_dormitory(request, dormitory_id):
     if not request.user.is_authenticated:
         messages.warning(request, "Login First to proceed")
         return render(request, "dormitory/index.html")
 
+    this_dorm = Dormitory.objects.get(id=dormitory_id)
+
     if request.method == "POST":
         stars = request.POST["stars"]
         content = request.POST["content"]
-        this_dorm = Dormitory.objects.get(id=dormitory_id)
-        
-        new_review = Review(reviewto = this_dorm,stars=stars,content=content,author=request.user,date=datetime.datetime.now(datetime.timezone(timedelta(hours = 7))))
+
+        new_review = Review(reviewto=this_dorm, stars=stars, content=content, author=request.user,
+                            date=datetime.datetime.now(datetime.timezone.utc))
         new_review.save()
         this_dorm.reviews.add(new_review)
 
+        return HttpResponseRedirect(reverse("dormitory:dormitory", args=(this_dorm.title,)))
 
-        return HttpResponseRedirect(reverse("dormitory:dormitory",args = (this_dorm.title,)))
+    return HttpResponseRedirect(reverse("dormitory:dormitory", args=(this_dorm.title,)))
 
-    return HttpResponseRedirect(reverse("dormitory:dormitory",args = (this_dorm.title,)))
 
-def report_review(request,dormitory_title,review_id):
+def report_review(request, review_id):
     if not request.user.is_authenticated:
         messages.warning(request, "Login First to proceed")
         return HttpResponseRedirect(reverse("dormitory:index"))
@@ -146,5 +149,5 @@ def report_review(request,dormitory_title,review_id):
     this_review = get_object_or_404(Review, id=review_id)
     this_review.report += 1
     this_review.save()
-    
-    return HttpResponseRedirect(reverse("dormitory:dormitory",args = (dormitory_title,)))
+
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
