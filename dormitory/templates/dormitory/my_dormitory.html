@@ -51,8 +51,8 @@
         margin-top: 10px;
     }
     img.scaled {
-        width: 35%;
-        height: 100%;
+        width: 250px;
+        height: 200px;
     }
 </style>
 
@@ -61,7 +61,7 @@
     <br>
     <div class="container">
         {% for dorm in my_dormitories %}
-            <div class="row">
+            <div class="row" style="margin-top: 1em;">
                 <div class="col">
                     <a href="{% url 'dormitory:dormitory' dorm.title %}" style="text-decoration: none;"><b class="p4">{{dorm}}</b></a>
                     <br>
