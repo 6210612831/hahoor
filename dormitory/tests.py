@@ -87,24 +87,6 @@ class DormitoryTestCase(TestCase):
 
         self.assertEqual(responses.status_code, 200)
 
-    def test_create_dormitory_view_check_content_is_valid(self):
-        c = Client()
-        user = User.objects.get(username='user1', email='user1@exp.com')
-        c.force_login(user)
-
-        # Create test file
-        f = open("file_to_upload.txt", "a")
-        f.write("Now the test file has more content!")
-        f.close()
-
-        with open("file_to_upload.txt", "r") as a_file:
-            responses = c.post(reverse('dormitory:create_dormitory'),
-                               {'title': 'Twintown',
-                                'desc': 'Twintown',
-                                'icon_d': a_file,
-                                'Content': "### Hello world"
-                                })
-
     def test_create_dormitory_view_when_no_post(self):
         c = Client()
         user = User.objects.get(username='user1', email='user1@exp.com')
