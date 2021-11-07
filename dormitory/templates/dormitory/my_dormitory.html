@@ -1,8 +1,89 @@
 {% extends "dormitory/layout.html" %} 
-
 {% block body %}
-{% for dorm in my_dormitories %}
-    <b>{{dorm}}</b>
+
+<title>หอพักของฉัน</title>
+<style>
+    .button5 {
+        background-color: #cec8ef;
+        color: black;
+        border: 2px solid white;
+    }
+
+    .button5:hover {
+        background-color: #aa98e7;
+        color: rgb(0, 0, 0);
+        border: 2px solid #e2e2e2;
+    }
+    .p2 {
+        font-family: "Prompt", sans-serif;
+        font-size: 1em;
+        }
+    .p3 {
+        font-family: "Prompt", sans-serif;
+        font-size: 2.5em;
+        }
+    .p4 {
+        font-family: "Prompt", sans-serif;
+        font-size: 1.2em;
+        }
+    .p4:hover {
+        color: #aa98e7;
+    }
+    .p5 {
+        font-family: "Prompt", sans-serif;
+        font-size: 1em;
+        }
+    .button6 {
+        background-color: rgb(238, 125, 105);
+        color: black;
+        border: 2px solid white;
+    }
+
+    .button6:hover {
+        background-color: #aa98e7;
+        color: rgb(0, 0, 0);
+        border: 2px solid #e2e2e2;
+    }
+    .line {
+        height: 1px;
+        width: 100%;
+        background-color: #E0E0E0;
+        margin-top: 10px;
+    }
+    img.scaled {
+        width: 35%;
+        height: 100%;
+    }
+</style>
+
+<div style="margin-left: 10%; margin-right: 10%;">
+    <h2 class="p3"><b>My Dormitory<b></h2>
     <br>
-{% endfor %}
+    <div class="container">
+        {% for dorm in my_dormitories %}
+            <div class="row">
+                <div class="col">
+                    <a href="{% url 'dormitory:dormitory' dorm.title %}" style="text-decoration: none;"><b class="p4">{{dorm}}</b></a>
+                    <br>
+                    <div class="figure">
+                        <br>
+                        <img class="img-thumbnail scaled" src="{{ dorm.icon.url }}">
+                    </div>
+                    <table style="float: right; margin-top: -2em;">
+                        <tr>
+                            {% if dorm.status%}
+                                <td width=150px><b class="p5">สถานะ :  </b><b style="color: #5cb484;" class="p5">Showing</b></td>
+                            {% else%}
+                                <td width=160px><b class="p5">สถานะ : </b><b style="color: tomato;" class="p5">Not Showing</b></td>
+                            {% endif %}
+                        </tr>
+                    </table> 
+                </div>
+            </div>
+            <br>
+            <div class="line"></div>
+        {% endfor %}
+    </div>
+</div>
+
 {% endblock %}

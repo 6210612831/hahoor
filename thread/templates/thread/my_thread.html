@@ -1,15 +1,100 @@
 {% extends "thread/layout.html" %} 
-
 {% block body %}
-<h2>My Threads</h2>
-{% for thread in my_threads %}
-    <b>{{thread}}</b>
+<title>กระทู้ของฉัน</title>
+<style>
+    .button5 {
+        background-color: #cec8ef;
+        color: black;
+        border: 2px solid white;
+    }
+
+    .button5:hover {
+        background-color: #aa98e7;
+        color: rgb(0, 0, 0);
+        border: 2px solid #e2e2e2;
+    }
+    .p2 {
+        font-family: "Prompt", sans-serif;
+        font-size: 1em;
+        }
+    .p2:hover {
+        color: #aa98e7;
+    }
+    .p3 {
+        font-family: "Prompt", sans-serif;
+        font-size: 2.5em;
+        }
+    .p4 {
+        font-family: "Prompt", sans-serif;
+        font-size: 1.2em;
+        }
+    .p4:hover {
+        color: #aa98e7;
+    }
+    .p5 {
+        font-family: "Prompt", sans-serif;
+        font-size: 1em;
+    }
+    .button6 {
+        background-color: rgb(238, 125, 105);
+        color: black;
+        border: 2px solid white;
+    }
+
+    .button6:hover {
+        background-color: #aa98e7;
+        color: rgb(0, 0, 0);
+        border: 2px solid #e2e2e2;
+    }
+    .line {
+        height: 1px;
+        width: 100%;
+        background-color: #E0E0E0;
+        margin-top: 10px;
+    }
+</style>
+
+<div style="margin-left: 10%; margin-right: 10%;">
+    <h2 class="p3"><b>My Threads &#128172;<b></h2>
     <br>
-{% endfor %}
-=====================<br>
-<h2>My Replies</h2>
-{% for reply in my_replies %}
-    <b>{{reply}}</b>
+        <div class="container">
+            {% for thread in my_threads %}
+                <div class="row">
+                    <div class="col">
+                        <a href = "{% url 'thread:thread' thread.id %}" style="text-decoration: none; "><b class="p4">{{thread.header}}</b></a>
+                        <table style="float: right;">
+                            <tr>
+                                <td width=70px><a href = "{% url 'thread:update_thread' thread.id %} " style="text-decoration: none;"><b class="p2">&#9997; แก้ไข</b></a></td>
+                                <td width=110px><b class="p5">&#128229; ตอบกลับ {{thread.number_reply}}</b></td>
+                                <td width=150px><b class="p5">&#128681; การร้องเรียน {{thread.report}}</b></td>
+                            </tr>
+                        </table>  
+                    </div>
+                    <div class="line"></div>
+                    <br>
+                </div>
+            {% endfor %}
+        </div>
+    <h2 class="p3"><b>My Replies &#128228;</b></h2>
     <br>
-{% endfor %}
+        <div class="container">
+            {% for reply in my_replies %}
+            <div class="row">
+                <div class="col">
+                    <a href = "" style="text-decoration: none;"><b class="p4">{{reply.replyto}}</b></a>
+                    <div>
+                    <b class="p5">ข้อความ: {{reply.content}}</b></a>
+                    </div>
+                    <table style="float: right; margin-top: -1.5em;">
+                        <tr>
+                            <td width=150px><b class="p5">&#128681; การร้องเรียน {{reply.report}}</b></td>
+                        </tr>
+                    </table>  
+                </div>
+                <div class="line"></div>
+                <br>
+            </div>
+        {% endfor %}
+    
+    </div>
 {% endblock %}
