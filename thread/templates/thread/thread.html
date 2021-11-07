@@ -156,7 +156,8 @@
     <br>
     
     <!-- form -->
-    {% if check_update != 1 %}
+    {% if request.user.is_authenticated %}
+        {% if check_update != 1 %}
 
         <form method="POST" action="{% url 'thread:reply_thread' thread.id%}" enctype="multipart/form-data" id=ตอบกลับกระทู้>
             {% csrf_token %}
@@ -165,9 +166,12 @@
 
             <input type="submit" value ="ยืนยัน" class="btn button6 p3" style="position: sticky"></input>
         </form>
+        {% endif %}
+    {% else %}
+        <a href="#login" style="text-decoration: none;"><h3 id=ตอบกลับกระทู้ style="text-align: center;">&#9997; กรุณา Login เพื่อเขียนรีวิว &#10071;</h3></a>
+    {% endif %}
     <div>
-
-{% endif %}
+        
 
     
 {% endblock %}

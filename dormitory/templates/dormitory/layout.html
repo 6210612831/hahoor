@@ -121,7 +121,7 @@
                         style="margin-top: 0.5em; margin-right: 2em;">Logout</button></a>
             </div>
             {% else %}
-            <form class="d-flex justify-content-end" action="{% url 'user:login_check' %}" method="post">
+            <form class="d-flex justify-content-end" action="{% url 'user:login_check' %}" method="post" id=login>
                 {% csrf_token %}
                 <input class="form-control me-2" type="text" placeholder="Username" name="username" aria-label="Login"
                     required>
