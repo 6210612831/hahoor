@@ -191,7 +191,7 @@
                 <br>
             {% endfor %}
 
-            
+            {% if request.user.is_authenticated %}
             <!-- form -->
             <form method="POST" action="{% url 'dormitory:review_dormitory' dormitory.id%}" enctype="multipart/form-data" id=เขียนรีวิว>
                 {% csrf_token %}
@@ -213,7 +213,9 @@
 
                 <input type="submit" value ="ยืนยัน" class="btn button6 p3"></input>
             </form>
-
+            {% else %}
+                <h3 id=เขียนรีวิว style="text-align: center;">&#9997; กรุณา Login เพื่อเขียนรีวิว &#10071;</h3>
+            {% endif %}
 
 </div>
 
