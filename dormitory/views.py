@@ -54,7 +54,7 @@ def dormitory(request, dorm_title):
 def create_dormitory(request):
     if not request.user.is_authenticated:
         messages.warning(request, "Login First to proceed")
-        return render(request, "dormitory/index.html")
+        return HttpResponseRedirect(reverse("dormitory:index"))
 
     if request.method == "POST":
         title = request.POST["title"]
@@ -123,7 +123,7 @@ def change_status_dormitory(request, dormitory_id):
 def review_dormitory(request, dormitory_id):
     if not request.user.is_authenticated:
         messages.warning(request, "Login First to proceed")
-        return render(request, "dormitory/index.html")
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
     this_dorm = Dormitory.objects.get(id=dormitory_id)
 
@@ -144,7 +144,7 @@ def review_dormitory(request, dormitory_id):
 def report_review(request, review_id):
     if not request.user.is_authenticated:
         messages.warning(request, "Login First to proceed")
-        return HttpResponseRedirect(reverse("dormitory:index"))
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
     this_review = get_object_or_404(Review, id=review_id)
     this_review.report += 1

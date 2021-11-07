@@ -84,7 +84,7 @@ def my_thread(request):
 def create_thread(request):
     if not request.user.is_authenticated:
         messages.warning(request, "Login First to proceed")
-        return render(request, "dormitory/index.html")
+        return HttpResponseRedirect(reverse("dormitory:index"))
 
     if request.method == "POST":
         header = request.POST["header"]
@@ -111,7 +111,7 @@ def create_thread(request):
 def reply_thread(request, thread_id):
     if not request.user.is_authenticated:
         messages.warning(request, "Login First to proceed")
-        return render(request, "dormitory/index.html")
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
     if request.method == "POST":
 
         content = request.POST["content"]
@@ -130,7 +130,7 @@ def reply_thread(request, thread_id):
 def report_thread(request, thread_id):
     if not request.user.is_authenticated:
         messages.warning(request, "Login First to proceed")
-        return HttpResponseRedirect(reverse("dormitory:index"))
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
     this_thread = get_object_or_404(Thread, id=thread_id)
     this_thread.report += 1
@@ -141,7 +141,7 @@ def report_thread(request, thread_id):
 def report_subthread(request, thread_id, subthread_id):
     if not request.user.is_authenticated:
         messages.warning(request, "Login First to proceed")
-        return HttpResponseRedirect(reverse("dormitory:index"))
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
     this_subthread = get_object_or_404(Sub_thread, id=subthread_id)
     this_subthread.report += 1
