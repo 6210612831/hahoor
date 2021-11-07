@@ -126,25 +126,25 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 CLOUDINARY_STORAGE = {
-             'CLOUD_NAME': 'hablh2qy1',
-             'API_KEY': '382791222542281',
-             'API_SECRET': 'k5XpWzvC6wipL6x3dWozseYum4g'
-            }
+    'CLOUD_NAME': 'hablh2qy1',
+    'API_KEY': '382791222542281',
+    'API_SECRET': 'k5XpWzvC6wipL6x3dWozseYum4g'
+}
 
-DEFAULT_FILE_STORAGE='cloudinary_storage.storage.MediaCloudinaryStorage'
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
-STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = ( os.path.join(BASE_DIR,'static'), )
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'), )
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+#STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-import django_heroku
-django_heroku.settings(locals())
+#import django_heroku
+# django_heroku.settings(locals())

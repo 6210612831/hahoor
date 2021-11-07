@@ -71,7 +71,9 @@
             
             <a href="{% url 'dormitory:dormitory' dorm.title %}" style="text-decoration: none;">
             <div class="figure">
-                <img class="img-thumbnail scaled" src="{{ dorm.icon.url }}">
+                {% if dorm.icon %}
+                <img class="img-thumbnail scaled" src="{{ dorm.icon.url }}"> 
+                {% endif %}
             </div>
             </a>
             
