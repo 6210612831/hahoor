@@ -95,8 +95,21 @@
         {% endfor %}
     </div>
     <h2 class="p3"><b>Threads</b></h2>
+    {% for thread in reported_threads%}
+        {{thread}}
+        {{thread.report}}
+    {% endfor %}
     <h2 class="p3"><b>Sub Threads</b></h2>
+    {% for sub_thread in reported_sub_threads%}
+        {{sub_thread}}
+        {{sub_thread.report}}
+    {% endfor %}
     <h2 class="p3"><b>Reviews</b></h2>
+    {% for review in reported_reviews%}
+        {{review}}
+        {{review.report}}
+    {% endfor %}
+    
 </div>
 
 {% endblock %}
