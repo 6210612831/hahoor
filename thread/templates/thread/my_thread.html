@@ -79,7 +79,7 @@
             {% for reply in my_replies %}
             <div class="row">
                 <div class="col">
-                    <a href = "" style="text-decoration: none;"><b class="p4">{{reply.replyto}}</b></a>
+                    <a href = "{% url 'thread:thread' reply.replyto.id %}" style="text-decoration: none;"><b class="p4">{{reply.replyto}}</b></a>
                     <div>
                     <b class="p5">ข้อความ: {{reply.content}}</b></a>
                     </div>
