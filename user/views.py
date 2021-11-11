@@ -91,7 +91,9 @@ def logout(request):
 def register_view(request):
     return render(request, "user/register.html")
 
-
+def my_profile(request) :
+    return render(request, "user/my_user.html")
+    
 def admin_view(request):
     if not request.user.is_authenticated:
         messages.warning(request, "Login First to proceed")
