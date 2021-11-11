@@ -6,6 +6,8 @@ __pycache__
 db.sqlite3
 media
 static/dormitorys
+dormitory/migrations
+thread/migrations
 # Backup files # 
 *.bak 
 
