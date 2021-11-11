@@ -28,7 +28,7 @@
     }
     .p7 {
         font-family: "Prompt", sans-serif;
-        font-size: 1.2em;
+        font-size: 1.1em;
     }
     .p7:hover {
         color: #aa98e7;
@@ -91,7 +91,7 @@
 
 </style>
 
-<div style="margin-left: 25%; margin-right: 25%; margin-bottom: 7em; margin-top: 4em;">
+<div style="margin-left: 25%; margin-right: 25%; margin-bottom: 13em; margin-top: 4em;">
 
     <!-- update thread -->
     {% if check_update == 1 %}
@@ -115,7 +115,8 @@
     <b class="p3" style="float: right;">{{thread.date}} &#9203;
         
     {% if request.user.username == thread.author.username %}
-        <a href = "{% url 'thread:update_thread' thread.id %}" style="float: right; text-decoration: none; margin-left: 1em;"><p class="p7">แก้ไข</p></a>
+        <a href ="" style="float: right; text-decoration: none; margin-left: 0.5em; margin-top: -0.1em;"><b class="p5">&#128680; ลบ</b></a>
+        <a href = "{% url 'thread:update_thread' thread.id %}" style="float: right; text-decoration: none; margin-left: 0.5em; margin-top: -0.1em;"><p class="p5">แก้ไข</p></a>
     {% endif %}
     
     </b>
@@ -137,7 +138,12 @@
     {% for sub_thread in thread.reply.all %}
     <br>
     <b class="p3">การตอบกลับที่ {{forloop.counter}}</b>
-    <b class="p3" style="float: right;">{{sub_thread.date}} &#9203;</b>
+    <b class="p3" style="float: right;">{{sub_thread.date}} &#9203;
+        {% if request.user.username == sub_thread.author.username %}
+            <a href="" style="float: right; text-decoration: none; margin-left: 0.5em; margin-top: -0.08em;"><b class="p5">&#128680; ลบ</b></a>
+            <a href = "" style="float: right; text-decoration: none; margin-left: 0.5em; margin-top: -0.08em;"><b class="p5">แก้ไข</b></a>
+        {% endif %}
+    </b>
     <br>
     <br>
     

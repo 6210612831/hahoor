@@ -54,40 +54,59 @@
     }
 </style>
 
-<div style="margin-left: 10%; margin-right: 10%;">
+<div style="margin-left: 10%; margin-right: 10%; margin-bottom: 5em;">
     <h2 class="p3"><b>My Threads &#128172;<b></h2>
     <br>
         <div class="container">
-            {% for thread in my_threads %}
-                <div class="row">
-                    <div class="col">
-                        <a href = "{% url 'thread:thread' thread.id %}" style="text-decoration: none; "><b class="p4">{{thread.header}}</b></a>
-                        <table style="float: right;">
-                            <tr>
-                                <td width=70px><a href = "{% url 'thread:update_thread' thread.id %} " style="text-decoration: none;"><b class="p2">&#9997; แก้ไข</b></a></td>
-                                <td width=110px><b class="p5">&#128229; ตอบกลับ {{thread.number_reply}}</b></td>
-                        </table>  
+            {% if not my_threads %}
+                <b class="p5">ยังไม่มีการสร้างกระทู้</b>
+                <a href="{% url 'thread:create_thread' %}" style="text-decoration: none;"><b class="p4"><u>คลิกที่นี่</u></b></a>
+                <b class="p5">เพื่อสร้างกระทู้</b>
+                <div class="line"></div>
+                <br>
+            {% else %}
+                {% for thread in my_threads %}
+                    <div class="row">
+                        <div class="col">
+                            <a href = "{% url 'thread:thread' thread.id %}" style="text-decoration: none; "><b class="p4">{{thread.header}}</b></a>
+                            <table style="float: right;">
+                                <tr>
+                                    <td width=70px><a href = "{% url 'thread:update_thread' thread.id %} " style="text-decoration: none;"><b class="p2">&#9997; แก้ไข</b></a></td>
+                                    <td width=60px><a href = "" style="text-decoration: none;"><b class="p2">&#128680; ลบ</b></a></td>
+                                    <td><b class="p5">&#128229; ตอบกลับ {{thread.number_reply}}</b></td>
+                            </table>  
+                        </div>
+                        <div class="line"></div>
+                        <br>
                     </div>
-                    <div class="line"></div>
-                    <br>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            {% endif %}
         </div>
     <h2 class="p3"><b>My Replies &#128228;</b></h2>
     <br>
         <div class="container">
-            {% for reply in my_replies %}
-            <div class="row">
-                <div class="col">
-                    <a href = "{% url 'thread:thread' reply.replyto.id %}" style="text-decoration: none;"><b class="p4">{{reply.replyto}}</b></a>
-                    <div>
-                    <b class="p5">ข้อความ: {{reply.content}}</b></a>
-                    </div>
-                </div>
+            {% if not my_replies %}
+                <b class="p5">ยังไม่ได้ตอบกลับ</b>
                 <div class="line"></div>
                 <br>
-            </div>
-        {% endfor %}
-    
+            {% else %}
+                {% for reply in my_replies %}
+                <div class="row">
+                    <div class="col">
+                        <a href = "{% url 'thread:thread' reply.replyto.id %}" style="text-decoration: none;"><b class="p4">{{reply.replyto.header}}</b></a>
+                        <table style="float: right; margin-top: 1em;">
+                            <tr>
+                                <td width=70px><a href = "" style="text-decoration: none;"><b class="p2">&#9997; แก้ไข</b></a></td>
+                                <td><a href = "" style="text-decoration: none;"><b class="p2">&#128680; ลบ</b></a></td>
+                        </table>  
+                        <div>
+                        <b class="p5">เนื้อหา: {{reply.content}}</b></a>
+                        </div>
+                    </div>
+                    <div class="line"></div>
+                    <br>
+                </div>
+                {% endfor %}
+            {% endif %} 
     </div>
 {% endblock %}
