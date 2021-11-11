@@ -61,29 +61,43 @@
     font-family: "Prompt", sans-serif;
     font-size: 1.2em;
     }
+    .p5 {
+    font-family: "Prompt", sans-serif;
+    font-size: 1.3em;
+    }
+    .p6 {
+    font-family: "Prompt", sans-serif;
+    font-size: 1.5em;
+    }
+    .p6:hover {
+        color: #aa98e7;
+    }
+
 
 </style>
     <h1 class="padding" style="margin-left: 2em;"><p class="p2"><b>&#11088; หอพักยอดนิยม &#11088;</b></p></h1>
 
     <div style="margin-left: 12%;margin-right: 10%; margin-top: 0.5em;">
-        
-        {% for dorm in dormitories%}
-            
-            <a href="{% url 'dormitory:dormitory' dorm.title %}" style="text-decoration: none;">
-            <div class="figure">
-                <img class="img-thumbnail scaled" src="{{ dorm.icon.url }}">
-            </div>
-            </a>
-            
-            <div class="detail">
+        {% if not dormitories %}
+            <b class="p5">ยังไม่มีการเพิ่มหอพัก</b>
+            <a href="{% url 'dormitory:create_dormitory' %}" style="text-decoration: none;"><b class="p6"><u>คลิกที่นี่</u></b></a>
+            <b class="p5">เพื่อเพิ่มหอพัก</b>
+        {% else %}
+            {% for dorm in dormitories%}
                 <a href="{% url 'dormitory:dormitory' dorm.title %}" style="text-decoration: none;">
-                <h2 class="active center p3"><b>{{dorm.title}}</b></h2>
+                <div class="figure">
+                    <img class="img-thumbnail scaled" src="{{ dorm.icon.url }}">
+                </div>
                 </a>
-                <p class="p4">{{ dorm.desc }} </p>
-            </div>
-        
-        {% endfor %}
-        
+                
+                <div class="detail">
+                    <a href="{% url 'dormitory:dormitory' dorm.title %}" style="text-decoration: none;">
+                    <h2 class="active center p3"><b>{{dorm.title}}</b></h2>
+                    </a>
+                    <p class="p4">{{ dorm.desc }} </p>
+                </div>
+            {% endfor %}
+        {% endif %}
     </div>
 
     <h1 class="padding" style="margin-left: 2em; margin-top: 2em;"><p class="p2"><b>แผนที่หอพักรอบ ๆ มหาวิทยาลัยธรรมศาสตร์ 🗺️</b></p></h1>

@@ -56,33 +56,47 @@
     }
 </style>
 
-<div style="margin-left: 10%; margin-right: 10%;">
+<div style="margin-left: 10%; margin-right: 10%; margin-bottom: 5em;">
     <h2 class="p3"><b>My Dormitory<b></h2>
     <br>
     <div class="container">
-        {% for dorm in my_dormitories %}
-            <div class="row" style="margin-top: 1em;">
-                <div class="col">
-                    <a href="{% url 'dormitory:dormitory' dorm.title %}" style="text-decoration: none;"><b class="p4">{{dorm}}</b></a>
-                    <br>
-                    <div class="figure">
-                        <br>
-                        <img class="img-thumbnail scaled" src="{{ dorm.icon.url }}">
-                    </div>
-                    <table style="float: right; margin-top: -2em;">
-                        <tr>
-                            {% if dorm.status%}
-                                <td width=150px><b class="p5">สถานะ :  </b><b style="color: #5cb484;" class="p5">Showing</b></td>
-                            {% else%}
-                                <td width=160px><b class="p5">สถานะ : </b><b style="color: tomato;" class="p5">Not Showing</b></td>
-                            {% endif %}
-                        </tr>
-                    </table> 
-                </div>
-            </div>
-            <br>
+        {% if not my_dormitories %}
+            <b class="p5">ยังไม่มีการเพิ่มหอพัก</b>
+            <a href="{% url 'dormitory:create_dormitory' %}" style="text-decoration: none;"><b class="p4"><u>คลิกที่นี่</u></b></a>
+            <b class="p5">เพื่อเพิ่มหอพัก</b>
             <div class="line"></div>
-        {% endfor %}
+            <br>
+        {% else %}
+            {% for dorm in my_dormitories %}
+                <div class="row">
+                    <div class="col">
+                        <a href="{% url 'dormitory:dormitory' dorm.title %}" style="text-decoration: none;"><b class="p4">{{dorm}}</b></a>
+                        <br>
+                        <div class="figure">
+                            <br>
+                            <img class="img-thumbnail scaled" src="{{ dorm.icon.url }}">
+                        </div>
+                        <table style="float: right; margin-top: -2em;">
+                            <tr>
+                                {% if dorm.status%}
+                                    <td><b class="p5">สถานะ :  </b><b style="color: #5cb484;" class="p5">Showing</b></td>
+                                {% else%}
+                                    <td><b class="p5">สถานะ : </b><b style="color: tomato;" class="p5">Not Showing</b></td>
+                                {% endif %}
+                            </tr>
+                        </table>
+                        <table style="float: right; margin-top: 1em;">
+                            <tr>
+                                <td width=70px><a href = "" style="text-decoration: none;"><b class="p2">&#9997; แก้ไข</b></a></td>
+                                <td width=60px><a href = "" style="text-decoration: none;"><b class="p2">&#128680; ลบ</b></a></td>
+                                <td><b class="p5">&#128229; ตอบกลับ</b></td>
+                        </table>   
+                    </div>
+                </div>
+                <br>
+                <div class="line"></div>
+            {% endfor %}
+        {% endif %}
     </div>
 </div>
 

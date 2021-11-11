@@ -19,12 +19,30 @@
     font-size: 1em;
     margin: -0.5em;
 }
+.p5 {
+    font-family: "Prompt", sans-serif;
+    font-size: 1.3em;
+    }
+.p6 {
+    font-family: "Prompt", sans-serif;
+    font-size: 1.5em;
+    }
+.p6:hover {
+    color: #aa98e7;
+}
 
 img.avatar {
     width: 50px;
     height: 50px;
 }
+.line {
+        height: 1px;
+        width: 100%;
+        background-color: #E0E0E0;
+        margin-top: 10px;
+}
 </style>
+
 
 <title>กระทู้ &#128172</title>
 
@@ -36,20 +54,27 @@ img.avatar {
 {% endif %}
 
     <div style="margin-left: 12%;margin-right: 12%; margin-top: 3em; margin-bottom: 5em;">
-    {% for thread in thread_list %}
-    <div style="margin-bottom: 5em;">
-        
-        <img class="avatar" src="/static/images/avatar.png" style="float:left; margin-right: 1em;"><p class="p4">{{thread.author.username}}
-            &#8986; {{thread.date}} 
-        </p>
-        <a href = "{% url 'thread:thread' thread.id %}" style="text-decoration: none;">
-        <b class="p3" style="float: left; margin-top: 0.5em;">{{thread.header}}</b></a>
-        <b class="p4" style="float: right; margin-top: 0.5em;">&#128233; ตอบกลับ {{thread.number_reply}}</b>
-        
-    </div>
-    <hr>
-    <br>
-    {% endfor %}
-
+    {% if not thread_list %}
+        <b class="p5">ยังไม่มีการสร้างกระทู้</b>
+        <a href="{% url 'thread:create_thread' %}" style="text-decoration: none;"><b class="p6"><u>คลิกที่นี่</u></b></a>
+        <b class="p5">เพื่อสร้างกระทู้</b>
+        <div class="line"></div>
+        <br>
+    {% else %}
+        {% for thread in thread_list %}
+        <div style="margin-bottom: 5em;">
+            
+            <img class="avatar" src="/static/images/avatar.png" style="float:left; margin-right: 1em;"><p class="p4">{{thread.author.username}}
+                &#8986; {{thread.date}} 
+            </p>
+            <a href = "{% url 'thread:thread' thread.id %}" style="text-decoration: none;">
+            <b class="p3" style="float: left; margin-top: 0.5em;">{{thread.header}}</b></a>
+            <b class="p4" style="float: right; margin-top: 0.5em;">&#128233; ตอบกลับ {{thread.number_reply}}</b>
+            
+        </div>
+        <hr>
+        <br>
+        {% endfor %}
+    {% endif %}
     </div>
 {% endblock %}

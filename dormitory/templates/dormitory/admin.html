@@ -35,6 +35,13 @@
         font-family: "Prompt", sans-serif;
         font-size: 1.2em;
         }
+    .p4:hover {
+        color: #aa98e7;
+    }
+    .p5 {
+        font-family: "Prompt", sans-serif;
+        font-size: 1.1em;
+        }
     .line {
         height: 1px;
         width: 100%;
@@ -46,70 +53,152 @@
         height: 200px;
     }
 </style>
-<div style="margin-left: 10%; margin-right: 10%;">
+<div style="margin-left: 10%; margin-right: 10%; margin-bottom: 5em;">
 <h2 class="p3"><b>Dormitories<b></h2>
 <br>
     <div class="container">
-        {% for dorm in dormitories %}
-            <div class="row">
-                {% if not dorm.status%}
-                <div class="col-7">
-                    <a href = "{% url 'dormitory:dormitory' dorm.title %}" style="text-decoration: none;"><b class="p4">{{dorm}}</b></a>
-                    <div class="figure">
-                        <br>
-                        <img class="img-thumbnail scaled" src="{{ dorm.icon.url }}">
+        {% if not dormitories %}
+            <b class="p4">ยังไม่มีการเพิ่มหอพัก</b>
+        {% else %}
+            {% for dorm in dormitories %}
+                <div class="row">
+                    {% if not dorm.status%}
+                    <div class="col">
+                        <a href = "{% url 'dormitory:dormitory' dorm.title %}" style="text-decoration: none;"><b class="p4">{{dorm}}</b></a>
+                        <p style="float: right;">
+                            <b class="p2">STATUS: </b> <b class="p2" style="color: tomato;">Not Showing</b>
+                        </p>
+                        
+                            <br>
+                            <br>
+                            <div style="float: right;">
+                                <a href="{% url 'dormitory:change_status_dormitory' dorm.id %}"><button type="button"class="btn button5 p2" style="width: 10em; height: 2.5em; margin-top: -0.5em;"><b>Change Status</b></button></a>
+                                <a href="{% url 'dormitory:remove_dormitory' dorm.id %}"><button type="button"class="btn button6 p2" style="width: 5.8em; height: 2.5em; margin-top: -0.5em;"><b>Delete</b></button></a>
+                            </div>   
+                        <div class="figure">
+                            <img class="img-thumbnail scaled" src="{{ dorm.icon.url }}">
+                        </div>
                     </div>
-                </div>
-                <div class="col">
-                    <b class="p2">STATUS: </b> <b class="p2" style="color: tomato;">Not Showing</b>
-                </div>
-                <div class="col">
-                    <a href="{% url 'dormitory:change_status_dormitory' dorm.id %}"><button type="button"class="btn button5 p2" style="width: 10em; height: 2.5em; margin-top: -0.5em;"><b>Change Status</b></button></a>
-                    <a href="{% url 'dormitory:remove_dormitory' dorm.id %}"><button type="button"class="btn button6 p2" style="width: 5.8em; height: 2.5em; margin-top: -0.5em;"><b>Delete</b></button></a>
-                </div>
-                
-                <br>
-                {% else %}
-                <div class="col-7">
-                    <a href = "{% url 'dormitory:dormitory' dorm.title %}" style="text-decoration: none;"><b class="p4">{{dorm}}</b></a>
-                    <div class="figure">
+                    <br>
+                    {% else %}
+                    <div class="col">
+                        <a href = "{% url 'dormitory:dormitory' dorm.title %}" style="text-decoration: none;"><b class="p4">{{dorm}}</b></a>
+                        <p style="float: right;">
+                            <b class="p2">STATUS: </b><b class="p2" style="color: #5cb484;">Showing</b>
+                        </p>
+                    
                         <br>
-                        <img class="img-thumbnail scaled" src="{{ dorm.icon.url }}">
+                        <br>
+                        <div style="float: right;">
+                            <a href="{% url 'dormitory:change_status_dormitory' dorm.id %}"><button type="button" class="btn button2 p2" style="width: 10em; height: 2.5em; margin-top: -0.5em;"><b>Change Status</b></button></a>
+                            <a href="{% url 'dormitory:remove_dormitory' dorm.id %}"><button type="button" class="btn button6 p2" style="width: 5.8em; height: 2.5em; margin-top: -0.5em;"><b>Delete</b></button></a>
+                        </div> 
+                        <div class="figure">
+                            <img class="img-thumbnail scaled" src="{{ dorm.icon.url }}">
+                        </div>
                     </div>
-                </div>
-                <div class="col">
-                    <b class="p2">STATUS: </b><b class="p2" style="color: #5cb484;">Showing</b>
-                </div>
-                <div class="col">
-                    <a href="{% url 'dormitory:change_status_dormitory' dorm.id %}"><button type="button"class="btn button2 p2" style="width: 10em; height: 2.5em; margin-top: -0.5em;"><b>Change Status</b></button></a>
-                    <a href="{% url 'dormitory:remove_dormitory' dorm.id %}"><button type="button"class="btn button6 p2" style="width: 5.8em; height: 2.5em; margin-top: -0.5em;"><b>Delete</b></button></a>
-                </div>
-                <br>
+                    <br>
+                    
+                    <br>
+                    {% endif%}
                 
+                </div>
                 <br>
-                {% endif%}
-            
-            </div>
-            <br>
-            <div class="line"></div>
-        {% endfor %}
+                <div class="line"></div>
+                <br>
+            {% endfor %}
+        {% endif %}
     </div>
-    <h2 class="p3"><b>Threads</b></h2>
-    {% for thread in reported_threads%}
-        {{thread}}
-        {{thread.report}}
-    {% endfor %}
-    <h2 class="p3"><b>Sub Threads</b></h2>
-    {% for sub_thread in reported_sub_threads%}
-        {{sub_thread}}
-        {{sub_thread.report}}
-    {% endfor %}
-    <h2 class="p3"><b>Reviews</b></h2>
-    {% for review in reported_reviews%}
-        {{review}}
-        {{review.report}}
-    {% endfor %}
-    
-</div>
 
+    <h2 class="p3"><b>Threads</b></h2>
+    <br>
+        <div class="container">
+            {% if not reported_threads %}
+            <b class="p5">ยังไม่มีกระทู้ที่ถูกรายงานครบจำนวน</b>
+            <div class="line"></div>
+            <br>
+            {% else %}
+                {% for thread in reported_threads%}
+                    <div class="col">
+                        <a href = "{% url 'thread:thread' thread.id %}" style="text-decoration: none;"><b class="p4">{{thread.header}}</b></a>
+                        <table style="float: right;">
+                            <tr>
+                                <td width=200px>&#9200; <b class="p2">{{thread.date}}</b></td> 
+                                <td>&#128681; <b class="p2">รายงาน {{thread.report}}</b></td>
+                            </tr>
+                        </table>
+                        <br>
+                        <b class="p5">by {{thread.author}}</b>
+                        <br>
+                        <a href="" style="float: right;"><button type="button"class="btn button6 p2" style="width: 5.8em; height: 2.5em; margin-top: -0.5em;"><b>Delete</b></button></a>
+                        <br>
+                    </div>
+                    <br>
+                    <div class="line"></div>
+                    <br>
+                {% endfor %}
+            {% endif %}
+        </div>
+    
+    <h2 class="p3"><b>Sub Threads</b></h2>
+    <br>
+        <div class="container">
+            {% if not reported_sub_threads %}
+                <b class="p5">ยังไม่มีการตอบกลับกระทู้ที่ถูกรายงานครบจำนวน</b>
+                <div class="line"></div>
+                <br>
+            {% else %}
+                {% for sub_thread in reported_sub_threads%}
+                    <div class="col">
+                        <a href = "{% url 'thread:thread' sub_thread.replyto.id %}" style="text-decoration: none;"><b class="p4">{{sub_thread.replyto.header}}</b></a>
+                        <table style="float: right;">
+                            <tr>
+                                <td width=200px>&#9200; <b class="p2">{{sub_thread.date}}</b></td> 
+                                <td>&#128681; <b class="p2">รายงาน {{sub_thread.report}}</b></td>
+                            </tr>
+                        </table>
+                        <br>
+                        <br>
+                        <b class="p5">เนื้อหา: {{sub_thread.content}}</b>
+                        <br>
+                        <b class="p2">ตอบกลับโดย {{sub_thread.author}}</b>
+                        <a href="" style="float: right; margin-top: -1em;"><button type="button"class="btn button6 p2" style="width: 5.8em; height: 2.5em; margin-top: -0.5em;"><b>Delete</b></button></a>
+                    </div>
+                    <br>
+                    <div class="line"></div>
+                    <br>
+                {% endfor %}
+            {% endif %}
+        </div>
+    <h2 class="p3"><b>Reviews</b></h2>
+    <br>
+        <div class="container">
+            {% if not reported_reviews %}
+                <b class="p5">ยังไม่มีการรีวิวที่ถูกรายงานครบจำนวน</b>
+                <div class="line"></div>
+                <br>
+            {% else %}
+                {% for review in reported_reviews%}
+                    <div class="col">
+                        <a href = "{% url 'dormitory:dormitory' review.reviewto.title%}" style="text-decoration: none;"><b class="p4">{{review.reviewto}}</b></a>
+                        <table style="float: right;">
+                            <tr>
+                                <td width=200px>&#9200; <b class="p2">{{review.date}}</b></td> 
+                                <td>&#128681; <b class="p2">รายงาน {{review.report}}</b></td>
+                            </tr>
+                        </table>
+                        <br>
+                        <br>
+                        <b class="p5">เนื้อหา: {{review.content}}</b>
+                        <br>
+                        <b class="p2">ตอบกลับโดย {{review.author}}</b>
+                        <a href="" style="float: right; margin-top: -1em;"><button type="button"class="btn button6 p2" style="width: 5.8em; height: 2.5em; margin-top: -0.5em;"><b>Delete</b></button></a>
+                    </div>
+                    <br>
+                    <div class="line"></div>
+                    <br>
+                {% endfor %}
+            {% endif %}
+        </div>
+</div>
 {% endblock %}
