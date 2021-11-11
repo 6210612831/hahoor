@@ -98,7 +98,7 @@ def create_thread(request):
             })
         if content.is_valid():
             content = content.cleaned_data['Content']
-            new_thread = Thread(header=header, content=content, author=request.user,
+            new_thread = Thread.objects.create(header=header, content=content, author=request.user,
                                 date=datetime.datetime.now(datetime.timezone.utc))
             new_thread.save()
 
@@ -117,7 +117,7 @@ def reply_thread(request, thread_id):
         content = request.POST["content"]
 
         this_thread = Thread.objects.get(id=thread_id)
-        new_subthread = Sub_thread(replyto=this_thread, content=content,
+        new_subthread = Sub_thread.objects.create(replyto=this_thread, content=content,
                                    author=request.user, date=datetime.datetime.now(datetime.timezone.utc))
         new_subthread.save()
         this_thread.reply.add(new_subthread)

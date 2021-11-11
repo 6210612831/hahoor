@@ -68,7 +68,7 @@ def create_dormitory(request):
             })
         if content.is_valid():
             content = content.cleaned_data['Content']
-            new_dorm = Dormitory(title=title, desc=desc, content=content,
+            new_dorm = Dormitory.objects.create(title=title, desc=desc, content=content,
                                  author=request.user, seen=0, date=datetime.datetime.now(datetime.timezone.utc), icon=icon)
             new_dorm.save()
 
@@ -131,7 +131,7 @@ def review_dormitory(request, dormitory_id):
         stars = request.POST["stars"]
         content = request.POST["content"]
 
-        new_review = Review(reviewto=this_dorm, stars=stars, content=content, author=request.user,
+        new_review = Review.objects.create(reviewto=this_dorm, stars=stars, content=content, author=request.user,
                             date=datetime.datetime.now(datetime.timezone.utc))
         new_review.save()
         this_dorm.reviews.add(new_review)
