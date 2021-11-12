@@ -33,6 +33,10 @@
     .p7:hover {
         color: #aa98e7;
     }
+    .p8 {
+        font-family: 'Noto Sans Thai', sans-serif;
+        font-size: 1.5em;
+    }
     .h3 {
     overflow: hidden;
     text-align: center;
@@ -88,6 +92,10 @@
         color: rgb(0, 0, 0);
         border: 2px solid #ccccff;
     }
+    #id_content {
+    width: 100%;
+    height: 100px;
+    }
 
 </style>
 
@@ -134,8 +142,11 @@ function report_sub_thread(val)
     
         <div class="container">
             <input type="submit" value ="ยืนยันการแก้ไข" class="btn button1 p5" style="float: right;"></input>
-            <p class="p2">ชื่อกระทู้ : {{ form.header }}</p>
-            <p class="p2">เนื้อหา : {{ form.content }}</p>
+            <b class="p8">ชื่อกระทู้ :</b>
+            <p class="p2" style="margin-top: 1em;">{{ form.header }}</p>
+            <br>
+            <b class="p8">เนื้อหา :</b>
+            <p class="p2">{{ form.content }}</p>
         </div>
     </form>
     {{ form.media }}
@@ -168,41 +179,50 @@ function report_sub_thread(val)
     <h3 class="p6 h3">&#128172; <b>{{thread.number_reply}} การตอบกลับ</b></h3>
 
     <!-- sub-thread -->
-    {% for sub_thread in thread.reply.all %}
-    <br>
-    <b class="p3">การตอบกลับที่ {{forloop.counter}}</b>
-    <b class="p3" style="float: right;">{{sub_thread.date}} &#9203;
-        {% if request.user.username == sub_thread.author.username %}
-            <a href="{% url 'thread:delete_reply' sub_thread.id%}" onclick="return confirm_delete_sub_thread()" style="float: right; text-decoration: none; margin-left: 0.5em; margin-top: -0.08em;"><b class="p5">&#128680; ลบ</b></a>
-            <a href = "{% url 'thread:update_reply' sub_thread.id%}" style="float: right; text-decoration: none; margin-left: 0.5em; margin-top: -0.08em;"><b class="p5">แก้ไข</b></a>
-        {% endif %}
-    </b>
-    <br>
-    <br>
-    
-    {% if check_update_reply == 1 and sub_thread.id == reply_id %}
-    <form method="POST" action="{% url 'thread:update_reply' sub_thread.id %}" enctype="multipart/form-data" id=update_reply>
-        {% csrf_token %}
-        <textarea type="text" name="content" class="form-control" maxlength="500"  required>{{sub_thread.content}}</textarea>
-        <br>
-        <input type="submit" value ="ยืนยัน" class="btn button6 p3"></input>
-    </form>
+    {% if not thread.reply.all%}
+            <br>
+            <div style="text-align: center;">
+                <b class="p4">ยังไม่มีการตอบกลับ สามารถเขียนการตอบกลับของคุณได้ที่ด้านล่าง &#128071;</b>
+            </div>
+            <br>
+            <div class="line"></div>
+            <br>
     {% else %}
-        <h4>{{sub_thread.content | convert_markdown | safe | linebreaks}}</h4>
+        {% for sub_thread in thread.reply.all %}
+        <b class="p3">การตอบกลับที่ {{forloop.counter}}</b>
+        <br>
+        <b class="p3" style="float: right; margin-top: -1.5em;">{{sub_thread.date}} &#9203;
+            {% if request.user.username == sub_thread.author.username %}
+                <a href="{% url 'thread:delete_reply' sub_thread.id%}" onclick="return confirm_delete_sub_thread()" style="float: right; text-decoration: none; margin-left: 0.5em; margin-top: -0.08em;"><b class="p5">&#128680; ลบ</b></a>
+                <a href = "{% url 'thread:update_reply' sub_thread.id%}" style="float: right; text-decoration: none; margin-left: 0.5em; margin-top: -0.08em;"><b class="p5">แก้ไข</b></a>
+            {% endif %}
+        </b>
+        <br>
+        <br>
+        
+        {% if check_update_reply == 1 and sub_thread.id == reply_id %}
+        <form method="POST" action="{% url 'thread:update_reply' sub_thread.id %}" enctype="multipart/form-data" id=update_reply>
+            {% csrf_token %}
+            <textarea type="text" name="content" class="form-control" maxlength="500"  required>{{sub_thread.content}}</textarea>
+            <br>
+            <input type="submit" value ="ยืนยัน" class="btn button6 p3"></input>
+        </form>
+        {% else %}
+            <h4>{{sub_thread.content | convert_markdown | safe | linebreaks}}</h4>
+        {% endif %}
+        
+        <br>
+
+        <img class="avatar" src="/static/images/avatar.png" style="width: 2em; height: 2em; margin-bottom: 0em;"> 
+        <b class="p3">ตอบกลับโดย {{sub_thread.author}} </b>
+        <div style="float: right; margin-top: -0.2em;" id = "#report_sub_thread">
+            <input type="hidden" value="{% url 'thread:report_subthread' thread.id sub_thread.id %}" id="sub_thread_id">
+            <a href="#report_sub_thread" onclick="report_sub_thread()"><button class="button button5">&#128681; <b class="p3">report</b></button></a>
+        </div>
+        
+        <div class="line"></div>
+        {% endfor %}
     {% endif %}
-    
-    <br>
-
-    <img class="avatar" src="/static/images/avatar.png" style="width: 2em; height: 2em; margin-bottom: 0em;"> 
-    <b class="p3">ตอบกลับโดย {{sub_thread.author}} </b>
-    <div style="float: right; margin-top: -0.2em;" id = "#report_sub_thread">
-        <input type="hidden" value="{% url 'thread:report_subthread' thread.id sub_thread.id %}" id="sub_thread_id">
-        <a href="#report_sub_thread" onclick="report_sub_thread()"><button class="button button5">&#128681; <b class="p3">report</b></button></a>
-    </div>
-    
-    <div class="line"></div>
-    {% endfor %}
-
     <br>
     
     <!-- form -->
