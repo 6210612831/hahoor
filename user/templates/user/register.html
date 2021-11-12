@@ -15,7 +15,7 @@
         <link rel="manifest" href="{%static 'favicon/site.webmanifest' %}">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400">  
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">        
-        <script src="{% static 'dormitory/css/styles.js' %}"></script>                                
+        <script src="{% static 'dormitory/css/styles.js' %}"></script>                        
     </head>
 
 {% block body %}
@@ -184,9 +184,15 @@
                                 <label class="mb-1" style="color: tomato; margin-top: -1em;">
                                     <b>{{fail_password}}</b><br> 
                                 </label> 
-                                {% endif %}  
+                                {% endif %}
                             </div>
-
+                            <div style="font-size: 0.8em;">
+                                <li>Password must have at least 8</li>
+                                <li>Password must have at least 1 of a-z</li>
+                                <li>Password must have at least 1 of A-Z</li>
+                                <li>Password must have at least 1 of 0-9</li>
+                            </div> 
+                            <br>
                             <!-- re password-->
                             <div class="row px-3"> 
                                 <label class="mb-1">
