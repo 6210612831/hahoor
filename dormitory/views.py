@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from .models import *
-from .forms import MarkdownForm
+from .forms import DormitoryForm, MarkdownForm
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.contrib import messages
@@ -45,9 +45,12 @@ def dormitories(request):
 
 def dormitory(request, dorm_title):
     this_dorm = get_object_or_404(Dormitory, title=dorm_title)
-
+    check_my_dormitory = 0
+    if request.user.username == this_dorm.author.username:
+        check_my_dormitory += 1
     return render(request, "dormitory/dormitory.html", {
         "dormitory": this_dorm,
+        "check_my_dormitory": check_my_dormitory,
     })
 
 
@@ -69,7 +72,7 @@ def create_dormitory(request):
         if content.is_valid():
             content = content.cleaned_data['Content']
             new_dorm = Dormitory.objects.create(title=title, desc=desc, content=content,
-                                 author=request.user, seen=0, date=datetime.datetime.now(datetime.timezone.utc), icon=icon)
+                                                author=request.user, seen=0, date=datetime.datetime.now(datetime.timezone.utc), icon=icon)
             new_dorm.save()
 
             return HttpResponseRedirect(reverse("dormitory:my_dormitory"))
@@ -132,7 +135,7 @@ def review_dormitory(request, dormitory_id):
         content = request.POST["content"]
 
         new_review = Review.objects.create(reviewto=this_dorm, stars=stars, content=content, author=request.user,
-                            date=datetime.datetime.now(datetime.timezone.utc))
+                                           date=datetime.datetime.now(datetime.timezone.utc))
         new_review.save()
         this_dorm.reviews.add(new_review)
 
@@ -148,6 +151,108 @@ def report_review(request, review_id):
 
     this_review = get_object_or_404(Review, id=review_id)
     this_review.report += 1
+    this_review.save()
+
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+
+def update_dormitory(request, dormitory_id):
+    this_dormitory = get_object_or_404(Dormitory, id=dormitory_id)
+    check_update = 1
+    # Check user is own this dormitory
+    if request.user.username != this_dormitory.author.username:
+        return HttpResponseRedirect(reverse("dormitory:dormitory", args=(this_dormitory.title,)))
+
+    # If user submit update form
+    if request.method == "POST":
+        form = DormitoryForm(request.POST)
+
+        if form.is_valid():
+            title = form.cleaned_data['title']
+            desc = form.cleaned_data['desc']
+            content = form.cleaned_data['content']
+            # Update  This Thread
+            this_dormitory.title = title
+            this_dormitory.desc = desc
+            this_dormitory.content = content
+            this_dormitory.save()
+
+            return HttpResponseRedirect(reverse("dormitory:dormitory", args=(this_dormitory.title,)))
+    else:
+        content = DormitoryForm(request.POST or None, instance=this_dormitory)
+
+    return render(request, "dormitory/dormitory.html", {
+        "dormitory": this_dormitory,
+        "check_update_dorm": check_update,
+        "form": content,
+
+    })
+
+
+def update_review(request, review_id):
+    check_update = 1
+    if not request.user.is_authenticated:
+        messages.warning(request, "Login First to proceed")
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+    this_review = Review.objects.get(id=review_id)
+
+    if request.user.username != this_review.author.username:
+        return HttpResponseRedirect(reverse("dormitory:dormitory", args=(this_review.reviewto.title,)))
+
+    if request.method == "POST":
+        stars = this_review.stars
+        if request.POST.get("stars"):
+            stars = request.POST["stars"]
+        content = request.POST["content"]
+
+        this_review.stars = stars
+        this_review.content = content
+        this_review.save()
+        return HttpResponseRedirect(reverse("dormitory:dormitory", args=(this_review.reviewto.title,)))
+
+    return render(request, "dormitory/dormitory.html", {
+        "dormitory": this_review.reviewto,
+        "check_update_review": check_update,
+        "review_id": review_id,
+    })
+
+
+def delete_review(request, reviews_id):
+    if not request.user.is_authenticated:
+        messages.warning(request, "Login First to proceed")
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+    this_review = Review.objects.get(id=reviews_id)
+
+    if request.user.username != this_review.author.username:
+        return HttpResponseRedirect(reverse("dormitory:dormitory", args=(this_review.reviewto.title,)))
+
+    this_review.delete()
+    return HttpResponseRedirect(reverse("dormitory:dormitory", args=(this_review.reviewto.title,)))
+
+
+def delete_dormitory(request, dormitory_id):
+    if not request.user.is_authenticated:
+        messages.warning(request, "Login First to proceed")
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+    this_dorm = Dormitory.objects.get(id=dormitory_id)
+
+    if request.user.username != this_dorm.author.username:
+        return HttpResponseRedirect(reverse("dormitory:dormitory", args=(this_dorm.title,)))
+
+    this_dorm.delete()
+    return HttpResponseRedirect(reverse("dormitory:dormitories"))
+
+
+def reset_report_review(request, review_id):
+    if not request.user.is_authenticated:
+        messages.warning(request, "Login First to proceed")
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+    this_review = get_object_or_404(Review, id=review_id)
+    this_review.report = 0
     this_review.save()
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
