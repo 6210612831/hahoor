@@ -91,6 +91,16 @@ def my_dormitory(request):
     })
 
 
+def my_review(request):
+    if not request.user.is_authenticated:
+        messages.warning(request, "Login First to proceed")
+        return HttpResponseRedirect(reverse("dormitory:index"))
+
+    return render(request, "dormitory/my_review.html", {
+        "my_review": Review.objects.filter(author=request.user)
+    })
+    
+
 def remove_dormitory(request, dormitory_id):
 
     if not request.user.is_authenticated:

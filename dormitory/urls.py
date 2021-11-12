@@ -10,6 +10,7 @@ urlpatterns = [
     path("dormitory/create_dormitory",
          views.create_dormitory, name="create_dormitory"),
     path("dormitory/my_dormitory", views.my_dormitory, name="my_dormitory"),
+    path("dormitory/my_review", views.my_review, name="my_review"),
     path("dormitory/remove_dormitory/<int:dormitory_id>",
          views.remove_dormitory, name="remove_dormitory"),
     path("dormitory/change_status/<int:dormitory_id>",
