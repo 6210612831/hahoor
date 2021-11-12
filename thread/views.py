@@ -99,7 +99,7 @@ def create_thread(request):
         if content.is_valid():
             content = content.cleaned_data['Content']
             new_thread = Thread.objects.create(header=header, content=content, author=request.user,
-                                date=datetime.datetime.now(datetime.timezone.utc))
+                                               date=datetime.datetime.now(datetime.timezone.utc))
             new_thread.save()
 
             return HttpResponseRedirect(reverse("thread:my_thread"))
@@ -118,7 +118,7 @@ def reply_thread(request, thread_id):
 
         this_thread = Thread.objects.get(id=thread_id)
         new_subthread = Sub_thread.objects.create(replyto=this_thread, content=content,
-                                   author=request.user, date=datetime.datetime.now(datetime.timezone.utc))
+                                                  author=request.user, date=datetime.datetime.now(datetime.timezone.utc))
         new_subthread.save()
         this_thread.reply.add(new_subthread)
 
@@ -135,7 +135,7 @@ def report_thread(request, thread_id):
     this_thread = get_object_or_404(Thread, id=thread_id)
     this_thread.report += 1
     this_thread.save()
-    return HttpResponseRedirect(reverse("thread:thread", args=(thread_id,)))
+    return HttpResponse('<script language="javascript">self.close();</script>')
 
 
 def report_subthread(request, thread_id, subthread_id):
@@ -146,4 +146,74 @@ def report_subthread(request, thread_id, subthread_id):
     this_subthread = get_object_or_404(Sub_thread, id=subthread_id)
     this_subthread.report += 1
     this_subthread.save()
-    return HttpResponseRedirect(reverse("thread:thread", args=(thread_id,)))
+    return HttpResponse('<script language="javascript">self.close();</script>')
+
+
+def delete_thread(request, thread_id):
+    if not request.user.is_authenticated:
+        messages.warning(request, "Login First to proceed")
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+    this_thread = Thread.objects.get(id=thread_id)
+
+    if request.user.username != this_thread.author.username:
+        return HttpResponseRedirect(reverse("thread:thread", args=(thread_id,)))
+
+    this_thread.delete()
+    return HttpResponseRedirect(reverse("thread:index"))
+
+
+def update_reply(request, sub_thread_id):
+    this_sub_thread = get_object_or_404(Sub_thread, id=sub_thread_id)
+    check_update = 1
+    if request.user.username != this_sub_thread.author.username:
+        return HttpResponseRedirect(reverse("thread:thread", args=(this_sub_thread.replyto.id,)))
+
+    if request.method == "POST":
+        content = request.POST["content"]
+        this_sub_thread.content = content
+        this_sub_thread.save()
+
+        return HttpResponseRedirect(reverse("thread:thread", args=(this_sub_thread.replyto.id,)))
+
+    return render(request, "thread/thread.html", {
+        "thread": this_sub_thread.replyto,
+        "check_update_reply": check_update,
+        "reply_id": sub_thread_id,
+    })
+
+
+def delete_reply(request, sub_thread_id):
+    if not request.user.is_authenticated:
+        messages.warning(request, "Login First to proceed")
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+    this_sub_thread = Sub_thread.objects.get(id=sub_thread_id)
+
+    if request.user.username != this_sub_thread.author.username:
+        return HttpResponseRedirect(reverse("thread:thread", args=(this_sub_thread.replyto.id,)))
+
+    this_sub_thread.delete()
+    return HttpResponseRedirect(reverse("thread:thread", args=(this_sub_thread.replyto.id,)))
+
+
+def reset_report_thread(request, thread_id):
+    if not request.user.is_authenticated:
+        messages.warning(request, "Login First to proceed")
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+    this_thread = get_object_or_404(Thread, id=thread_id)
+    this_thread.report = 0
+    this_thread.save()
+    return HttpResponseRedirect(reverse("user:admin"))
+
+
+def reset_report_reply(request, sub_thread_id):
+    if not request.user.is_authenticated:
+        messages.warning(request, "Login First to proceed")
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+    this_subthread = get_object_or_404(Sub_thread, id=sub_thread_id)
+    this_subthread.report = 0
+    this_subthread.save()
+    return HttpResponseRedirect(reverse("user:admin"))

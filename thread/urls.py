@@ -15,5 +15,16 @@ urlpatterns = [path("", views.index, name="index"),
                     views.report_subthread, name="report_subthread"),
                path("update/<int:thread_id>",
                     views.update_thread, name="update_thread"),
+               path("delete_thread/<int:thread_id>",
+                    views.delete_thread, name="delete_thread"),
+               path("update_reply/<int:sub_thread_id>",
+                    views.update_reply, name="update_reply"),
+               path("delete_reply/<int:sub_thread_id>",
+                    views.delete_reply, name="delete_reply"),
 
+
+               path("reset_report_reply/<int:sub_thread_id>",
+                    views.reset_report_reply, name="reset_report_reply"),
+               path("reset_report_thread/<int:thread_id>",
+                    views.reset_report_thread, name="reset_report_thread"),
                ]

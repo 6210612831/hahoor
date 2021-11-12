@@ -91,6 +91,39 @@
 
 </style>
 
+<script language="javascript">
+    function confirm_delete_thread()
+{
+    var answer = window.confirm("ยืนยันลบกระทู้");
+    if(answer)
+    {
+        alert("ลบกระทู้สำเร็จ");
+    }
+    return answer;
+}
+function confirm_delete_sub_thread()
+{
+    var answer = window.confirm("ยืนยันลบการตอบกลับกระทู้");
+    if(answer)
+    {
+        alert("ลบการตอบกลับกระทู้สำเร็จ");
+    }
+    return answer;
+}
+function report_thread()
+    {
+        var win = window.open("{% url 'thread:report_thread' thread.id %}","popup");
+        return false;
+    }
+function report_sub_thread(val)
+    {
+        const sub_id = document.getElementById("sub_thread_id").value;
+        var win = window.open(sub_id,"popup");
+        return false;
+    }
+</script>
+
+
 <div style="margin-left: 25%; margin-right: 25%; margin-bottom: 13em; margin-top: 4em;">
 
     <!-- update thread -->
@@ -115,7 +148,7 @@
     <b class="p3" style="float: right;">{{thread.date}} &#9203;
         
     {% if request.user.username == thread.author.username %}
-        <a href ="" style="float: right; text-decoration: none; margin-left: 0.5em; margin-top: -0.1em;"><b class="p5">&#128680; ลบ</b></a>
+        <a href ="{% url 'thread:delete_thread' thread.id %}" onclick="return confirm_delete_thread()" style="float: right; text-decoration: none; margin-left: 0.5em; margin-top: -0.1em;"><b class="p5">&#128680; ลบ</b></a>
         <a href = "{% url 'thread:update_thread' thread.id %}" style="float: right; text-decoration: none; margin-left: 0.5em; margin-top: -0.1em;"><p class="p5">แก้ไข</p></a>
     {% endif %}
     
@@ -126,9 +159,9 @@
     <h3><p class="p4">{{thread.content | convert_markdown | safe }}</p></h3>
     <br>
 
-    <div style="float: right; margin-top: -1.5em;">
+    <div style="float: right; margin-top: -1.5em;" id ="#report_thread">
         <a href="#ตอบกลับกระทู้"><button class="button button5"><b class="p3">&#128073; ตอบกลับกระทู้</b></button></a>
-        <a href="{% url 'thread:report_thread' thread.id %}"><button class="button button5">&#128681; <b class="p3">report</b></button></a>
+        <a href="#report_thread" onclick="report_thread()"><button class="button button5">&#128681; <b class="p3">report</b></button></a>
     </div>
     <br>
     {% endif %}
@@ -140,20 +173,31 @@
     <b class="p3">การตอบกลับที่ {{forloop.counter}}</b>
     <b class="p3" style="float: right;">{{sub_thread.date}} &#9203;
         {% if request.user.username == sub_thread.author.username %}
-            <a href="" style="float: right; text-decoration: none; margin-left: 0.5em; margin-top: -0.08em;"><b class="p5">&#128680; ลบ</b></a>
-            <a href = "" style="float: right; text-decoration: none; margin-left: 0.5em; margin-top: -0.08em;"><b class="p5">แก้ไข</b></a>
+            <a href="{% url 'thread:delete_reply' sub_thread.id%}" onclick="return confirm_delete_sub_thread()" style="float: right; text-decoration: none; margin-left: 0.5em; margin-top: -0.08em;"><b class="p5">&#128680; ลบ</b></a>
+            <a href = "{% url 'thread:update_reply' sub_thread.id%}" style="float: right; text-decoration: none; margin-left: 0.5em; margin-top: -0.08em;"><b class="p5">แก้ไข</b></a>
         {% endif %}
     </b>
     <br>
     <br>
     
-    <h4>{{sub_thread.content | convert_markdown | safe | linebreaks}}</h4>
+    {% if check_update_reply == 1 and sub_thread.id == reply_id %}
+    <form method="POST" action="{% url 'thread:update_reply' sub_thread.id %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <textarea type="text" name="content" class="form-control" maxlength="500"  required>{{sub_thread.content}}</textarea>
+        <br>
+        <input type="submit" value ="ยืนยัน" class="btn button6 p3"></input>
+    </form>
+    {% else %}
+        <h4>{{sub_thread.content | convert_markdown | safe | linebreaks}}</h4>
+    {% endif %}
+    
     <br>
 
     <img class="avatar" src="/static/images/avatar.png" style="width: 2em; height: 2em; margin-bottom: 0em;"> 
     <b class="p3">ตอบกลับโดย {{sub_thread.author}} </b>
-    <div style="float: right; margin-top: -0.2em;">
-        <a href="{% url 'thread:report_subthread' thread.id sub_thread.id%}"><button class="button button5">&#128681; <b class="p3">report</b></button></a>
+    <div style="float: right; margin-top: -0.2em;" id = "#report_sub_thread">
+        <input type="hidden" value="{% url 'thread:report_subthread' thread.id sub_thread.id %}" id="sub_thread_id">
+        <a href="#report_sub_thread" onclick="report_sub_thread()"><button class="button button5">&#128681; <b class="p3">report</b></button></a>
     </div>
     
     <div class="line"></div>
