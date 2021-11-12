@@ -297,7 +297,7 @@ function confirm_delete_review()
                 <br>
             {% endif %}
             {% endfor %}
-            {% if check_update_review != 1 %}
+            {% if check_update_review != 1 and dormitory.status == 1 %}
             {% if request.user.is_authenticated %}
             <!-- form -->
             <form method="POST" action="{% url 'dormitory:review_dormitory' dormitory.id%}" enctype="multipart/form-data" id=เขียนรีวิว>
