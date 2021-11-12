@@ -297,12 +297,12 @@ function confirm_delete_review()
                 <br>
             {% endif %}
             {% endfor %}
-
+            {% if check_update_review != 1 %}
             {% if request.user.is_authenticated %}
             <!-- form -->
             <form method="POST" action="{% url 'dormitory:review_dormitory' dormitory.id%}" enctype="multipart/form-data" id=เขียนรีวิว>
                 {% csrf_token %}
-                <b class="p5">Rating: </p>
+                <b class="p4">Rating: </p>
                 <div class="rate">
                     <input name="stars" type="radio" id="star5" name="rate" value="5" />
                     <label for="star5" title="text">🌚</label>
@@ -322,6 +322,7 @@ function confirm_delete_review()
             </form>
             {% else %}
             <a href="#login" style="text-decoration: none;"><h3 id=เขียนรีวิว style="text-align: center;">&#9997; กรุณา Login เพื่อเขียนรีวิว &#10071;</h3></a>
+            {% endif %}
             {% endif %}
     {% endif %}
 
