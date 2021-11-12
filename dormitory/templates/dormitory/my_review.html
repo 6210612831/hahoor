@@ -1,7 +1,118 @@
-{% extends "dormitory/layout.html" %} {% block body %}
+{% extends "dormitory/layout.html" %} 
+{% block body %}
 
-<title>รีวิวของฉัน &#9997;</title>
+<title>รีวิวของฉัน</title>
+<style>
+    .button5 {
+        background-color: #cec8ef;
+        color: black;
+        border: 2px solid white;
+    }
 
-<h1>การรีวิวของฉัน</h1>
+    .button5:hover {
+        background-color: #aa98e7;
+        color: rgb(0, 0, 0);
+        border: 2px solid #e2e2e2;
+    }
+    .p2 {
+        font-family: "Prompt", sans-serif;
+        font-size: 1em;
+        }
+    .p3 {
+        font-family: "Prompt", sans-serif;
+        font-size: 2.5em;
+        }
+    .p4 {
+        font-family: "Prompt", sans-serif;
+        font-size: 1.2em;
+        }
+    .p4:hover {
+        color: #aa98e7;
+    }
+    .p5 {
+        font-family: "Prompt", sans-serif;
+        font-size: 1em;
+        }
+    .button6 {
+        background-color: rgb(238, 125, 105);
+        color: black;
+        border: 2px solid white;
+    }
+
+    .button6:hover {
+        background-color: #aa98e7;
+        color: rgb(0, 0, 0);
+        border: 2px solid #e2e2e2;
+    }
+    .line {
+        height: 1px;
+        width: 100%;
+        background-color: #E0E0E0;
+        margin-top: 10px;
+    }
+    img.scaled {
+        width: 250px;
+        height: 200px;
+    }
+</style>
+
+<script language="javascript">
+    function confirm_delete()
+    {
+        var answer = window.confirm("ยืนยันการลบ");
+        if(answer)
+        {
+            alert("การลบสำเร็จ");
+        }
+        return answer;
+    }
+</script>
+
+<div style="margin-left: 10%; margin-right: 10%; margin-bottom: 5em;">
+    <h2 class="p3"><b>การรีวิวของฉัน<b></h2>
+    <br>
+    <div class="container">
+        {% if not my_review %}
+            <b class="p5">ยังไม่ได้ทำการรีวิว</b>
+            <div class="line"></div>
+            <br>
+        {% else %}
+            {% for review in my_review %}
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <a href="{% url 'dormitory:dormitory' review.reviewto.id %}" style="text-decoration: none;"><b class="p4">{{review.reviewto}}</b></a>
+                        <br>
+                        <table style="float: right; margin-top: -2em;">
+                            <tr>
+                                <td width=70px><a href = "{% url 'dormitory:update_review' review.id %}" style="text-decoration: none;"><b class="p2">&#9997; แก้ไข</b></a></td>
+                                <td><a href = "{% url 'dormitory:delete_review' review.id %}" style="text-decoration: none;" onclick="return confirm_delete()"><b class="p2">&#128680; ลบ</b></a></td>
+                        </table>
+                        <br>
+                        <div>
+                            <b class="p5">rating: 
+                                {% if review.stars == 1 %}
+                                <span style="font-size: 1em;"> &#127773;&#127770;&#127770;&#127770;&#127770;</span>
+                                {% elif review.stars == 2 %}
+                                    <span style="font-size: 1em;"> &#127773;&#127773;&#127770;&#127770;&#127770;</span>
+                                {% elif review.stars == 3 %}
+                                    <span style="font-size: 1em;"> &#127773;&#127773;&#127773;&#127770;&#127770;</span>
+                                {% elif review.stars == 4 %}
+                                    <span style="font-size: 1em;"> &#127773;&#127773;&#127773;&#127773;&#127770;</span>
+                                {% elif review.stars == 5 %}
+                                <span style="font-size: 1em;"> &#127773;&#127773;&#127773;&#127773;&#127773;</span>
+                                {% endif %}
+                            </b>
+                            <br>
+                            <b class="p5">เนื้อหา: {{review.content}}</b></a>
+                        </div>   
+                    </div>
+                </div>
+                <br>
+                <div class="line"></div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
 
 {% endblock %}

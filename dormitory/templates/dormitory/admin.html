@@ -6,6 +6,7 @@
     .button5 {
         background-color: #cec8ef;
         color: black;
+
         border: 2px solid white;
     }
     .button5:hover {
@@ -16,16 +17,35 @@
     .button6 {
         background-color: rgb(238, 125, 105);
         color: black;
-        border: 2px solid white;
+        border: 1px solid white;
     }
     .button6:hover {
+        background-color: white;
+        color: rgb(0, 0, 0);
+        border: 1px solid rgb(238, 125, 105);
+    }
+    .button7 {
+        background-color: rgb(255, 255, 255);
+        color: black;
+        height: 2.35em;
+        border: 1px solid rgb(238, 125, 105);
+    }
+    .button7:hover {
+        background-color: rgb(238, 125, 105);
+        color: rgb(0, 0, 0);
+    }
+    .button8 {
+        background-color: rgb(255, 255, 255);
+        color: black;
+        border: 1px solid #aa98e7;
+    }
+    .button8:hover {
         background-color: #aa98e7;
         color: rgb(0, 0, 0);
-        border: 2px solid #e2e2e2;
     }
     .p2 {
         font-family: "Prompt", sans-serif;
-        font-size: 1em;
+        font-size: 0.95em;
         }
     .p3 {
         font-family: "Prompt", sans-serif;
@@ -57,10 +77,10 @@
 <script language="javascript">
     function confirm_delete()
     {
-        var answer = window.confirm("Delete?");
+        var answer = window.confirm("ยืนยันการลบ");
         if(answer)
         {
-            alert("Delete Success");
+            alert("การลบสำเร็จ");
         }
         return answer;
     }
@@ -69,7 +89,9 @@
 
 
 
-<div style="margin-left: 10%; margin-right: 10%; margin-bottom: 5em;">
+<div style="margin-left: 10%; margin-right: 10%; margin-bottom: 13em;">
+
+<!-- dormitory -->
 <h2 class="p3"><b>Dormitories<b></h2>
 <br>
     <div class="container">
@@ -106,7 +128,7 @@
                         <br>
                         <br>
                         <div style="float: right;">
-                            <a href="{% url 'dormitory:change_status_dormitory' dorm.id %}"><button type="button" class="btn button2 p2" style="width: 10em; height: 2.5em; margin-top: -0.5em;"><b>Change Status</b></button></a>
+                            <a href="{% url 'dormitory:change_status_dormitory' dorm.id %}"><button type="button" class="btn button8 p2" style="width: 10em; height: 2.35em; margin-top: -0.5em;"><b>Change Status</b></button></a>
                             <a href="{% url 'dormitory:remove_dormitory' dorm.id %}"><button type="button" class="btn button6 p2" style="width: 5.8em; height: 2.5em; margin-top: -0.5em;" onclick="return confirm_delete()"><b>Delete</b></button></a>
                         </div> 
                         <div class="figure">
@@ -126,6 +148,7 @@
         {% endif %}
     </div>
 
+<!-- thread -->
     <h2 class="p3"><b>Threads</b></h2>
     <br>
         <div class="container">
@@ -137,27 +160,33 @@
                 {% for thread in reported_threads%}
                     <div class="col">
                         <a href = "{% url 'thread:thread' thread.id %}" style="text-decoration: none;"><b class="p4">{{thread.header}}</b></a>
-                        <table style="float: right;">
+                        <table style="float: right; margin-top: -1em;">
                             <tr>
                                 <td width=200px>&#9200; <b class="p2">{{thread.date}}</b></td> 
-                                <td width=150px>&#128681; <b class="p2">รายงาน {{thread.report}}</b></td>
+                                <td>&#128681; <b class="p2">รายงาน {{thread.report}}</b></td>
                                
                             </tr>
                         </table>
                         <br>
                         <b class="p5">by {{thread.author}}</b>
                         <br>
-                        <a href="{% url 'thread:reset_report_thread' thread.id %}"><button type="button"class="btn button5 p2" style="float: right; margin-top: -0.5em;"><b>Reset report</b></button></a>
-                        <a href="" style="float: right;"><button type="button"class="btn button6 p2" style="width: 5.8em; height: 2.5em; margin-top: -0.5em;" onclick="return confirm_delete()"><b>Delete</b></button></a>
+                        <table style="float: right; margin-top: -1em;">
+                            <tr>
+                                <td width=115px><a href="{% url 'thread:reset_report_thread' thread.id %}"><button type="button"class="btn button7 p2" style="margin-top: -0.4em;"><b>Reset report</b></button></a></td>
+                                <td><a href=""><button type="button"class="btn button6 p2" style="width: 5.8em; height: 2.5em; margin-top: -0.5em;" onclick="return confirm_delete()"><b>Delete</b></button></a></td>
+                            </tr>
+                        </table>
                         <br>
                     </div>
+                    
                     <br>
                     <div class="line"></div>
                     <br>
                 {% endfor %}
             {% endif %}
         </div>
-    
+
+<!-- sub thread -->
     <h2 class="p3"><b>Sub Threads</b></h2>
     <br>
         <div class="container">
@@ -172,7 +201,7 @@
                         <table style="float: right;">
                             <tr>
                                 <td width=200px>&#9200; <b class="p2">{{sub_thread.date}}</b></td> 
-                                <td width=150px>&#128681; <b class="p2">รายงาน {{sub_thread.report}}</b></td>
+                                <td>&#128681; <b class="p2">รายงาน {{sub_thread.report}}</b></td>
                             </tr>
                         </table>
                         <br>
@@ -180,8 +209,12 @@
                         <b class="p5">เนื้อหา: {{sub_thread.content}}</b>
                         <br>
                         <b class="p2">ตอบกลับโดย {{sub_thread.author}}</b>
-                        <a href="{% url 'thread:reset_report_reply' sub_thread.id %}"><button type="button"class="btn button5 p2" style="float: right; margin-top: -0.5em;"><b>Reset report</b></button></a>
-                        <a href="" style="float: right; margin-top: -1em;"><button type="button"class="btn button6 p2" style="width: 5.8em; height: 2.5em; margin-top: -0.5em;" onclick="return confirm_delete()"><b>Delete</b></button></a>
+                        <table style="float: right;">
+                            <tr>
+                                <td width=115px><a href="{% url 'thread:reset_report_reply' sub_thread.id %}"><button type="button"class="btn button7 p2" style="margin-top: -2.5em;"><b>Reset report</b></button></a></td>
+                                <td><a href="" style="margin-top: -1em;"><button type="button"class="btn button6 p2" style="width: 5.8em; height: 2.5em; margin-top: -2.5em;" onclick="return confirm_delete()"><b>Delete</b></button></a></td>
+                            </tr>
+                        </table>
                     </div>
                     <br>
                     <div class="line"></div>
@@ -189,6 +222,7 @@
                 {% endfor %}
             {% endif %}
         </div>
+<!-- review -->
     <h2 class="p3"><b>Reviews</b></h2>
     <br>
         <div class="container">
@@ -203,7 +237,7 @@
                         <table style="float: right;">
                             <tr>
                                 <td width=200px>&#9200; <b class="p2">{{review.date}}</b></td> 
-                                <td width=150px>&#128681; <b class="p2">รายงาน {{review.report}}</b></td>
+                                <td>&#128681; <b class="p2">รายงาน {{review.report}}</b></td>
                             </tr>
                         </table>
                         <br>
@@ -211,8 +245,12 @@
                         <b class="p5">เนื้อหา: {{review.content}}</b>
                         <br>
                         <b class="p2">ตอบกลับโดย {{review.author}}</b>
-                        <a href="{% url 'dormitory:reset_report_review' review.id %}"><button type="button"class="btn button5 p2" style="float: right; margin-top: -1em;"><b>Reset report</b></button></a>
-                        <a href="" style="float: right; margin-top: -1em;"><button type="button"class="btn button6 p2" style="width: 5.8em; height: 2.5em; margin-top: -0.5em;" onclick="return confirm_delete()"><b>Delete</b></button></a>
+                        <table style="float: right;">
+                            <tr>
+                                <td width=115px><a href="{% url 'dormitory:reset_report_review' review.id %}"><button type="button"class="btn button7 p2" style="margin-top: -2.5em;"><b>Reset report</b></button></a></td>
+                                <td><a href="" style="margin-top: -1em;"><button type="button"class="btn button6 p2" style="width: 5.8em; height: 2.5em; margin-top: -2.5em;" onclick="return confirm_delete()"><b>Delete</b></button></a></td>
+                            </tr>
+                        </table>
                     </div>
                     <br>
                     <div class="line"></div>

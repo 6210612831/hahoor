@@ -56,6 +56,18 @@
     }
 </style>
 
+<script language="javascript">
+    function confirm_delete()
+    {
+        var answer = window.confirm("ยืนยันการลบ");
+        if(answer)
+        {
+            alert("การลบสำเร็จ");
+        }
+        return answer;
+    }
+</script>
+
 <div style="margin-left: 10%; margin-right: 10%; margin-bottom: 5em;">
     <h2 class="p3"><b>หอพักของฉัน<b></h2>
     <br>
@@ -87,9 +99,9 @@
                         </table>
                         <table style="float: right; margin-top: 1em;">
                             <tr>
-                                <td width=70px><a href = "" style="text-decoration: none;"><b class="p2">&#9997; แก้ไข</b></a></td>
-                                <td width=60px><a href = "" style="text-decoration: none;"><b class="p2">&#128680; ลบ</b></a></td>
-                                <td><b class="p5">&#128229; ตอบกลับ</b></td>
+                                <td width=70px><a href = "{% url 'dormitory:update_dormitory' dorm.id%}" style="text-decoration: none;"><b class="p2">&#9997; แก้ไข</b></a></td>
+                                <td width=60px><a href = "{% url 'dormitory:remove_dormitory' dorm.id%}" style="text-decoration: none;" onclick="return confirm_delete()"><b class="p2">&#128680; ลบ</b></a></td>
+                                <td><b class="p5">&#128077; รีวิว {{dorm.reviews.count }}</b></td>
                         </table>   
                     </div>
                 </div>

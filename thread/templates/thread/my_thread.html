@@ -54,7 +54,20 @@
     }
 </style>
 
+<script language="javascript">
+    function confirm_delete()
+    {
+        var answer = window.confirm("ยืนยันการลบ");
+        if(answer)
+        {
+            alert("การลบสำเร็จ");
+        }
+        return answer;
+    }
+</script>
+
 <div style="margin-left: 10%; margin-right: 10%; margin-bottom: 5em;">
+<!-- my thread -->
     <h2 class="p3"><b>กระทู้ของฉัน &#128172;<b></h2>
     <br>
         <div class="container">
@@ -72,7 +85,7 @@
                             <table style="float: right;">
                                 <tr>
                                     <td width=70px><a href = "{% url 'thread:update_thread' thread.id %} " style="text-decoration: none;"><b class="p2">&#9997; แก้ไข</b></a></td>
-                                    <td width=60px><a href = "" style="text-decoration: none;"><b class="p2">&#128680; ลบ</b></a></td>
+                                    <td width=60px><a href = "{% url 'thread:delete_thread' thread.id%} " style="text-decoration: none;" onclick="return confirm_delete()"><b class="p2">&#128680; ลบ</b></a></td>
                                     <td><b class="p5">&#128229; ตอบกลับ {{thread.number_reply}}</b></td>
                             </table>  
                         </div>
@@ -82,6 +95,7 @@
                 {% endfor %}
             {% endif %}
         </div>
+<!-- reply -->
     <h2 class="p3"><b>การตอบกลับของฉัน &#128228;</b></h2>
     <br>
         <div class="container">
@@ -96,8 +110,8 @@
                         <a href = "{% url 'thread:thread' reply.replyto.id %}" style="text-decoration: none;"><b class="p4">{{reply.replyto.header}}</b></a>
                         <table style="float: right; margin-top: 1em;">
                             <tr>
-                                <td width=70px><a href = "" style="text-decoration: none;"><b class="p2">&#9997; แก้ไข</b></a></td>
-                                <td><a href = "" style="text-decoration: none;"><b class="p2">&#128680; ลบ</b></a></td>
+                                <td width=70px><a href = "{% url 'thread:update_reply' reply.id%}" style="text-decoration: none;"><b class="p2">&#9997; แก้ไข</b></a></td>
+                                <td><a href = "{% url 'thread:delete_reply' reply.id%}" style="text-decoration: none;" onclick="return confirm_delete()"><b class="p2">&#128680; ลบ</b></a></td>
                         </table>  
                         <div>
                         <b class="p5">เนื้อหา: {{reply.content}}</b></a>

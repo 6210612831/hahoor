@@ -5,10 +5,6 @@
 <title>{{ dormitory.title }}</title>
 
 <style>
-    .p9 {
-        font-family: 'Noto Sans Thai', sans-serif;
-        font-size: 1.5em;
-    }
     .p2 {
         font-family: 'Noto Sans Thai', sans-serif;
         font-size: 2em;
@@ -26,7 +22,19 @@
         font-size: 1.1em;
     }
     .p5:hover {
-        color: #aa98e7;
+        color: #000000;
+    }
+    .p6 {
+        font-family: 'Noto Sans Thai', sans-serif;
+        font-size: 1em;
+    }
+    .p7 {
+        font-family: 'Noto Sans Thai', sans-serif;
+        font-size: 1.5em;
+    }
+    .p8 {
+        font-family: "Prompt", sans-serif;
+        font-size: 1em;
     }
     img{
         display: block;
@@ -42,7 +50,7 @@
         height: 1px;
         position: relative;
         vertical-align: middle;
-        width: 46%;
+        width: 43%;
     }
     .h3:before {
         right: 0.5em;
@@ -141,39 +149,32 @@
         content: '🌝';
     ;
     }
-
-    #id_title {
-        width :600px;
-        height: 50px;
-    }
     #id_desc {
-        width :600px;
-        height: 150px;
+    width: 100%;
+    height: 100px;
     }
     #id_content {
-        width :600px;
-        height: 300px;
+    width: 100%;
+    height: 200px;
     }
-
-
 </style>
 
 <script language="javascript">
     function confirm_delete_dorm()
 {
-    var answer = window.confirm("ยืนยันลบหอพัก");
+    var answer = window.confirm("ยืนยันการลบ");
     if(answer)
     {
-        alert("ลบหอพักสำเร็จ");
+        alert("การลบสำเร็จ");
     }
     return answer;
 }
 function confirm_delete_review()
 {
-    var answer = window.confirm("ยืนยันลบการรีวิว");
+    var answer = window.confirm("ยืนยันการลบ");
     if(answer)
     {
-        alert("ลบการรีวิวสำเร็จ");
+        alert("การลบสำเร็จ");
     }
     return answer;
 }
@@ -182,18 +183,26 @@ function confirm_delete_review()
 
 <!-- content -->
 <div style="margin-left: 25%; margin-right: 25%; margin-bottom: 13em; margin-top: 4em;">
+    <!-- update dormitory -->
     {% if check_update_dorm == 1 %}
         <form method="POST" action="{% url 'dormitory:update_dormitory' dormitory.id %}" enctype="multipart/form-data">
         
             {% csrf_token %}
         
             <div class="container">
-                <input type="submit" value ="ยืนยันการแก้ไข" class="btn button1 p5" style="float: right;"></input>
-                <p class="p9">ชื่อหอพัก : </br> {{ form.title }}</p>
-                <p class="p9">คำอธิบาย : </br> {{ form.desc }}</p>
-                <p class="p9">เนื้อหา : </br> {{ form.content }}</p>
+                <button type="submit" class="btn button1 p5" style="float: right;">ยืนยันการแก้ไข</button>
+                
+                <b class="p7">ชื่อหอพัก :</b>
+                <p class="p6" style="margin-top: 1em;">{{ form.title }}</p>
+                <br>
+                <b class="p7">คำอธิบาย :</b>
+                <p class="p6" style="margin-top: 1em;">{{ form.desc }}</p>
+                <br>
+                <b class="p7">เนื้อหา :</b>
+                <p class="p6">{{ form.content }}</p>
             </div>
         </form>
+        <br>
         {{ form.media }}
         <br>
     {% else %}
@@ -224,79 +233,89 @@ function confirm_delete_review()
             <br>
             <br>
     {% endif %}
+
     {% if check_update_dorm != 1 %}
+        <h3 class="p3 h3">&#128172;<b> การรีวิว</b></h3>
+        {% if not dormitory.reviews.all%}
+            <br>
+            <div style="text-align: center;">
+                <b class="p4">ยังไม่มีการรีวิว สามารถเขียนรีวิวของคุณได้ที่ด้านล่าง &#128071;</b>
+            </div>
+            <br>
+            <div class="line"></div>
+            <br>
+        {% else %}
             <!-- review -->
-            <h3 class="p3 h3">&#128172;<b> การรีวิว</b></h3>
             {% for review in dormitory.reviews.all %}
-            
-            {% if check_update_review == 1 and review.id == review_id%}
-                <form method="POST" action="{% url 'dormitory:update_review' review.id %}" enctype="multipart/form-data">
-                    {% csrf_token %}
-
-                    <img class="avatar" src="/static/images/avatar.png" style="float:left; margin-right: 1em; margin-top: 0.5em; width: 3em; height: 3em;">
-                    <b class="p3" style="margin-left: 0.5em;">{{review.author}} </b>
-                    <br>
+                {% if check_update_review == 1 and review.id == review_id%}
+                    <form method="POST" action="{% url 'dormitory:update_review' review.id %}" enctype="multipart/form-data">
                         {% csrf_token %}
-                        <div class="rate ">
-                            <b class="p3">rating:</b>
-                            <input name="stars" type="radio" id="star5" name="rate" value="5" />
-                            <label for="star5" title="text">🌚</label>
-                            <input name="stars" type="radio" id="star4" name="rate" value="4" />
-                            <label for="star4" title="text">🌚</label>
-                            <input name="stars" type="radio" id="star3" name="rate" value="3" />
-                            <label for="star3" title="text">🌚</label>
-                            <input name="stars" type="radio" id="star2" name="rate" value="2" />
-                            <label for="star2" title="text">🌚</label>
-                            <input name="stars" type="radio" id="star1" name="rate" value="1" />
-                            <label for="star1" title="text">🌚</label>
-                        </div>
-                        
-                        <textarea type="text" name="content" class="form-control" maxlength="500"required>{{review.content}}</textarea>
+
+                        <img class="avatar" src="/static/images/avatar.png" style="float:left; margin-right: 1em; margin-top: 0.5em; width: 3em; height: 3em;">
+                        <b class="p3" style="margin-left: 0.5em;">{{review.author}} </b>
                         <br>
-        
-                        <input type="submit" value ="ยืนยัน" class="btn button6 p3"></input>
-
-                </form>
-                {{ form.media }}
-                <br>
-
-            {% else %}
-                <img class="avatar" src="/static/images/avatar.png" style="float:left; margin-right: 1em; margin-top: 0.5em; width: 3em; height: 3em;">
-                <b class="p3" style="margin-left: 0.5em;" id="{{review.id}}">{{review.author}} </b>
-                <br>
-                {% if review.stars == 1 %}
-                <span style="font-size: 1.5em;"> &#127773;&#127770;&#127770;&#127770;&#127770;</span>
-                {% elif review.stars == 2 %}
-                    <span style="font-size: 1.5em;"> &#127773;&#127773;&#127770;&#127770;&#127770;</span>
-                {% elif review.stars == 3 %}
-                    <span style="font-size: 1.5em;"> &#127773;&#127773;&#127773;&#127770;&#127770;</span>
-                {% elif review.stars == 4 %}
-                    <span style="font-size: 1.5em;"> &#127773;&#127773;&#127773;&#127773;&#127770;</span>
-                {% elif review.stars == 5 %}
-                <span style="font-size: 1.5em;"> &#127773;&#127773;&#127773;&#127773;&#127773;</span>
-                {% endif %}
-                
-                <br>
-                
-                <br>
-                <b class="p3" style="float: right; margin-top: -5.5em;" >{{review.date}} &#9203;
-                    {% if request.user.username == review.author.username %}
-                        <a href ="{% url 'dormitory:delete_review' review.id %}" onclick="return confirm_delete_review()" style="float: right; text-decoration: none; margin-left: 0.5em; margin-top: -0.13em;"><b class="p5">&#128680; ลบ</b></a>
-                        <a href ="{% url 'dormitory:update_review' review.id %}" style="float: right; text-decoration: none; margin-left: 0.5em; margin-top: -0.08em;"><b class="p5">แก้ไข</b></a>
-                    {% endif %}
-                </b>
-                
-                <h4 >{{review.content | convert_markdown | safe }}</h4>
+                            {% csrf_token %}
+                            <div class="rate ">
+                                <b class="p3">rating:</b>
+                                <input name="stars" type="radio" id="star5" name="rate" value="5" />
+                                <label for="star5" title="text">🌚</label>
+                                <input name="stars" type="radio" id="star4" name="rate" value="4" />
+                                <label for="star4" title="text">🌚</label>
+                                <input name="stars" type="radio" id="star3" name="rate" value="3" />
+                                <label for="star3" title="text">🌚</label>
+                                <input name="stars" type="radio" id="star2" name="rate" value="2" />
+                                <label for="star2" title="text">🌚</label>
+                                <input name="stars" type="radio" id="star1" name="rate" value="1" />
+                                <label for="star1" title="text">🌚</label>
+                            </div>
+                            
+                            <textarea type="text" name="content" class="form-control" maxlength="500"required>{{review.content}}</textarea>
+                            <br>
             
-                <div style="float: right; margin-top: -2em; ">
-                    <a href="{% url 'dormitory:report_review' review.id %}" class="button button5" role="button" aria-pressed="true">&#128681; <b class="p3">report</b></a>
-                </div>
-                <br>
+                            <input type="submit" value ="ยืนยัน" class="btn button6 p3"></input>
 
-                <div class="line"></div>
-                <br>
-            {% endif %}
+                    </form>
+                    {{ form.media }}
+                    <br>
+
+                {% else %}
+                    <img class="avatar" src="/static/images/avatar.png" style="float:left; margin-right: 1em; margin-top: 0.5em; width: 3em; height: 3em;">
+                    <b class="p3" style="margin-left: 0.5em;" id="{{review.id}}">{{review.author}} </b>
+                    <br>
+                    {% if review.stars == 1 %}
+                    <span style="font-size: 1.5em;"> &#127773;&#127770;&#127770;&#127770;&#127770;</span>
+                    {% elif review.stars == 2 %}
+                        <span style="font-size: 1.5em;"> &#127773;&#127773;&#127770;&#127770;&#127770;</span>
+                    {% elif review.stars == 3 %}
+                        <span style="font-size: 1.5em;"> &#127773;&#127773;&#127773;&#127770;&#127770;</span>
+                    {% elif review.stars == 4 %}
+                        <span style="font-size: 1.5em;"> &#127773;&#127773;&#127773;&#127773;&#127770;</span>
+                    {% elif review.stars == 5 %}
+                    <span style="font-size: 1.5em;"> &#127773;&#127773;&#127773;&#127773;&#127773;</span>
+                    {% endif %}
+                    
+                    <br>
+                    
+                    <br>
+                    <b class="p3" style="float: right; margin-top: -5.5em;" >{{review.date}} &#9203;
+                        {% if request.user.username == review.author.username %}
+                            <a href ="{% url 'dormitory:delete_review' review.id %}" onclick="return confirm_delete_review()" style="float: right; text-decoration: none; margin-left: 0.5em; margin-top: -0.13em;"><b class="p5">&#128680; ลบ</b></a>
+                            <a href ="{% url 'dormitory:update_review' review.id %}" style="float: right; text-decoration: none; margin-left: 0.5em; margin-top: -0.08em;"><b class="p5">แก้ไข</b></a>
+                        {% endif %}
+                    </b>
+                    
+                    <h4 >{{review.content | convert_markdown | safe }}</h4>
+                
+                    <div style="float: right; margin-top: -2em; ">
+                        <a href="{% url 'dormitory:report_review' review.id %}" class="button button5" role="button" aria-pressed="true">&#128681; <b class="p3">report</b></a>
+                    </div>
+                    <br>
+
+                    <div class="line"></div>
+                    <br>
+                {% endif %}
             {% endfor %}
+        {% endif %}
             {% if check_update_review != 1 and dormitory.status == 1 %}
             {% if request.user.is_authenticated %}
             <!-- form -->
@@ -318,7 +337,7 @@ function confirm_delete_review()
                 <textarea type="text" name="content" class="form-control" maxlength="500" placeholder="ตอบกลับกระทู้" required></textarea>
                 <br>
 
-                <input type="submit" value ="ยืนยัน" class="btn button6 p3"></input>
+                <input type="submit" value ="ยืนยัน" class="btn button6 p8"></input>
             </form>
             {% else %}
             <a href="#login" style="text-decoration: none;"><h3 id=เขียนรีวิว style="text-align: center;">&#9997; กรุณา Login เพื่อเขียนรีวิว &#10071;</h3></a>

@@ -160,7 +160,7 @@ def delete_thread(request, thread_id):
         return HttpResponseRedirect(reverse("thread:thread", args=(thread_id,)))
 
     this_thread.delete()
-    return HttpResponseRedirect(reverse("thread:index"))
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 
 def update_reply(request, sub_thread_id):
@@ -194,7 +194,7 @@ def delete_reply(request, sub_thread_id):
         return HttpResponseRedirect(reverse("thread:thread", args=(this_sub_thread.replyto.id,)))
 
     this_sub_thread.delete()
-    return HttpResponseRedirect(reverse("thread:thread", args=(this_sub_thread.replyto.id,)))
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 
 def reset_report_thread(request, thread_id):

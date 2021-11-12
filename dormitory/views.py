@@ -99,7 +99,7 @@ def my_review(request):
     return render(request, "dormitory/my_review.html", {
         "my_review": Review.objects.filter(author=request.user)
     })
-    
+
 
 def remove_dormitory(request, dormitory_id):
 
@@ -239,7 +239,7 @@ def delete_review(request, reviews_id):
         return HttpResponseRedirect(reverse("dormitory:dormitory", args=(this_review.reviewto.title,)))
 
     this_review.delete()
-    return HttpResponseRedirect(reverse("dormitory:dormitory", args=(this_review.reviewto.title,)))
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 
 def delete_dormitory(request, dormitory_id):
@@ -253,7 +253,7 @@ def delete_dormitory(request, dormitory_id):
         return HttpResponseRedirect(reverse("dormitory:dormitory", args=(this_dorm.title,)))
 
     this_dorm.delete()
-    return HttpResponseRedirect(reverse("dormitory:dormitories"))
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 
 def reset_report_review(request, review_id):
