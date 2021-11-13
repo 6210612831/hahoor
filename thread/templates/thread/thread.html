@@ -125,7 +125,7 @@ function report_thread()
     }
 function report_sub_thread(val)
     {
-        const sub_id = document.getElementById("sub_thread_id").value;
+        const sub_id = document.getElementById("sub_thread_id_"+val).value;
         var win = window.open(sub_id,"popup");
         return false;
     }
@@ -216,8 +216,8 @@ function report_sub_thread(val)
         <img class="avatar" src="/static/images/avatar.png" style="width: 2em; height: 2em; margin-bottom: 0em;"> 
         <b class="p3">ตอบกลับโดย {{sub_thread.author}} </b>
         <div style="float: right; margin-top: -0.2em;" id = "#report_sub_thread">
-            <input type="hidden" value="{% url 'thread:report_subthread' thread.id sub_thread.id %}" id="sub_thread_id">
-            <a href="#report_sub_thread" onclick="report_sub_thread()"><button class="button button5">&#128681; <b class="p3">report</b></button></a>
+            <input type="hidden" value="{% url 'thread:report_subthread' thread.id sub_thread.id %}" id="sub_thread_id_{{sub_thread.id}}">
+            <a href="#report_sub_thread" onclick="report_sub_thread({{sub_thread.id}})"><button class="button button5">&#128681; <b class="p3">report</b></button></a>
         </div>
         
         <div class="line"></div>
