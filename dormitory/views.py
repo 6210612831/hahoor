@@ -141,7 +141,9 @@ def review_dormitory(request, dormitory_id):
     this_dorm = Dormitory.objects.get(id=dormitory_id)
 
     if request.method == "POST":
-        stars = request.POST["stars"]
+        stars = 0
+        if request.POST.get("stars"):
+            stars = request.POST["stars"]
         content = request.POST["content"]
 
         new_review = Review.objects.create(reviewto=this_dorm, stars=stars, content=content, author=request.user,
@@ -163,7 +165,7 @@ def report_review(request, review_id):
     this_review.report += 1
     this_review.save()
 
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+    return HttpResponse('<script language="javascript">self.close();</script>')
 
 
 def update_dormitory(request, dormitory_id):

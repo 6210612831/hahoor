@@ -84,6 +84,15 @@
         }
         return answer;
     }
+    function confirm_reset()
+    {
+        var answer = window.confirm("ยืนยันการรีเซ็ต");
+        if(answer)
+        {
+            alert("การรีเซ็ตสำเร็จ");
+        }
+        return answer;
+    }
 </script>
 
 
@@ -172,7 +181,7 @@
                         <br>
                         <table style="float: right; margin-top: -1em;">
                             <tr>
-                                <td width=115px><a href="{% url 'thread:reset_report_thread' thread.id %}"><button type="button"class="btn button7 p2" style="margin-top: -0.4em;"><b>Reset report</b></button></a></td>
+                                <td width=115px><a href="{% url 'thread:reset_report_thread' thread.id %}" onclick="return confirm_reset()"><button type="button"class="btn button7 p2" style="margin-top: -0.4em;"><b>Reset report</b></button></a></td>
                                 <td><a href=""><button type="button"class="btn button6 p2" style="width: 5.8em; height: 2.5em; margin-top: -0.5em;" onclick="return confirm_delete()"><b>Delete</b></button></a></td>
                             </tr>
                         </table>
@@ -211,7 +220,7 @@
                         <b class="p2">ตอบกลับโดย {{sub_thread.author}}</b>
                         <table style="float: right;">
                             <tr>
-                                <td width=115px><a href="{% url 'thread:reset_report_reply' sub_thread.id %}"><button type="button"class="btn button7 p2" style="margin-top: -2.5em;"><b>Reset report</b></button></a></td>
+                                <td width=115px><a href="{% url 'thread:reset_report_reply' sub_thread.id %}" onclick="return confirm_reset()"><button type="button"class="btn button7 p2" style="margin-top: -2.5em;"><b>Reset report</b></button></a></td>
                                 <td><a href="" style="margin-top: -1em;"><button type="button"class="btn button6 p2" style="width: 5.8em; height: 2.5em; margin-top: -2.5em;" onclick="return confirm_delete()"><b>Delete</b></button></a></td>
                             </tr>
                         </table>
@@ -247,7 +256,7 @@
                         <b class="p2">ตอบกลับโดย {{review.author}}</b>
                         <table style="float: right;">
                             <tr>
-                                <td width=115px><a href="{% url 'dormitory:reset_report_review' review.id %}"><button type="button"class="btn button7 p2" style="margin-top: -2.5em;"><b>Reset report</b></button></a></td>
+                                <td width=115px><a href="{% url 'dormitory:reset_report_review' review.id %}" onclick="return confirm_reset()"><button type="button"class="btn button7 p2" style="margin-top: -2.5em;"><b>Reset report</b></button></a></td>
                                 <td><a href="" style="margin-top: -1em;"><button type="button"class="btn button6 p2" style="width: 5.8em; height: 2.5em; margin-top: -2.5em;" onclick="return confirm_delete()"><b>Delete</b></button></a></td>
                             </tr>
                         </table>
