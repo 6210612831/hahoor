@@ -32,7 +32,7 @@ def index(request):
 def thread(request, thread_id):
     this_thread = get_object_or_404(Thread, id=thread_id)
     check_my_thread = 0
-    if request.user.username == this_thread.author:
+    if request.user.username == this_thread.author.username:
         check_my_thread += 1
     return render(request, "thread/thread.html", {
         "thread": this_thread,
