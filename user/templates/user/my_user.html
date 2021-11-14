@@ -97,96 +97,109 @@
         font-size: 18px;
     }
     .button {
-        background-color: #ccccff;
+        background-color: #4caf50; /* Green */
         border: none;
-        color: rgb(0, 0, 0);
-        padding: 15px 32px;
+        color: white;
+        padding: 16px 32px;
         text-align: center;
         text-decoration: none;
         display: inline-block;
-        font-size: 10px;
+        font-size: 16px;
         margin: 4px 2px;
+        transition-duration: 0.4s;
         cursor: pointer;
-        border-radius: 75%;
+    }
 
+    .button1 {
+        background-color: #8878c3;
+        color: white;
+        border: 2px solid #8878c3;
+        width: 10em;
+        border-radius: 12px;
+    }
+
+    .button1:hover {
+        background-color: #ccccff;
+        color: rgb(0, 0, 0);
+        border: 2px solid #ccccff;
     }
 </style>
 
     {% if check_update %}
-    <div class="container">
-        <h2 style="margin-bottom: 1em;">อัพเดตโปรไฟล์</h1>
+        <div class="container">
+            <h2 style="margin-bottom: 1em;">อัพเดตโปรไฟล์</h1>
+            <form method="POST" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <input class="mb-4" type="text" name="new_first_name" placeholder="First name" value="{{request.user.first_name}}" required>
 
-        <form method="POST" action="" enctype="multipart/form-data">
-        {% csrf_token %}
-        
-        <input class="mb-4" type="text" name="new_first_name" placeholder="First name" value="{{request.user.first_name}}" required>
+            
+            <input class="mb-4" type="text" name="new_last_name" placeholder="Last name" value="{{request.user.last_name}}" required>
 
-        
-        <input class="mb-4" type="text" name="new_last_name" placeholder="Last name" value="{{request.user.last_name}}" required>
+            
+            <input class="mb-4" type="email" name="new_email" placeholder="Email" value="{{request.user.email}}" required>
 
-        
-        <input class="mb-4" type="email" name="new_email" placeholder="Email" value="{{request.user.email}}" required>
+            <input type="submit" value ="ยืนยันการเปลี่ยนแปลง" class="button1 p1" style="padding: 0.3em; margin: 2em;"></input>
+            
+            </form>
 
-        <input type="submit" value ="ยืนยันการเปลี่ยนแปลง" class="button1 p1" style="padding: 0.3em; margin: 2em;"></input>
-        
-        </form>
-
-        <a href="{% url 'user:my_profile' %}"><button class="button2 p1" style="padding: 0.3em;">ยกเลิก</button></a>
-    </div>
-    {% elif check_change_password %}
-    <div class="container">
-        <h2 style="margin-bottom: 1em;">เปลี่ยนรหัสผ่าน</h1>
-
-        <form method="POST" action="" enctype="multipart/form-data">
-        {% csrf_token %}
-
-        <input class="mb-4" type="password" name="old_password" placeholder="Current password" required/>
-            {% if wrong_password %}
-            <label style="color: tomato;">
-                <b>{{wrong_password}}</b>
-            </label>
-            {% endif %}
-
-        <input class="mb-4 mt-4" type="password" name="new_password" placeholder="New password" required/>
-        <input class="mb-4" type="password" name="new_re_password" placeholder="Confirm New password" required/>
-            {% if fail_password %}
-            <label class="mb-1" style="color: tomato; margin-top: -1em;">
-                <b>{{fail_password}}</b><br>
-            </label>
-            {% endif %}
-        <div style="font-size: 0.8em; text-align: left;">
-            <li>Password must have at least 8 characters</li>
-            <li>Password must have at least 1 of a-z</li>
-            <li>Password must have at least 1 of A-Z</li>
-            <li>Password must have at least 1 of 0-9</li>
-        </div> 
-        <input type="submit" value ="ยืนยันการเปลี่ยนรหัสผ่าน" class="button1 p1" style="padding: 0.3em; margin: 2em;"></input>
-        
-        </form>
-        <a href="{% url 'user:my_profile' %}"><button class="button2 p1" style="padding: 0.3em;">ยกเลิก</button></a>
-    </div>
-    {% else %}
-    <div class="container" style="margin-bottom: 5em;">
-        <div class="avatar-flip">
-            <img style="margin: 10px; background-color: whitesmoke;" src="/static/images/avatar.png" width="132" height="132">
-            <img style="margin: 10px;" src="/static/images/chahoor_1.png" width="132" height="132">
+            <a href="{% url 'user:my_profile' %}"><button class="btn button1 p1" style="padding: 0.3em;">ยกเลิก</button></a>
         </div>
-        <h2><b>{{ request.user.username }}</b></h2>
-        <hr color=#8878c3>
-        {% if request.user.first_name %}
-        <h3>{{ request.user.first_name | title }} {{request.user.last_name | title }}</h3>
-        {% else %}
-        <h3>Empty Name</h3>
-        {% endif %}
+    {% elif check_change_password %}
+        <div class="container">
+            <h2 style="margin-bottom: 1em;">เปลี่ยนรหัสผ่าน</h1>
 
-        <p class="p10"> Email : {{ request.user.email}}</p>
+            <form method="POST" action="" enctype="multipart/form-data">
+            {% csrf_token %}
 
-        <a href="{% url 'user:update_profile' %}"><button class="button1 p1" style="padding: 0.5em;">อัพเดตโปรไฟล์</button></a>
-        <a href="{% url 'user:change_password' %}"><button class="button1 p1" style="padding: 0.5em;">เปลี่ยนรหัสผ่าน</button></a>
-    </div>
+            <input class="mb-4" type="password" name="old_password" placeholder="Current password" required/>
+                {% if wrong_password %}
+                <label style="color: tomato;">
+                    <b>{{wrong_password}}</b>
+                </label>
+                {% endif %}
+
+            <input class="mb-4 mt-4" type="password" name="new_password" placeholder="New password" required/>
+            <input class="mb-4" type="password" name="new_re_password" placeholder="Confirm New password" required/>
+                {% if fail_password %}
+                <label class="mb-1" style="color: tomato; margin-top: -1em;">
+                    <b>{{fail_password}}</b><br>
+                </label>
+                {% endif %}
+            <div style="font-size: 0.8em; text-align: left;">
+                <li>Password must have at least 8 characters</li>
+                <li>Password must have at least 1 of a-z</li>
+                <li>Password must have at least 1 of A-Z</li>
+                <li>Password must have at least 1 of 0-9</li>
+            </div> 
+            <input type="submit" value ="ยืนยันการเปลี่ยนรหัสผ่าน" class="button1 p1" style="padding: 0.3em; margin: 2em;"></input>
+            
+            </form>
+            <a href="{% url 'user:my_profile' %}"><button class="button2 p1" style="padding: 0.3em;">ยกเลิก</button></a>
+        </div>
+    {% else %}
+        <div class="container" style="margin-bottom: 5em;">
+            <div class="avatar-flip">
+                <img style="margin: 10px; background-color: whitesmoke;" src="/static/images/avatar.png" width="132" height="132">
+                <img style="margin: 10px;" src="/static/images/chahoor_1.png" width="132" height="132">
+            </div>
+            <h2><b>{{ request.user.username }}</b></h2>
+            <hr color=#8878c3>
+            {% if request.user.first_name %}
+            <h3>{{ request.user.first_name | title }} {{request.user.last_name | title }}</h3>
+            {% else %}
+            <h3>Empty Name</h3>
+            {% endif %}
+
+            <p class="p10"> Email : {{ request.user.email}}</p>
+
+            <a href="{% url 'user:update_profile' %}"><button class="button1 p1" style="padding: 0.5em;">อัพเดตโปรไฟล์</button></a>
+            <a href="{% url 'user:change_password' %}"><button class="button1 p1" style="padding: 0.5em;">เปลี่ยนรหัสผ่าน</button></a>
+        </div>
     {% endif %}
+
     {% if changed_profile %}
-        <h1 style="text-align: center; color: rgb(25, 206, 25)">อัพเดตโปรไฟล์แล้ว</h1>
+        <h1 style="text-align: center; color: #5cb484">อัพเดตโปรไฟล์แล้ว</h1>
     {% endif %}
     {% if changed_password %}
         <h1 style="text-align: center; color: tomato;">เปลี่ยนรหัสผ่านแล้ว</h1>
