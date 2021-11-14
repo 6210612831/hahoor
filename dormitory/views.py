@@ -114,7 +114,7 @@ def remove_dormitory(request, dormitory_id):
         return HttpResponseRedirect(reverse("dormitory:index"))
     Dormitory.objects.get(id=dormitory_id).icon.delete(save=True)
     Dormitory.objects.get(id=dormitory_id).delete()
-    return HttpResponseRedirect(reverse("user:admin"))
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 
 def change_status_dormitory(request, dormitory_id):
@@ -143,7 +143,7 @@ def review_dormitory(request, dormitory_id):
     this_dorm = Dormitory.objects.get(id=dormitory_id)
 
     if request.method == "POST":
-        stars = 0
+        stars = 1
         if request.POST.get("stars"):
             stars = request.POST["stars"]
         content = request.POST["content"]
