@@ -129,8 +129,14 @@ function report_sub_thread(val)
         var win = window.open(sub_id,"popup");
         return false;
     }
+function which_subthread()
+{ 
+    var subthr_id = document.getElementById("in_subthread_id").value;
+    document.getElementById(`subthread_id_${subthr_id}`).focus();
+    
+}
 </script>
-
+<input type="hidden" id="in_subthread_id" value="{{reply_id}}">
 
 <div style="margin-left: 25%; margin-right: 25%; margin-bottom: 13em; margin-top: 4em;">
 
@@ -203,7 +209,7 @@ function report_sub_thread(val)
         {% if check_update_reply == 1 and sub_thread.id == reply_id %}
         <form method="POST" action="{% url 'thread:update_reply' sub_thread.id %}" enctype="multipart/form-data" id=update_reply>
             {% csrf_token %}
-            <textarea type="text" name="content" class="form-control" maxlength="500"  required>{{sub_thread.content}}</textarea>
+            <textarea id ="subthread_id_{{sub_thread.id}}" value="subthread_id_{{sub_thread.id}}" type="text" name="content" class="form-control" maxlength="500"  required>{{sub_thread.content}}</textarea>
             <br>
             <input type="submit" value ="ยืนยัน" class="btn button6 p3"></input>
         </form>
@@ -213,7 +219,7 @@ function report_sub_thread(val)
         
         <br>
 
-        <img class="avatar" src="/static/images/avatar.png" style="width: 2em; height: 2em; margin-bottom: 0em;"> 
+        <img onload="which_subthread()" class="avatar" src="/static/images/avatar.png" style="width: 2em; height: 2em; margin-bottom: 0em;"> 
         <b class="p3">ตอบกลับโดย {{sub_thread.author}} </b>
         <div style="float: right; margin-top: -0.2em;" id = "#report_sub_thread">
             <input type="hidden" value="{% url 'thread:report_subthread' thread.id sub_thread.id %}" id="sub_thread_id_{{sub_thread.id}}">

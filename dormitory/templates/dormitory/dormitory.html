@@ -276,11 +276,11 @@ function report_review(val)
 
                         <img onload="which_review()" class="avatar" src="/static/images/avatar.png" style="float:left; margin-right: 1em; margin-top: 0.5em; width: 3em; height: 3em;">
                         <b class="p3" style="margin-left: 0.5em;">{{review.author}} </b>
-                        <input type="radio" id ="review_id_{{review.id}}" value="review_id_{{review.id}}" readonly>
+                        
                         <br>
                             {% csrf_token %}
                             <div class="rate ">
-                                <b class="p3">rating:</b>
+                                <b class="p3" style="margin-right: 0.5em;">Rating:</b>
                                 <input name="stars" type="radio" id="star5" name="rate" value="5" />
                                 <label for="star5" title="text">🌚</label>
                                 <input name="stars" type="radio" id="star4" name="rate" value="4" />
@@ -293,7 +293,7 @@ function report_review(val)
                                 <label for="star1" title="text">🌚</label>
                             </div>
                             
-                            <textarea type="text" name="content" class="form-control" maxlength="500"required>{{review.content}}</textarea>
+                            <textarea id ="review_id_{{review.id}}" value="review_id_{{review.id}}" type="text" name="content" class="form-control" maxlength="500"required>{{review.content}}</textarea>
                             <br>
             
                             <input type="submit" value ="ยืนยัน" class="btn button6 p3"></input>
