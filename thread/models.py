@@ -12,6 +12,9 @@ class Sub_thread(models.Model):
 
     def __str__(self):
         return f"reply {self.replyto.header} @{self.date} by {self.author}"
+    
+    class Meta:
+        ordering = ['-date']
 
 class Thread(models.Model):
     header = models.CharField(max_length=300)
@@ -31,3 +34,6 @@ class Thread(models.Model):
         if search.lower() in self.header.lower():
             return True
         return False
+
+    class Meta:
+        ordering = ['-date']

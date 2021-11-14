@@ -16,6 +16,9 @@ class Review(models.Model):
     def __str__(self):
         return f"Reviewed {self.reviewto.title} : {self.stars} stars by {self.author}"
 
+    class Meta:
+        ordering = ['-date']
+
 
 class Dormitory(models.Model):
     title = models.CharField(max_length=100)
@@ -35,3 +38,6 @@ class Dormitory(models.Model):
         if search.lower() in self.title.lower():
             return True
         return False
+
+    class Meta:
+        ordering = ['-date']
