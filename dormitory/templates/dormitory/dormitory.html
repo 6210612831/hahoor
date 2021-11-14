@@ -184,6 +184,21 @@ function report_review(val)
         var win = window.open(review_urls,"popup");
         return false;
     }
+
+function check_star()
+    {
+        var s1 = document.getElementById("star1").checked;
+        var s2 = document.getElementById("star2").checked;
+        var s3 = document.getElementById("star3").checked;
+        var s4 = document.getElementById("star4").checked;
+        var s5 = document.getElementById("star5").checked;
+        if((s1 == 0) && (s2 == 0) && (s3 == 0) && (s4 == 0) && (s5 == 0))
+        {
+            alert("กรุณาให้คะแนนอย่างน้อย 1 คะแนน");
+            return false;
+        }
+        return true;
+    }
 </script>
 <input type="hidden" id="in_review_id" value="{{review_id}}">
 
@@ -347,7 +362,7 @@ function report_review(val)
                 <textarea type="text" name="content" class="form-control" maxlength="500" placeholder="รีวิวหอพัก" required></textarea>
                 <br>
 
-                <input type="submit" value ="ยืนยัน" class="btn button6 p8"></input>
+                <input type="submit" onclick="return check_star()" value ="ยืนยัน" class="btn button6 p8"></input>
             </form>
             {% else %}
             <a href="#login" style="text-decoration: none;"><h3 id=เขียนรีวิว style="text-align: center;">&#9997; กรุณา Login เพื่อเขียนรีวิว &#10071;</h3></a>
