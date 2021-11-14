@@ -1,7 +1,7 @@
 Markdown==3.3.4
 Django==3.2.6
 django_markdownx==3.0.1
-django-heroku
+coverage==5.5
 gunicorn
 folium==0.12.1
 whitenoise
