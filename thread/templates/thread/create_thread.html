@@ -2,6 +2,9 @@
 {% block body %}
 <title>สร้างกระทู้</title>
 <style>
+    p{
+        font-family: "Prompt", sans-serif;
+    }
     .p2 {
         font-family: "Prompt", sans-serif;
         font-size: 1.2em;
@@ -15,22 +18,20 @@
     <br>
 </div>
 <form method="POST" action="{% url 'thread:create_thread' %}" enctype="multipart/form-data">
-
     {% csrf_token %}
-    {%if fail_header%} 
-        <div style="color: red;"><b>{{fail_header}}</b></div><br> 
-    {%endif%}
-
     <div class="container">
         <div class="row">
             <div class="col">
                 <div class="form-group" style="width: 25em; margin-left: 5em;">
                     <label><b class="p2">ชื่อกระทู้</b></label>
-                    <input type="text" name="header" class="form-control" maxlength="120" placeholder="Enter thread header" required/></input>
-                </div>
-                <br>
-                <div style="margin-left: 5em;">
+                    <p><input type="text" name="header" class="form-control" maxlength="120" placeholder="Enter thread header" required/></input></p>
                     <br>
+                </div>
+                {%if fail_header%} 
+                    <div style="color: tomato; margin-left: 5em;"><p class="p2"><b>{{fail_header}}</b></p></div><br> 
+                {%endif%}
+                
+                <div style="margin-left: 5em;">
                     <input type="submit" value ="ยืนยัน" class="btn button1 p2"></input>
                 </div>
                 <br>

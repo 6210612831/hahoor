@@ -6,6 +6,9 @@
 <title>{{thread.header}}</title>
 
 <style>
+    p{
+        font-family: 'Noto Sans Thai', sans-serif;
+    }
     .p2 {
         font-family: 'Noto Sans Thai', sans-serif;
         font-size: 1em;
@@ -103,19 +106,11 @@
     function confirm_delete_thread()
 {
     var answer = window.confirm("ยืนยันลบกระทู้");
-    if(answer)
-    {
-        alert("ลบกระทู้สำเร็จ");
-    }
     return answer;
 }
 function confirm_delete_sub_thread()
 {
     var answer = window.confirm("ยืนยันลบการตอบกลับกระทู้");
-    if(answer)
-    {
-        alert("ลบการตอบกลับกระทู้สำเร็จ");
-    }
     return answer;
 }
 function report_thread()
@@ -209,9 +204,9 @@ function which_subthread()
         {% if check_update_reply == 1 and sub_thread.id == reply_id %}
         <form method="POST" action="{% url 'thread:update_reply' sub_thread.id %}" enctype="multipart/form-data" id=update_reply>
             {% csrf_token %}
-            <textarea id ="subthread_id_{{sub_thread.id}}" value="subthread_id_{{sub_thread.id}}" type="text" name="content" class="form-control" maxlength="500"  required>{{sub_thread.content}}</textarea>
+            <textarea  type="text" name="content" class="form-control" maxlength="500"  required>{{sub_thread.content}}</textarea>
             <br>
-            <input type="submit" value ="ยืนยัน" class="btn button6 p3"></input>
+            <button id ="subthread_id_{{sub_thread.id}}" value="subthread_id_{{sub_thread.id}}" type="submit" class="btn button6 p3">ยืนยัน</button>
         </form>
         {% else %}
             <h4>{{sub_thread.content | convert_markdown | safe | linebreaks}}</h4>
@@ -230,7 +225,7 @@ function which_subthread()
         {% endfor %}
     {% endif %}
     <br>
-    
+    <br>
     <!-- form -->
     {% if check_update_reply != 1 %}
     {% if request.user.is_authenticated %}
@@ -238,7 +233,7 @@ function which_subthread()
 
         <form method="POST" action="{% url 'thread:reply_thread' thread.id%}" enctype="multipart/form-data" id=ตอบกลับกระทู้>
             {% csrf_token %}
-            <textarea type="text" name="content" class="form-control" maxlength="500" placeholder="ตอบกลับกระทู้" required></textarea>
+            <p><textarea type="text" name="content" class="form-control" maxlength="500" placeholder="ตอบกลับกระทู้" required></textarea></p>
             <br>
 
             <input type="submit" value ="ยืนยัน" class="btn button6 p3" style="position: sticky"></input>

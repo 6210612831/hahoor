@@ -40,9 +40,9 @@
         transition: all 0.3s ease-in-out;
         -webkit-transition: all 0.3s ease-in-out;
         -moz-transition: all 0.3s ease-in-out;
-        box-shadow: 0 0 0 13px #f0f0f0;
-        -webkit-box-shadow: 0 0 0 13px #f0f0f0;
-        -moz-box-shadow: 0 0 0 13px #f0f0f0;
+        box-shadow: 0 0 0 13px #a090da;
+        -webkit-box-shadow: 0 0 0 13px #a090da;
+        -moz-box-shadow: 0 0 0 13px #a090da;
     }
 
     .avatar-flip img {
@@ -53,6 +53,7 @@
         transition: all 0.3s ease-in-out;
         -webkit-transition: all 0.3s ease-in-out;
         -moz-transition: all 0.3s ease-in-out;
+        
     }
 
     .avatar-flip img:first-child {
@@ -71,7 +72,7 @@
     }
     h2 {
         font-family: 'Prompt', sans-serif;
-        font-size: 32px;
+        font-size: 35px;
         font-weight: 600;
         margin-bottom: 15px;
         color: #333;
@@ -84,7 +85,13 @@
         letter-spacing: 1px;
         margin-bottom: 25px
     }
-
+    h5 {
+        font-family: 'Prompt', sans-serif;
+        font-size: 20px;
+    }
+    p{
+        font-family: 'Prompt', sans-serif;
+    }
     .p10 {
         font-family: 'Prompt', sans-serif;
         font-size: 16px;
@@ -96,109 +103,182 @@
         font-family: 'Prompt', sans-serif;
         font-size: 18px;
     }
+    .p12 {
+        font-family: 'Prompt', sans-serif;
+        font-size: 12.5px;
+    }
+    .p13 {
+        font-family: 'Prompt', sans-serif;
+        font-size: 14px;
+    }
+    h1,h2,h3,h4,h5,h6 {
+        font-family: 'Prompt', sans-serif;
+    }
     .button {
-        background-color: #ccccff;
+        background-color: #4caf50; /* Green */
         border: none;
-        color: rgb(0, 0, 0);
-        padding: 15px 32px;
+        color: white;
+        padding: 16px 32px;
         text-align: center;
         text-decoration: none;
         display: inline-block;
-        font-size: 10px;
+        font-size: 16px;
         margin: 4px 2px;
+        transition-duration: 0.4s;
         cursor: pointer;
-        border-radius: 75%;
+    }
 
+    .button5 {
+        background-color: #8878c3;
+        color: white;
+        border: 2px solid #8878c3;
+        width: 10em;
+        height: 2.2em;
+        border-radius: 8px;
+    }
+
+    .button5:hover {
+        background-color: #ccccff;
+        color: rgb(0, 0, 0);
+        border: 2px solid #ccccff;
+    }
+    .button6 {
+        background-color: #8878c3;
+        color: white;
+        border: 2px solid #8878c3;
+        width: 11.5em;
+        height: 2.3em;
+        border-radius: 8px;
+    }
+    .button6:hover {
+        background-color: #ccccff;
+        color: rgb(0, 0, 0);
+        border: 2px solid #ccccff;
+    }
+    .button7 {
+        background-color: #8878c3;
+        color: white;
+        border: 2px solid #8878c3;
+        width: 12em;
+        height: 2.3em;
+        border-radius: 8px;
+    }
+    .button7:hover {
+        background-color: #ccccff;
+        color: rgb(0, 0, 0);
+        border: 2px solid #ccccff;
     }
 </style>
-
+<title>ข้อมูลส่วนตัว</title>
     {% if check_update %}
-    <div class="container">
-        <h2 style="margin-bottom: 1em;">อัพเดตโปรไฟล์</h1>
-
-        <form method="POST" action="" enctype="multipart/form-data">
-        {% csrf_token %}
-        
-        <input class="mb-4" type="text" name="new_first_name" placeholder="First name" value="{{request.user.first_name}}" required>
-
-        
-        <input class="mb-4" type="text" name="new_last_name" placeholder="Last name" value="{{request.user.last_name}}" required>
-
-        
-        <input class="mb-4" type="email" name="new_email" placeholder="Email" value="{{request.user.email}}" required>
-
-        <input type="submit" value ="ยืนยันการเปลี่ยนแปลง" class="button1 p1" style="padding: 0.3em; margin: 2em;"></input>
-        
-        </form>
-
-        <a href="{% url 'user:my_profile' %}"><button class="button2 p1" style="padding: 0.3em;">ยกเลิก</button></a>
-    </div>
-    {% elif check_change_password %}
-    <div class="container">
-        <h2 style="margin-bottom: 1em;">เปลี่ยนรหัสผ่าน</h1>
-
-        <form method="POST" action="" enctype="multipart/form-data">
-        {% csrf_token %}
-
-        <input class="mb-4" type="password" name="old_password" placeholder="Current password" required/>
-            {% if wrong_password %}
-            <label style="color: tomato;">
-                <b>{{wrong_password}}</b>
+        <div class="container form-group">
+            <h2 style="margin-bottom: 1em">อัพเดตโปรไฟล์</h2>
+            <br>
+            <form method="POST" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label>
+                <b class="p13" style="margin-left: -18em;">ชื่อ</b>
             </label>
-            {% endif %}
-
-        <input class="mb-4 mt-4" type="password" name="new_password" placeholder="New password" required/>
-        <input class="mb-4" type="password" name="new_re_password" placeholder="Confirm New password" required/>
-            {% if fail_password %}
-            <label class="mb-1" style="color: tomato; margin-top: -1em;">
-                <b>{{fail_password}}</b><br>
+            <p><input class="mb-4 form-control" type="text" name="new_first_name" style="width: 18em; margin-left: 3em;" placeholder="First name" value="{{request.user.first_name}}" required></p>
+            
+            <label>
+                <b class="p13" style="margin-left: -15.5em;">นามสกุล</b>
             </label>
-            {% endif %}
-        <div style="font-size: 0.8em; text-align: left;">
-            <li>Password must have at least 8 characters</li>
-            <li>Password must have at least 1 of a-z</li>
-            <li>Password must have at least 1 of A-Z</li>
-            <li>Password must have at least 1 of 0-9</li>
-        </div> 
-        <input type="submit" value ="ยืนยันการเปลี่ยนรหัสผ่าน" class="button1 p1" style="padding: 0.3em; margin: 2em;"></input>
+            <p><input class="mb-4 form-control" type="text" name="new_last_name" style="width: 18em; margin-left: 3em;" placeholder="Last name" value="{{request.user.last_name}}" required></p>
+
+            <label>
+                <b class="p13" style="margin-left: -16.4em;">Email</b>
+            </label>
+            <p><input class="mb-4 form-control" type="email" name="new_email" style="width: 18em; margin-left: 3em;" placeholder="Email" value="{{request.user.email}}" required></p>
+
+            <input type="submit" value ="ยืนยันการเปลี่ยนแปลง" class="button6 p1" style="padding: 0.3em; margin: 2em;"></input>
+            
+            </form>
+
+            <a href="{% url 'user:my_profile' %}"><button class="btn button6 p1" style="margin-top: -1em;">ยกเลิก</button></a>
         
-        </form>
-        <a href="{% url 'user:my_profile' %}"><button class="button2 p1" style="padding: 0.3em;">ยกเลิก</button></a>
-    </div>
-    {% else %}
-    <div class="container" style="margin-bottom: 5em;">
-        <div class="avatar-flip">
-            <img style="margin: 10px; background-color: whitesmoke;" src="/static/images/avatar.png" width="132" height="132">
-            <img style="margin: 10px;" src="/static/images/chahoor_1.png" width="132" height="132">
         </div>
-        <h2><b>{{ request.user.username }}</b></h2>
-        <hr color=#8878c3>
-        {% if request.user.first_name %}
-        <h3>{{ request.user.first_name | title }} {{request.user.last_name | title }}</h3>
-        {% else %}
-        <h3>Empty Name</h3>
-        {% endif %}
+    {% elif check_change_password %}
+        <div class="container form-group">
+            <h2 style="margin-bottom: 1em;">เปลี่ยนรหัสผ่าน</h1>
+            <br>
+            <form method="POST" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div>
+                <label>
+                    <b class="p13" style="margin-left: -12.5em;">รหัสผ่านปัจจุบัน</b>
+                </label>
+                <p><input class="mb-4 form-control" type="password" name="old_password" style="width: 18em; margin-left: 3em;" placeholder="Current password" required/></p>
+                    {% if wrong_password %}
+                    <label style="color: tomato;">
+                        <p><b>รหัสผ่านไม่ถูกต้อง</b></p>
+                    </label>
+                    {% endif %}
+            </div>
+            <label>
+                <b class="p13" style="margin-left: -14em;">รหัสผ่านใหม่</b>
+            </label>
+            <p><input class="mb-4 form-control" type="password" name="new_password" style="width: 18em; margin-left: 3em;" placeholder="New password" required/></p>
+            
+            <label>
+                <b class="p13" style="margin-left: -13em;">ยืนยันรหัสผ่าน</b>
+            </label>
+            <p><input class="mb-4 form-control" type="password" name="new_re_password" style="width: 18em; margin-left: 3em;" placeholder="Confirm New password" required/></p>
+                {% if fail_password %}
+                <label class="mb-1" style="color: tomato;">
+                    <p><b>{{fail_password}}</b></p>
+                </label>
+                {% endif %}
 
-        <p class="p10"> Email : {{ request.user.email}}</p>
-
-        <a href="{% url 'user:update_profile' %}"><button class="button1 p1" style="padding: 0.5em;">อัพเดตโปรไฟล์</button></a>
-        <a href="{% url 'user:change_password' %}"><button class="button1 p1" style="padding: 0.5em;">เปลี่ยนรหัสผ่าน</button></a>
-    </div>
-    {% endif %}
-    {% if messages %}
-        {% for message in messages %}
-            {% if message.tags == "info" %}
-            <h1 style="text-align: center; color: rgb(25, 206, 25)">{{message}}</h1>
+            <div style="text-align: left; margin-left: 3.2em;">
+                <li class="p12">Password must have at least 8 characters</li>
+                <li class="p12">Password must have at least 1 of a-z</li>
+                <li class="p12">Password must have at least 1 of A-Z</li>
+                <li class="p12">Password must have at least 1 of 0-9</li>
+            </div>
+            <br>
+            <br> 
+            <input type="submit" value ="ยืนยันการเปลี่ยนรหัสผ่าน" class="button7 p1" ></input>
+            
+            </form>
+            <br>
+            <a href="{% url 'user:my_profile' %}"><button class="button7 p1">ยกเลิก</button></a>
+        </div>
+    
+    {% else %}
+        <div class="container" style="margin-bottom: 5em;">
+            <div class="avatar-flip">
+                <img style="margin: 10px; background-color: whitesmoke;" src="/static/images/avatar.png" width="132" height="132">
+                <img style="margin: 10px;" src="/static/images/chahoor_1.png" width="132" height="132">
+            </div>
+            <h2><b class="p2">{{ request.user.username }}</b></h2>
+            <hr style="color: #8878c3;">
+            {% if request.user.first_name %}
+            <h5><b>{{ request.user.first_name | title }} {{request.user.last_name | title }}</b></h5>
+            {% else %}
+            <h5><b>Empty Name</b></h5>
             {% endif %}
-        {% endfor %}
+
+            <p class="p10"> Email : {{ request.user.email}}</p>
+            
+            <br>
+            <a href="{% url 'user:update_profile' %}"><button class="button5 p1" >อัพเดตโปรไฟล์</button></a>
+            <br>
+            <br>
+            <a href="{% url 'user:change_password' %}"><button class="button5 p1" >เปลี่ยนรหัสผ่าน</button></a>
+        </div>
     {% endif %}
-    {% if changed_profile %}
-        <h1 style="text-align: center; color: rgb(25, 206, 25)">อัพเดตโปรไฟล์แล้ว</h1>
+
+    {% if messages %}
+    {% for message in messages %}
+        {% if message.tags == "info" %}
+        <h1 style="text-align: center; color: #5cb484;">{{message}}</h1>
+        {% endif %}
+    {% endfor %}
     {% endif %}
-    {% if changed_password %}
-        <h1 style="text-align: center; color: tomato;">เปลี่ยนรหัสผ่านแล้ว</h1>
-    {% endif %}
-    <br>
+    
+
 
 
 {% endblock %}

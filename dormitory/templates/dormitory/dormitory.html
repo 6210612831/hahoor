@@ -139,8 +139,6 @@
         content: '🌝';
 
     }
-
-
     .rate > input:checked + label:hover,
     .rate > input:checked + label:hover ~ label,
     .rate > input:checked ~ label:hover,
@@ -172,19 +170,11 @@ function which_review()
 function confirm_delete_dorm()
 {
     var answer = window.confirm("ยืนยันการลบ");
-    if(answer)
-    {
-        alert("การลบสำเร็จ");
-    }
     return answer;
 }
 function confirm_delete_review()
 {
     var answer = window.confirm("ยืนยันการลบ");
-    if(answer)
-    {
-        alert("การลบสำเร็จ");
-    }
     return answer;
 }
 
@@ -194,12 +184,6 @@ function report_review(val)
         var win = window.open(review_urls,"popup");
         return false;
     }
-
-
-
-
-
-
 </script>
 <input type="hidden" id="in_review_id" value="{{review_id}}">
 
@@ -307,9 +291,7 @@ function report_review(val)
                     <b class="p3" style="margin-left: 0.5em;">{{review.author}} </b>
                     
                     <br>
-                    {% if review.stars == 0 %}
-                    <span style="font-size: 1.5em;"> &#127770;&#127770;&#127770;&#127770;&#127770;</span>
-                    {% elif review.stars == 1 %}
+                    {% if review.stars == 1 %}
                     <span style="font-size: 1.5em;"> &#127773;&#127770;&#127770;&#127770;&#127770;</span>
                     {% elif review.stars == 2 %}
                         <span style="font-size: 1.5em;"> &#127773;&#127773;&#127770;&#127770;&#127770;</span>
@@ -362,7 +344,7 @@ function report_review(val)
                     <input name="stars" type="radio" id="star1" name="rate" value="1" />
                     <label for="star1" title="text">🌚</label>
                   </div>
-                <textarea type="text" name="content" class="form-control" maxlength="500" placeholder="ตอบกลับกระทู้" required></textarea>
+                <textarea type="text" name="content" class="form-control" maxlength="500" placeholder="รีวิวหอพัก" required></textarea>
                 <br>
 
                 <input type="submit" value ="ยืนยัน" class="btn button6 p8"></input>
