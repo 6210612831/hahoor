@@ -115,7 +115,8 @@ def update_profile(request) :
         this_user.email = new_email
         this_user.save()
 
-        return render(request, "user/my_user.html", {"changed_profile": "Changed profile"})
+        messages.info(request, "อัพเดตโปรไฟล์แล้ว")
+        return HttpResponseRedirect(reverse("user:my_profile"))
 
     return render(request, "user/my_user.html",
     { "check_update" :check_update })
@@ -157,7 +158,9 @@ def change_password(request) :
             user = authenticate(
                 request, username=request.user.username, password=new_password)
             auth_login(request, user)
-            return render(request, "user/my_user.html",{"changed_password" : "Changed password"})
+
+            messages.info(request, "เปลี่ยนรหัสผ่านแล้ว")
+            return HttpResponseRedirect(reverse("user:my_profile"))
 
         else :
             return render(request, "user/my_user.html",

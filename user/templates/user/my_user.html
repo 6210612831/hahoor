@@ -197,7 +197,17 @@
             <a href="{% url 'user:change_password' %}"><button class="button1 p1" style="padding: 0.5em;">เปลี่ยนรหัสผ่าน</button></a>
         </div>
     {% endif %}
+<<<<<<< HEAD
 
+=======
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == "info" %}
+            <h1 style="text-align: center; color: rgb(25, 206, 25)">{{message}}</h1>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+>>>>>>> refs/remotes/origin/main
     {% if changed_profile %}
         <h1 style="text-align: center; color: #5cb484">อัพเดตโปรไฟล์แล้ว</h1>
     {% endif %}
