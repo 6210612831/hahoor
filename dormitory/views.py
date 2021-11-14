@@ -45,6 +45,8 @@ def dormitories(request):
 
 def dormitory(request, dorm_title):
     this_dorm = get_object_or_404(Dormitory, title=dorm_title)
+    this_dorm.seen += 1
+    this_dorm.save()
     check_my_dormitory = 0
     if request.user.username == this_dorm.author.username:
         check_my_dormitory += 1
@@ -253,9 +255,9 @@ def delete_dormitory(request, dormitory_id):
 
     if request.user.username != this_dorm.author.username:
         return HttpResponseRedirect(reverse("dormitory:dormitory", args=(this_dorm.title,)))
-
+    this_dorm.icon.delete(save=True)
     this_dorm.delete()
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+    return HttpResponseRedirect(reverse("dormitory:index"))
 
 
 def reset_report_review(request, review_id):

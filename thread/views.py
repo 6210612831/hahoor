@@ -160,7 +160,7 @@ def delete_thread(request, thread_id):
         return HttpResponseRedirect(reverse("thread:thread", args=(thread_id,)))
 
     this_thread.delete()
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+    return HttpResponseRedirect(reverse("thread:index"))
 
 
 def update_reply(request, sub_thread_id):
