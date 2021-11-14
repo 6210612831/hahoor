@@ -92,8 +92,84 @@ def register_view(request):
     return render(request, "user/register.html")
 
 def my_profile(request) :
+
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("dormitory:index"))
+
     return render(request, "user/my_user.html")
+
+def update_profile(request) :
+
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("dormitory:index"))
+
+    check_update = 1
+    if request.method == "POST":
+        new_first_name = request.POST["new_first_name"]
+        new_last_name = request.POST["new_last_name"]
+        new_email = request.POST["new_email"]
+
+        this_user = User.objects.get(username = request.user.username)
+        this_user.first_name = new_first_name
+        this_user.last_name = new_last_name
+        this_user.email = new_email
+        this_user.save()
+
+        return render(request, "user/my_user.html", {"changed_profile": "Changed profile"})
+
+    return render(request, "user/my_user.html",
+    { "check_update" :check_update })
     
+
+def change_password(request) :
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("dormitory:index"))
+
+    check_change_password = 1
+    if request.method == "POST":
+        old_password = request.POST["old_password"]
+        new_password = request.POST["new_password"]
+        new_re_password = request.POST["new_re_password"]
+        
+
+        this_user = User.objects.get(username=request.user.username)
+
+        check_user = authenticate(request, username=request.user.username, password=old_password)
+        if check_user is not None:
+            if old_password == new_password :    
+                return render(request, "user/my_user.html", {"check_change_password": check_change_password, "fail_password": "Password can't be same as before"})
+
+            if (len(new_password) < 8):
+                return render(request, "user/my_user.html", {"check_change_password": check_change_password, "fail_password": "Password must have at least 8"})
+            elif not re.search("[a-z]", new_password):
+                return render(request, "user/my_user.html", {"check_change_password": check_change_password, "fail_password": "Password must have at least 1 of a-z"})
+            elif not re.search("[A-Z]", new_password):
+                return render(request, "user/my_user.html", {"check_change_password": check_change_password, "fail_password": "Password must have at least 1 of A-Z"})
+            elif not re.search("[0-9]", new_password):
+                return render(request, "user/my_user.html", {"check_change_password": check_change_password, "fail_password": "Password must have at least 1 of 0-9"})
+        # Check re-password is same as password
+            if new_password != new_re_password:
+                return render(request, "user/my_user.html", {"check_change_password": check_change_password, "fail_password": "Invalid password confirm"})
+
+            this_user.set_password(new_password)
+            this_user.save()
+
+            user = authenticate(
+                request, username=request.user.username, password=new_password)
+            auth_login(request, user)
+            return render(request, "user/my_user.html",{"changed_password" : "Changed password"})
+
+        else :
+            return render(request, "user/my_user.html",
+                          {"check_change_password": check_change_password,
+                           "wrong_password": "Invalid Credential",
+                           })
+
+    return render(request, "user/my_user.html",
+                  {"check_change_password": check_change_password,
+                  })
+
+
 def admin_view(request):
     if not request.user.is_authenticated:
         messages.warning(request, "Login First to proceed")
